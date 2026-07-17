@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "BattleBrews2ClosetotheSun.sln"
+    "dotnet.defaultSolution": "BattleBrews2ClosetotheSun.slnx"
 }
