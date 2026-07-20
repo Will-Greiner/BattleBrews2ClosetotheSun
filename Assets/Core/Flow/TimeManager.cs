@@ -78,7 +78,7 @@ public class TimeManager : MonoBehaviour
         if (isSubscribed || GameManager.Instance == null)
             return;
 
-        GameManager.Instance.RoundStarted += HandleRoundStarted;
+        GameManager.Instance.RoundActivated += HandleRoundActivated;
         GameManager.Instance.RoundResolved += HandleRoundResolved;
         GameManager.Instance.GameEnded += HandleGameEnded;
         isSubscribed = true;
@@ -89,13 +89,13 @@ public class TimeManager : MonoBehaviour
         if (!isSubscribed || GameManager.Instance == null)
             return;
 
-        GameManager.Instance.RoundStarted -= HandleRoundStarted;
+        GameManager.Instance.RoundActivated -= HandleRoundActivated;
         GameManager.Instance.RoundResolved -= HandleRoundResolved;
         GameManager.Instance.GameEnded -= HandleGameEnded;
         isSubscribed = false;
     }
 
-    private void HandleRoundStarted(EncounterData encounter, PotionData requestedPotion)
+    private void HandleRoundActivated(EncounterData encounter, PotionData requestedPotion)
     {
         StartRoundTimer(GameManager.Instance.CurrentRound);
     }

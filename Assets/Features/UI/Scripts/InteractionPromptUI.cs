@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -13,9 +14,13 @@ public class InteractionPromptUI : MonoBehaviour
     [Tooltip("Position relative to the camera's right, up, and forward directions.")]
     [SerializeField] private Vector3 handOffset = new Vector3(0f, 0.3f, 0f);
 
+    private Coroutine temporaryPromptRoutine;
+
+    public bool IsShowingTemporaryPrompt => temporaryPromptRoutine != null;
+
     private void Awake()
     {
-        Hide();
+        ForceHide();
     }
 
     private void LateUpdate()
@@ -25,23 +30,62 @@ public class InteractionPromptUI : MonoBehaviour
 
         Transform cameraTransform = playerCamera.transform;
 
-        transform.position =
-            handTarget.position +
-            cameraTransform.right * handOffset.x +
-            cameraTransform.up * handOffset.y +
-            cameraTransform.forward * handOffset.z;
+        transform.position = handTarget.position + cameraTransform.right * handOffset.x + cameraTransform.up * handOffset.y + cameraTransform.forward * handOffset.z;
+        transform.rotation = Quaternion.LookRotation(cameraTransform.forward, cameraTransform.up);
+    }
 
-        transform.rotation = Quaternion.LookRotation(
-            cameraTransform.forward,
-            cameraTransform.up
-        );
+    private void OnDisable()
+    {
+        if (temporaryPromptRoutine != null)
+        {
+            StopCoroutine(temporaryPromptRoutine);
+            temporaryPromptRoutine = null;
+        }
     }
 
     public void Show(string prompt)
     {
+        if (IsShowingTemporaryPrompt)
+            return;
+
+        ForceShow(prompt);
+    }
+
+    public void Hide()
+    {
+        if (IsShowingTemporaryPrompt)
+            return;
+
+        ForceHide();
+    }
+
+    public void ShowTemporary(string message, float duration = 1.5f)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        if (temporaryPromptRoutine != null)
+            StopCoroutine(temporaryPromptRoutine);
+
+        temporaryPromptRoutine = StartCoroutine(TemporaryPromptRoutine(message, duration));
+    }
+
+    private IEnumerator TemporaryPromptRoutine(string message, float duration)
+    {
+        ForceShow(message);
+
+        if (duration > 0f)
+            yield return new WaitForSecondsRealtime(duration);
+
+        temporaryPromptRoutine = null;
+        ForceHide();
+    }
+
+    private void ForceShow(string prompt)
+    {
         if (string.IsNullOrWhiteSpace(prompt))
         {
-            Hide();
+            ForceHide();
             return;
         }
 
@@ -51,11 +95,16 @@ public class InteractionPromptUI : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
     }
 
-    public void Hide()
+    private void ForceHide()
     {
-        promptText.text = string.Empty;
-        canvasGroup.alpha = 0f;
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
+        if (promptText != null)
+            promptText.text = string.Empty;
+
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 }

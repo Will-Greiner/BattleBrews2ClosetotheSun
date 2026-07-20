@@ -26,7 +26,7 @@ public class CauldronController : MonoBehaviour
     [SerializeField] private AudioClip goodPotionClip;
     [SerializeField] private AudioClip badPotionClip;
 
-    [Header("Current Contributions")]
+    [Header("Current Ingredients")]
     [SerializeField] private List<CauldronContribution> contributions = new();
 
     public event Action ContributionsChanged;
@@ -37,29 +37,41 @@ public class CauldronController : MonoBehaviour
 
     public bool CanAcceptIngredient(GrabbableItem item)
     {
-        if (item == null || contributions.Count >= maxContributions)
+        if (item == null || !item.gameObject.activeInHierarchy || contributions.Count >= maxContributions)
             return false;
 
         IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
         return ingredientItem != null && ingredientItem.Data != null;
     }
 
-    public bool TryAddContribution(GrabbableItem item, CauldronContribution contribution)
+    public bool TryAddIngredient(GrabbableItem item)
     {
-        if (!CanAcceptIngredient(item) || contribution == null)
+        if (!CanAcceptIngredient(item))
             return false;
 
         IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
 
-        if (ingredientItem == null || ingredientItem.Data != contribution.SourceIngredient)
+        if (ingredientItem == null || ingredientItem.Data == null)
             return false;
 
-        contributions.Add(contribution);
+        contributions.Add(new CauldronContribution(ingredientItem.Data));
         PlayIngredientAddedEffects();
         ContributionsChanged?.Invoke();
-        Destroy(item.gameObject);
 
+        item.gameObject.SetActive(false);
+        Destroy(item.gameObject);
         return true;
+    }
+
+    [Obsolete("Use TryAddIngredient. Contributions are now assigned automatically.")]
+    public bool TryAddContribution(GrabbableItem item, CauldronContribution contribution)
+    {
+        return TryAddIngredient(item);
+    }
+
+    public RecipeMatchResult EvaluatePotion(PotionData potion)
+    {
+        return ContributionRecipeMatcher.Evaluate(potion, contributions);
     }
 
     public bool Stir()
@@ -91,19 +103,6 @@ public class CauldronController : MonoBehaviour
     {
         contributions.Clear();
         ContributionsChanged?.Invoke();
-    }
-
-    private int GetDistinctSourceIngredientCount()
-    {
-        HashSet<IngredientData> distinctIngredients = new();
-
-        foreach (CauldronContribution contribution in contributions)
-        {
-            if (contribution != null && contribution.SourceIngredient != null)
-                distinctIngredients.Add(contribution.SourceIngredient);
-        }
-
-        return distinctIngredients.Count;
     }
 
     private void CreatePotion(PotionData potion, bool isFailure)

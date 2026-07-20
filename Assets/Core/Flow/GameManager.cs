@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public event Action<int, int> LivesChanged;
     public event Action<int, int> RoundChanged;
     public event Action<EncounterData, PotionData> RoundStarted;
+    public event Action<EncounterData, PotionData> RoundActivated;
     public event Action<BattleOutcome, EncounterData, PotionData, PotionData> RoundResolved;
     public event Action GameEnded;
 
@@ -85,7 +86,7 @@ public class GameManager : MonoBehaviour
         CurrentEncounter = null;
         RequestedPotion = null;
         DeliveredPotion = null;
-        State = GameState.RoundStarting;
+        State = GameState.NotStarted;
 
         GameStarted?.Invoke();
         LivesChanged?.Invoke(Lives, startingLives);
@@ -95,7 +96,7 @@ public class GameManager : MonoBehaviour
 
     public void StartNextRound()
     {
-        if (State == GameState.RoundActive)
+        if (State == GameState.RoundStarting || State == GameState.RoundActive)
             return;
 
         if (Lives <= 0 || CurrentRound >= totalRounds)
@@ -126,10 +127,19 @@ public class GameManager : MonoBehaviour
         }
 
         DeliveredPotion = null;
-        State = GameState.RoundActive;
 
         RoundChanged?.Invoke(CurrentRound, totalRounds);
         RoundStarted?.Invoke(CurrentEncounter, RequestedPotion);
+    }
+
+    public bool ActivateCurrentRound()
+    {
+        if (State != GameState.RoundStarting || CurrentEncounter == null || RequestedPotion == null)
+            return false;
+
+        State = GameState.RoundActive;
+        RoundActivated?.Invoke(CurrentEncounter, RequestedPotion);
+        return true;
     }
 
     public bool CanDeliverPotion(PotionData potion)

@@ -52,66 +52,16 @@ public class RoundReportUI : MonoBehaviour
         "Better luck next round."
     };
 
-    private bool isSubscribed;
-
     private void Awake()
     {
         continueButton.onClick.AddListener(HandleContinueClicked);
         Hide();
     }
 
-    private void OnEnable()
-    {
-        SubscribeToGameManager();
-    }
-
-    private void Start()
-    {
-        SubscribeToGameManager();
-
-        if (GameManager.Instance != null && GameManager.Instance.State == GameState.RoundResolving)
-            ShowReport(GameManager.Instance.CurrentOutcome, GameManager.Instance.CurrentEncounter, GameManager.Instance.RequestedPotion, GameManager.Instance.DeliveredPotion);
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeFromGameManager();
-    }
-
     private void OnDestroy()
     {
         if (continueButton != null)
             continueButton.onClick.RemoveListener(HandleContinueClicked);
-    }
-
-    private void SubscribeToGameManager()
-    {
-        if (isSubscribed || GameManager.Instance == null)
-            return;
-
-        GameManager.Instance.RoundResolved += HandleRoundResolved;
-        GameManager.Instance.GameEnded += HandleGameEnded;
-        isSubscribed = true;
-    }
-
-    private void UnsubscribeFromGameManager()
-    {
-        if (!isSubscribed || GameManager.Instance == null)
-            return;
-
-        GameManager.Instance.RoundResolved -= HandleRoundResolved;
-        GameManager.Instance.GameEnded -= HandleGameEnded;
-        isSubscribed = false;
-    }
-
-    private void HandleRoundResolved(BattleOutcome outcome, EncounterData encounter, PotionData requestedPotion, PotionData deliveredPotion)
-    {
-        ShowReport(outcome, encounter, requestedPotion, deliveredPotion);
-    }
-
-    private void HandleGameEnded()
-    {
-        Hide();
     }
 
     private void HandleContinueClicked()
@@ -135,10 +85,8 @@ public class RoundReportUI : MonoBehaviour
 
         resultText.text = didWin ? "VICTORY" : "DEFEAT";
         resultText.color = outcomeColor;
-
         gradeText.text = GetRandomEntry(didWin ? winGrades : loseGrades);
         gradeText.color = outcomeColor;
-
         encounterText.text = encounter.EncounterName;
         outcomeText.text = didWin ? encounter.WinOutcomeText : encounter.LoseOutcomeText;
         commentText.text = GetRandomEntry(didWin ? winComments : loseComments);

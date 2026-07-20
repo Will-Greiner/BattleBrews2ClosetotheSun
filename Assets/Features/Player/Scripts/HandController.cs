@@ -220,11 +220,13 @@ public class HandController : MonoBehaviour
         GrabbableItem heldItem = grabController.HeldItem;
         StirringStick stirringStick = heldItem.GetComponent<StirringStick>();
         CauldronRope clearRope = heldItem.GetComponent<CauldronRope>();
+        MortarPestle mortarPestle = heldItem.GetComponent<MortarPestle>();
 
         bool isStirring = stirringStick != null && stirringStick.IsStirring;
         bool isPullingRope = clearRope != null && clearRope.IsBeingPulled;
+        bool isPounding = mortarPestle != null && mortarPestle.IsBeingUsed;
 
-        if (!isStirring && !isPullingRope)
+        if (!isStirring && !isPullingRope && !isPounding)
             return false;
 
         Transform grabPoint = heldItem.GrabPoint;

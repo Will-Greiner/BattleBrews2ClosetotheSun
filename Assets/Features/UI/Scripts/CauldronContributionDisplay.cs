@@ -56,54 +56,21 @@ public class CauldronContributionDisplay : MonoBehaviour
         }
 
         StringBuilder builder = new();
-        HashSet<ItemPropertyData> displayedProperties = new();
         HashSet<IngredientData> displayedIngredients = new();
-
         builder.AppendLine(title);
 
         foreach (CauldronContribution contribution in cauldron.Contributions)
         {
-            if (contribution == null)
+            IngredientData ingredient = contribution != null ? contribution.SourceIngredient : null;
+
+            if (ingredient == null || !displayedIngredients.Add(ingredient))
                 continue;
 
-            if (contribution.Type == ContributionType.Property)
-            {
-                ItemPropertyData property = contribution.SelectedProperty;
-
-                if (property == null || displayedProperties.Contains(property))
-                    continue;
-
-                displayedProperties.Add(property);
-                int quantity = CountProperty(property);
-                AppendContribution(builder, property.DisplayName, quantity);
-            }
-            else
-            {
-                IngredientData ingredient = contribution.SourceIngredient;
-
-                if (ingredient == null || displayedIngredients.Contains(ingredient))
-                    continue;
-
-                displayedIngredients.Add(ingredient);
-                int quantity = CountIngredient(ingredient);
-                AppendContribution(builder, ingredient.IngredientName, quantity);
-            }
+            int quantity = CountIngredient(ingredient);
+            builder.AppendLine(quantity > 1 ? $"{ingredient.IngredientName}  x{quantity}" : ingredient.IngredientName);
         }
 
         contentsText.text = builder.ToString().TrimEnd();
-    }
-
-    private int CountProperty(ItemPropertyData property)
-    {
-        int count = 0;
-
-        foreach (CauldronContribution contribution in cauldron.Contributions)
-        {
-            if (contribution != null && contribution.MatchesProperty(property))
-                count++;
-        }
-
-        return count;
     }
 
     private int CountIngredient(IngredientData ingredient)
@@ -112,18 +79,10 @@ public class CauldronContributionDisplay : MonoBehaviour
 
         foreach (CauldronContribution contribution in cauldron.Contributions)
         {
-            if (contribution != null && contribution.MatchesIngredient(ingredient))
+            if (contribution != null && contribution.SourceIngredient == ingredient)
                 count++;
         }
 
         return count;
-    }
-
-    private void AppendContribution(StringBuilder builder, string contributionName, int quantity)
-    {
-        if (quantity > 1)
-            builder.AppendLine($"{contributionName}  x{quantity}");
-        else
-            builder.AppendLine(contributionName);
     }
 }

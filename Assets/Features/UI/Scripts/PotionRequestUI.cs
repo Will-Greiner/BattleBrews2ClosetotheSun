@@ -10,64 +10,7 @@ public class PotionRequestUI : MonoBehaviour
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private Image potionIcon;
 
-    private bool isSubscribed;
-
     private void Awake()
-    {
-        Hide();
-    }
-
-    private void OnEnable()
-    {
-        SubscribeToGameManager();
-    }
-
-    private void Start()
-    {
-        SubscribeToGameManager();
-
-        if (GameManager.Instance != null && GameManager.Instance.State == GameState.RoundActive)
-            ShowRequest(GameManager.Instance.CurrentEncounter, GameManager.Instance.RequestedPotion);
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeFromGameManager();
-    }
-
-    private void SubscribeToGameManager()
-    {
-        if (isSubscribed || GameManager.Instance == null)
-            return;
-
-        GameManager.Instance.RoundStarted += HandleRoundStarted;
-        GameManager.Instance.RoundResolved += HandleRoundResolved;
-        GameManager.Instance.GameEnded += HandleGameEnded;
-        isSubscribed = true;
-    }
-
-    private void UnsubscribeFromGameManager()
-    {
-        if (!isSubscribed || GameManager.Instance == null)
-            return;
-
-        GameManager.Instance.RoundStarted -= HandleRoundStarted;
-        GameManager.Instance.RoundResolved -= HandleRoundResolved;
-        GameManager.Instance.GameEnded -= HandleGameEnded;
-        isSubscribed = false;
-    }
-
-    private void HandleRoundStarted(EncounterData encounter, PotionData requestedPotion)
-    {
-        ShowRequest(encounter, requestedPotion);
-    }
-
-    private void HandleRoundResolved(BattleOutcome outcome, EncounterData encounter, PotionData requestedPotion, PotionData deliveredPotion)
-    {
-        Hide();
-    }
-
-    private void HandleGameEnded()
     {
         Hide();
     }

@@ -16,9 +16,11 @@ MonoBehaviour:
   icon: {fileID: 0}
   description: 
   prefab: {fileID: 8390168086883276517, guid: acd4b167011e3d34a8576fc34c6d4557, type: 3}
-  requiredTotalIngredients: 1
-  propertyRequirements:
-  - property: {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
+  requirements:
+  - requirementType: 1
+    ingredient: {fileID: 11400000, guid: d0e91350edcd0b341ab3bc3df2efbcd4, type: 2}
+    property: {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
     requiredCount: 1
-  specificIngredientRequirements: []
+  firstRequestRound: 1
+  lastRequestRound: 99
   isDiscovered: 1

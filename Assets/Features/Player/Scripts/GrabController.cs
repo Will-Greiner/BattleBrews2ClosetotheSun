@@ -24,6 +24,7 @@ public class GrabController : MonoBehaviour
     private ConfigurableJoint grabJoint;
     private Rigidbody handRigidbody;
     private bool inputEnabled = true;
+    private ObjectHighlight receiverHighlight;
 
     public Camera PlayerCamera => playerCamera;
     public GrabbableItem HeldItem => heldItem;
@@ -47,15 +48,25 @@ public class GrabController : MonoBehaviour
     {
         if (!inputEnabled || Mouse.current == null || playerCamera == null)
         {
+            ClearReceiverHighlight();
             HideInteractionPrompt();
             return;
         }
 
+        UpdateReceiverHighlight();
         UpdateInteractionPrompt();
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            HandlePrimaryAction();
+            HandlePrimaryPress();
+            UpdateReceiverHighlight();
+            UpdateInteractionPrompt();
+        }
+
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            HandlePrimaryRelease();
+            UpdateReceiverHighlight();
             UpdateInteractionPrompt();
         }
     }
@@ -65,7 +76,7 @@ public class GrabController : MonoBehaviour
         if (heldItem == null)
             return;
 
-        if (heldItem.GetComponent<StirringStick>() != null || heldItem.GetComponent<CauldronRope>() != null)
+        if (heldItem.GetComponent<StirringStick>() != null || heldItem.GetComponent<CauldronRope>() != null || heldItem.GetComponent<MortarPestle>() != null)
             return;
 
         float distance = Vector3.Distance(heldItem.GrabPoint.position, transform.position);
@@ -79,17 +90,21 @@ public class GrabController : MonoBehaviour
         HideInteractionPrompt();
     }
 
-    private void HandlePrimaryAction()
+    private void HandlePrimaryPress()
     {
         if (heldItem != null)
-        {
-            if (!TryUseHeldItemOnReceiver())
-                Release();
-
             return;
-        }
 
         TryUseTargetUnderMouse();
+    }
+
+    private void HandlePrimaryRelease()
+    {
+        if (heldItem == null)
+            return;
+
+        if (!TryUseHeldItemOnReceiver())
+            Release();
     }
 
     private void UpdateInteractionPrompt()
@@ -171,6 +186,12 @@ public class GrabController : MonoBehaviour
         return $"{grabPrompt} {item.DisplayName}";
     }
 
+    public void ShowTemporaryPrompt(string message, float duration = 1.5f)
+    {
+        if (interactionPromptUI != null)
+            interactionPromptUI.ShowTemporary(message, duration);
+    }
+
     private void HideInteractionPrompt()
     {
         if (interactionPromptUI != null)
@@ -184,8 +205,16 @@ public class GrabController : MonoBehaviour
 
         IItemReceiver receiver = FindItemReceiver(hit.collider);
 
-        if (receiver == null || !receiver.CanReceiveItem(heldItem))
+        if (receiver == null)
             return false;
+
+        if (!receiver.CanReceiveItem(heldItem))
+        {
+            if (receiver is IItemRejectionFeedback rejectionFeedback)
+                rejectionFeedback.ShowRejectionFeedback(heldItem);
+
+            return false;
+        }
 
         GrabbableItem transferredItem = TakeHeldItem();
 
@@ -305,6 +334,14 @@ public class GrabController : MonoBehaviour
             return true;
         }
 
+        MortarPestle mortarPestle = heldItem.GetComponent<MortarPestle>();
+
+        if (mortarPestle != null)
+        {
+            mortarPestle.BeginPounding(this);
+            return true;
+        }
+
         Rigidbody body = heldItem.Rigidbody;
         body.linearVelocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
@@ -341,6 +378,8 @@ public class GrabController : MonoBehaviour
         if (heldItem == null)
             return null;
 
+        ClearReceiverHighlight();
+
         GrabbableItem transferredItem = heldItem;
         heldItem = null;
 
@@ -360,6 +399,11 @@ public class GrabController : MonoBehaviour
         if (clearRope != null)
             clearRope.EndPull();
 
+        MortarPestle mortarPestle = transferredItem.GetComponent<MortarPestle>();
+
+        if (mortarPestle != null)
+            mortarPestle.EndPounding();
+
         transferredItem.OnReleased();
         return transferredItem;
     }
@@ -369,7 +413,10 @@ public class GrabController : MonoBehaviour
         inputEnabled = enabled;
 
         if (!inputEnabled)
+        {
+            ClearReceiverHighlight();
             HideInteractionPrompt();
+        }
     }
 
     private void TryGrabFocusedItem()
@@ -383,5 +430,47 @@ public class GrabController : MonoBehaviour
             return;
 
         Grab(focusedItem);
+    }
+
+    private void UpdateReceiverHighlight()
+    {
+        if (heldItem == null)
+        {
+            ClearReceiverHighlight();
+            return;
+        }
+
+        if (!TryGetPointerHitIgnoringHeldItem(out RaycastHit hit))
+        {
+            ClearReceiverHighlight();
+            return;
+        }
+
+        IItemReceiver receiver = FindItemReceiver(hit.collider);
+
+        if (receiver == null || !receiver.CanReceiveItem(heldItem))
+        {
+            ClearReceiverHighlight();
+            return;
+        }
+
+        ObjectHighlight newHighlight = hit.collider.GetComponentInParent<ObjectHighlight>();
+
+        if (newHighlight == receiverHighlight)
+            return;
+
+        ClearReceiverHighlight();
+        receiverHighlight = newHighlight;
+
+        if (receiverHighlight != null)
+            receiverHighlight.Show();
+    }
+
+    private void ClearReceiverHighlight()
+    {
+        if (receiverHighlight != null)
+            receiverHighlight.Hide();
+
+        receiverHighlight = null;
     }
 }

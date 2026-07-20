@@ -1,5 +1,38 @@
 using System.Collections.Generic;
 
+public sealed class RecipeMatchResult
+{
+    private readonly int[] completedCounts;
+
+    public PotionData Potion { get; }
+    public int AssignedContributionCount { get; }
+    public int CompatibleExtraCount { get; }
+    public int IncompatibleContributionCount { get; }
+    public bool AllRequirementsMet { get; }
+    public bool IsExactMatch { get; }
+    public bool IsOverfilledMatch { get; }
+
+    public RecipeMatchResult(PotionData potion, int[] completedCounts, int assignedContributionCount, int compatibleExtraCount, int incompatibleContributionCount, bool allRequirementsMet, bool isExactMatch, bool isOverfilledMatch)
+    {
+        Potion = potion;
+        this.completedCounts = completedCounts;
+        AssignedContributionCount = assignedContributionCount;
+        CompatibleExtraCount = compatibleExtraCount;
+        IncompatibleContributionCount = incompatibleContributionCount;
+        AllRequirementsMet = allRequirementsMet;
+        IsExactMatch = isExactMatch;
+        IsOverfilledMatch = isOverfilledMatch;
+    }
+
+    public int GetCompletedCount(int requirementIndex)
+    {
+        if (completedCounts == null || requirementIndex < 0 || requirementIndex >= completedCounts.Length)
+            return 0;
+
+        return completedCounts[requirementIndex];
+    }
+}
+
 public static class ContributionRecipeMatcher
 {
     public static PotionData FindExactMatch(PotionDatabase database, IReadOnlyList<CauldronContribution> contributions)
@@ -9,7 +42,7 @@ public static class ContributionRecipeMatcher
 
         foreach (PotionData potion in database.Potions)
         {
-            if (IsExactMatch(potion, contributions))
+            if (Evaluate(potion, contributions).IsExactMatch)
                 return potion;
         }
 
@@ -23,7 +56,7 @@ public static class ContributionRecipeMatcher
 
         foreach (PotionData potion in database.Potions)
         {
-            if (IsOverfilledMatch(potion, contributions))
+            if (Evaluate(potion, contributions).IsOverfilledMatch)
                 return potion;
         }
 
@@ -37,7 +70,9 @@ public static class ContributionRecipeMatcher
 
         foreach (PotionData potion in database.Potions)
         {
-            if (CouldStillMatch(potion, contributions))
+            RecipeMatchResult result = Evaluate(potion, contributions);
+
+            if (result.IncompatibleContributionCount == 0 && contributions.Count < potion.RequiredTotalIngredients)
                 return true;
         }
 
@@ -46,110 +81,110 @@ public static class ContributionRecipeMatcher
 
     public static bool IsExactMatch(PotionData potion, IReadOnlyList<CauldronContribution> contributions)
     {
-        if (potion == null || contributions == null)
-            return false;
-
-        if (contributions.Count != potion.RequiredTotalIngredients)
-            return false;
-
-        return MeetsAllRequirements(potion, contributions);
+        return Evaluate(potion, contributions).IsExactMatch;
     }
 
     public static bool IsOverfilledMatch(PotionData potion, IReadOnlyList<CauldronContribution> contributions)
     {
-        if (potion == null || contributions == null)
-            return false;
-
-        if (contributions.Count <= potion.RequiredTotalIngredients)
-            return false;
-
-        if (!ContainsOnlyCompatibleContributions(potion, contributions))
-            return false;
-
-        return MeetsAllRequirements(potion, contributions);
+        return Evaluate(potion, contributions).IsOverfilledMatch;
     }
 
-    public static bool CouldStillMatch(PotionData potion, IReadOnlyList<CauldronContribution> contributions)
+    public static RecipeMatchResult Evaluate(PotionData potion, IReadOnlyList<CauldronContribution> contributions)
     {
-        if (potion == null || contributions == null)
-            return false;
+        int requirementCount = potion != null ? potion.Requirements.Count : 0;
+        int[] completedCounts = new int[requirementCount];
 
-        if (contributions.Count >= potion.RequiredTotalIngredients)
-            return false;
+        if (potion == null || contributions == null || !potion.HasValidRecipe())
+            return new RecipeMatchResult(potion, completedCounts, 0, 0, contributions != null ? contributions.Count : 0, false, false, false);
 
-        return ContainsOnlyCompatibleContributions(potion, contributions);
-    }
+        int assignedCount = 0;
+        int compatibleExtraCount = 0;
+        int incompatibleCount = 0;
 
-    private static bool MeetsAllRequirements(PotionData potion, IReadOnlyList<CauldronContribution> contributions)
-    {
-        foreach (PropertyRequirement requirement in potion.PropertyRequirements)
-        {
-            if (requirement == null || requirement.Property == null)
-                return false;
-
-            int matchingCount = 0;
-
-            foreach (CauldronContribution contribution in contributions)
-            {
-                if (contribution != null && contribution.MatchesProperty(requirement.Property))
-                    matchingCount++;
-            }
-
-            if (matchingCount < requirement.RequiredCount)
-                return false;
-        }
-
-        foreach (SpecificIngredientRequirement requirement in potion.SpecificIngredientRequirements)
-        {
-            if (requirement == null || requirement.Ingredient == null)
-                return false;
-
-            int matchingCount = 0;
-
-            foreach (CauldronContribution contribution in contributions)
-            {
-                if (contribution != null && contribution.MatchesIngredient(requirement.Ingredient))
-                    matchingCount++;
-            }
-
-            if (matchingCount < requirement.RequiredCount)
-                return false;
-        }
-
-        return true;
-    }
-
-    private static bool ContainsOnlyCompatibleContributions(PotionData potion, IReadOnlyList<CauldronContribution> contributions)
-    {
         foreach (CauldronContribution contribution in contributions)
         {
-            if (contribution == null || !IsContributionCompatible(contribution, potion))
-                return false;
+            IngredientData ingredient = contribution != null ? contribution.SourceIngredient : null;
+
+            if (ingredient == null)
+            {
+                incompatibleCount++;
+                continue;
+            }
+
+            int matchedRequirementIndex = FindFirstIncompleteMatchingRequirement(potion, ingredient, completedCounts);
+
+            if (matchedRequirementIndex >= 0)
+            {
+                completedCounts[matchedRequirementIndex]++;
+                assignedCount++;
+                continue;
+            }
+
+            if (CanMatchAnyRequirement(potion, ingredient))
+                compatibleExtraCount++;
+            else
+                incompatibleCount++;
         }
 
-        return true;
+        bool allRequirementsMet = AreAllRequirementsMet(potion, completedCounts);
+        bool exactMatch = allRequirementsMet && contributions.Count == potion.RequiredTotalIngredients && incompatibleCount == 0;
+        bool overfilledMatch = allRequirementsMet && contributions.Count > potion.RequiredTotalIngredients && incompatibleCount == 0;
+
+        return new RecipeMatchResult(potion, completedCounts, assignedCount, compatibleExtraCount, incompatibleCount, allRequirementsMet, exactMatch, overfilledMatch);
     }
 
-    private static bool IsContributionCompatible(CauldronContribution contribution, PotionData potion)
+    public static bool CanIngredientSatisfyRequirement(IngredientData ingredient, RecipeRequirement requirement)
     {
-        if (contribution.Type == ContributionType.Property)
+        if (ingredient == null || requirement == null || !requirement.IsValid())
+            return false;
+
+        if (requirement.RequirementType == RecipeRequirementType.Ingredient)
+            return requirement.MatchesIngredientIdentity(ingredient);
+
+        if (!ingredient.HasProperty(requirement.Property))
+            return false;
+
+        IngredientDiscoveryManager discoveryManager = IngredientDiscoveryManager.Instance;
+        return discoveryManager != null && discoveryManager.IsPropertyDiscovered(ingredient, requirement.Property);
+    }
+
+    private static int FindFirstIncompleteMatchingRequirement(PotionData potion, IngredientData ingredient, int[] completedCounts)
+    {
+        for (int i = 0; i < potion.Requirements.Count; i++)
         {
-            foreach (PropertyRequirement requirement in potion.PropertyRequirements)
-            {
-                if (requirement != null && requirement.Property == contribution.SelectedProperty)
-                    return true;
-            }
+            RecipeRequirement requirement = potion.Requirements[i];
+
+            if (requirement == null || completedCounts[i] >= requirement.RequiredCount)
+                continue;
+
+            if (CanIngredientSatisfyRequirement(ingredient, requirement))
+                return i;
         }
 
-        if (contribution.Type == ContributionType.Ingredient)
+        return -1;
+    }
+
+    private static bool CanMatchAnyRequirement(PotionData potion, IngredientData ingredient)
+    {
+        foreach (RecipeRequirement requirement in potion.Requirements)
         {
-            foreach (SpecificIngredientRequirement requirement in potion.SpecificIngredientRequirements)
-            {
-                if (requirement != null && requirement.Ingredient == contribution.SourceIngredient)
-                    return true;
-            }
+            if (CanIngredientSatisfyRequirement(ingredient, requirement))
+                return true;
         }
 
         return false;
+    }
+
+    private static bool AreAllRequirementsMet(PotionData potion, int[] completedCounts)
+    {
+        for (int i = 0; i < potion.Requirements.Count; i++)
+        {
+            RecipeRequirement requirement = potion.Requirements[i];
+
+            if (requirement == null || completedCounts[i] < requirement.RequiredCount)
+                return false;
+        }
+
+        return true;
     }
 }

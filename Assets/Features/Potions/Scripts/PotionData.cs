@@ -7,24 +7,18 @@ public class PotionData : ScriptableObject
     [Header("Identity")]
     [SerializeField] private string potionName;
     [SerializeField] private Sprite icon;
-    [TextArea]
-    [SerializeField] private string description;
+    [TextArea] [SerializeField] private string description;
 
     [Header("World Item")]
     [SerializeField] private GameObject prefab;
 
     [Header("Recipe")]
-    [Min(1)]
-    [SerializeField] private int requiredTotalIngredients = 3;
-    [SerializeField] private List<PropertyRequirement> propertyRequirements = new();
-    [SerializeField] private List<SpecificIngredientRequirement> specificIngredientRequirements = new();
+    [Tooltip("Requirements are evaluated from top to bottom. An ingredient satisfies the first incomplete requirement it can match.")]
+    [SerializeField] private List<RecipeRequirement> requirements = new();
 
     [Header("Request Availability")]
-    [Min(1)]
-    [SerializeField] private int firstRequestRound = 1;
-
-    [Min(1)]
-    [SerializeField] private int lastRequestRound = 99;
+    [Min(1)] [SerializeField] private int firstRequestRound = 1;
+    [Min(1)] [SerializeField] private int lastRequestRound = 99;
 
     [Header("Discovery")]
     [SerializeField] private bool isDiscovered;
@@ -33,9 +27,8 @@ public class PotionData : ScriptableObject
     public Sprite Icon => icon;
     public string Description => description;
     public GameObject Prefab => prefab;
-    public int RequiredTotalIngredients => requiredTotalIngredients;
-    public IReadOnlyList<PropertyRequirement> PropertyRequirements => propertyRequirements;
-    public IReadOnlyList<SpecificIngredientRequirement> SpecificIngredientRequirements => specificIngredientRequirements;
+    public IReadOnlyList<RecipeRequirement> Requirements => requirements;
+    public int RequiredTotalIngredients => CalculateRequiredTotalIngredients();
     public int FirstRequestRound => firstRequestRound;
     public int LastRequestRound => lastRequestRound;
     public bool IsDiscovered => isDiscovered;
@@ -50,9 +43,52 @@ public class PotionData : ScriptableObject
         isDiscovered = discovered;
     }
 
+    public bool HasValidRecipe()
+    {
+        if (requirements == null || requirements.Count == 0)
+            return false;
+
+        foreach (RecipeRequirement requirement in requirements)
+        {
+            if (requirement == null || !requirement.IsValid())
+                return false;
+        }
+
+        return true;
+    }
+
+    private int CalculateRequiredTotalIngredients()
+    {
+        int total = 0;
+
+        if (requirements == null)
+            return total;
+
+        foreach (RecipeRequirement requirement in requirements)
+        {
+            if (requirement != null)
+                total += Mathf.Max(1, requirement.RequiredCount);
+        }
+
+        return total;
+    }
+
     private void OnValidate()
     {
         firstRequestRound = Mathf.Max(1, firstRequestRound);
         lastRequestRound = Mathf.Max(firstRequestRound, lastRequestRound);
+        RemoveNullRequirements();
+    }
+
+    private void RemoveNullRequirements()
+    {
+        if (requirements == null)
+            requirements = new List<RecipeRequirement>();
+
+        for (int i = requirements.Count - 1; i >= 0; i--)
+        {
+            if (requirements[i] == null)
+                requirements.RemoveAt(i);
+        }
     }
 }
