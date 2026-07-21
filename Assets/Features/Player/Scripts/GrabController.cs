@@ -76,7 +76,7 @@ public class GrabController : MonoBehaviour
         if (heldItem == null)
             return;
 
-        if (heldItem.GetComponent<StirringStick>() != null || heldItem.GetComponent<CauldronRope>() != null || heldItem.GetComponent<MortarPestle>() != null)
+        if (heldItem.GetComponent<StirringStick>() != null || heldItem.GetComponent<CauldronRope>() != null || heldItem.GetComponent<MortarPestle>() != null || heldItem.GetComponent<BurnerBellows>() != null || heldItem.GetComponent<PulverizerCrank>() != null)
             return;
 
         float distance = Vector3.Distance(heldItem.GrabPoint.position, transform.position);
@@ -342,6 +342,22 @@ public class GrabController : MonoBehaviour
             return true;
         }
 
+        BurnerBellows burnerBellows = heldItem.GetComponent<BurnerBellows>();
+
+        if (burnerBellows != null)
+        {
+            burnerBellows.BeginSqueezing(this);
+            return true;
+        }
+
+        PulverizerCrank pulverizerCrank = heldItem.GetComponent<PulverizerCrank>();
+
+        if (pulverizerCrank != null)
+        {
+            pulverizerCrank.BeginCranking(this);
+            return true;
+        }
+
         Rigidbody body = heldItem.Rigidbody;
         body.linearVelocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
@@ -403,6 +419,16 @@ public class GrabController : MonoBehaviour
 
         if (mortarPestle != null)
             mortarPestle.EndPounding();
+
+        BurnerBellows burnerBellows = transferredItem.GetComponent<BurnerBellows>();
+
+        if (burnerBellows != null)
+            burnerBellows.EndSqueezing();
+
+        PulverizerCrank pulverizerCrank = transferredItem.GetComponent<PulverizerCrank>();
+
+        if (pulverizerCrank != null)
+            pulverizerCrank.EndCranking();
 
         transferredItem.OnReleased();
         return transferredItem;

@@ -221,12 +221,16 @@ public class HandController : MonoBehaviour
         StirringStick stirringStick = heldItem.GetComponent<StirringStick>();
         CauldronRope clearRope = heldItem.GetComponent<CauldronRope>();
         MortarPestle mortarPestle = heldItem.GetComponent<MortarPestle>();
+        BurnerBellows burnerBellows = heldItem.GetComponent<BurnerBellows>();
+        PulverizerCrank pulverizerCrank = heldItem.GetComponent<PulverizerCrank>();
 
         bool isStirring = stirringStick != null && stirringStick.IsStirring;
         bool isPullingRope = clearRope != null && clearRope.IsBeingPulled;
         bool isPounding = mortarPestle != null && mortarPestle.IsBeingUsed;
+        bool isSqueezingBellows = burnerBellows != null && burnerBellows.IsBeingUsed;
+        bool isCranking = pulverizerCrank != null && pulverizerCrank.IsBeingUsed;
 
-        if (!isStirring && !isPullingRope && !isPounding)
+        if (!isStirring && !isPullingRope && !isPounding && !isSqueezingBellows && !isCranking)
             return false;
 
         Transform grabPoint = heldItem.GrabPoint;

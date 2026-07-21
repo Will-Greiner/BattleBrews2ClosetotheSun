@@ -23,6 +23,11 @@ public class StirringStick : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 1f;
     [SerializeField] private float maximumAngleChangePerFrame = 45f;
 
+    [Header("Gesture Shape")]
+    [Tooltip("Vertical height of the accepted stirring ellipse relative to its width. Lower values accept a flatter ellipse.")]
+    [Range(0.1f, 1f)]
+    [SerializeField] private float verticalAxisScale = 0.55f;
+
     [Header("Reset")]
     [SerializeField] private float returnDuration = 0.5f;
 
@@ -160,7 +165,8 @@ public class StirringStick : MonoBehaviour
         if (directionFromCenter.sqrMagnitude < 1f)
             return previousMouseAngle;
 
-        return Mathf.Atan2(directionFromCenter.y, directionFromCenter.x) * Mathf.Rad2Deg;
+        Vector2 ellipseCorrectedDirection = new Vector2(directionFromCenter.x, directionFromCenter.y / verticalAxisScale);
+        return Mathf.Atan2(ellipseCorrectedDirection.y, ellipseCorrectedDirection.x) * Mathf.Rad2Deg;
     }
 
     private IEnumerator ReturnToStartRoutine()

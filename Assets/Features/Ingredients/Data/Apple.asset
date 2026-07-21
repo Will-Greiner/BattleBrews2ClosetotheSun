@@ -15,6 +15,9 @@ MonoBehaviour:
   ingredientName: Apple
   icon: {fileID: 0}
   description: 
+  persistentId: c844486e64f04dfea3ce22be39f3a03b
   prefab: {fileID: 8377358475073678697, guid: 9ea9d1f07c7777a4c9e7c2fe83418d56, type: 3}
   properties:
   - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
+  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 2a6506cc02a40324880f9e230a2a0647, type: 2}

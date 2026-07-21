@@ -8,6 +8,7 @@ public class GrabbableItem : MonoBehaviour
 
     [Header("Gravity")]
     [SerializeField] private bool permanentlyEnableGravityWhenGrabbed;
+    [SerializeField] private bool ignorePhysicsUntilFirstGrab;
 
     [Header("Interaction Prompts")]
     [SerializeField] private string grabPromptOverride;
@@ -16,6 +17,7 @@ public class GrabbableItem : MonoBehaviour
     private Rigidbody itemRigidbody;
     private bool defaultUseGravity;
     private bool gravityPermanentlyEnabled;
+    private bool awaitingFirstGrab;
     private RigidbodyInterpolation defaultInterpolation;
     private CollisionDetectionMode defaultCollisionMode;
     private int defaultSolverIterations;
@@ -57,6 +59,16 @@ public class GrabbableItem : MonoBehaviour
         defaultCollisionMode = itemRigidbody.collisionDetectionMode;
         defaultSolverIterations = itemRigidbody.solverIterations;
         defaultSolverVelocityIterations = itemRigidbody.solverVelocityIterations;
+
+        awaitingFirstGrab = ignorePhysicsUntilFirstGrab;
+
+        if (awaitingFirstGrab)
+        {
+            itemRigidbody.linearVelocity = Vector3.zero;
+            itemRigidbody.angularVelocity = Vector3.zero;
+            itemRigidbody.useGravity = false;
+            itemRigidbody.isKinematic = true;
+        }
     }
 
     public bool CanGrab()
@@ -67,6 +79,12 @@ public class GrabbableItem : MonoBehaviour
     public void OnGrabbed()
     {
         IsHeld = true;
+
+        if (awaitingFirstGrab)
+        {
+            awaitingFirstGrab = false;
+            itemRigidbody.isKinematic = false;
+        }
 
         if (permanentlyEnableGravityWhenGrabbed)
             gravityPermanentlyEnabled = true;
@@ -86,5 +104,14 @@ public class GrabbableItem : MonoBehaviour
         itemRigidbody.solverIterations = defaultSolverIterations;
         itemRigidbody.solverVelocityIterations = defaultSolverVelocityIterations;
         itemRigidbody.WakeUp();
+    }
+
+    public void PrepareForPhysicsIgnoredSpawn()
+    {
+        awaitingFirstGrab = true;
+        itemRigidbody.linearVelocity = Vector3.zero;
+        itemRigidbody.angularVelocity = Vector3.zero;
+        itemRigidbody.useGravity = false;
+        itemRigidbody.isKinematic = true;
     }
 }

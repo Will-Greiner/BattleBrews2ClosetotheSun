@@ -12,6 +12,11 @@ public class IngredientProcessingStation : MonoBehaviour
     [SerializeField] private Transform outputPoint;
     [SerializeField] private GameObject processedIngredientPrefab;
 
+    [Header("Ingredient Progress Movement")]
+    [SerializeField] private Transform ingredientProgressEndPoint;
+    [SerializeField] private AnimationCurve ingredientMovementCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    [SerializeField] private bool rotateIngredientWithProgress;
+
     [Header("Effects")]
     [SerializeField] private ParticleSystem completionParticles;
     [SerializeField] private AudioSource audioSource;
@@ -77,6 +82,7 @@ public class IngredientProcessingStation : MonoBehaviour
             return false;
 
         currentProgress = Mathf.Min(requiredProgress, currentProgress + amount);
+        UpdateIngredientProgressTransform();
         ProgressChanged?.Invoke(currentProgress, requiredProgress);
 
         if (currentProgress >= requiredProgress)
@@ -125,6 +131,8 @@ public class IngredientProcessingStation : MonoBehaviour
         }
 
         currentItem.enabled = false;
+
+        UpdateIngredientProgressTransform();
     }
 
     private void CompleteProcessing()
@@ -161,13 +169,15 @@ public class IngredientProcessingStation : MonoBehaviour
 
         GameObject output = Instantiate(processedIngredientPrefab, outputPoint.position, outputPoint.rotation);
 
-        Rigidbody outputRigidbody = output.GetComponent<Rigidbody>();
+        GrabbableItem outputGrabbable = output.GetComponent<GrabbableItem>();
 
-        if (outputRigidbody != null)
+        if (outputGrabbable != null)
         {
-            outputRigidbody.linearVelocity = Vector3.zero;
-            outputRigidbody.angularVelocity = Vector3.zero;
-            outputRigidbody.useGravity = false;
+            outputGrabbable.PrepareForPhysicsIgnoredSpawn();
+        }
+        else
+        {
+            Debug.LogError($"{output.name} requires a GrabbableItem component.", output);
         }
 
         ProcessedIngredientItem processedItem = output.GetComponent<ProcessedIngredientItem>();
@@ -213,5 +223,19 @@ public class IngredientProcessingStation : MonoBehaviour
             return $"{ingredient.GetPropertyAtLevel(propertyLevel).DisplayName} already discovered";
 
         return "Ingredient rejected";
+    }
+
+    private void UpdateIngredientProgressTransform()
+    {
+        if (currentItem == null || ingredientSnapPoint == null || ingredientProgressEndPoint == null)
+            return;
+
+        float normalizedProgress = requiredProgress > 0f ? Mathf.Clamp01(currentProgress / requiredProgress) : 0f;
+        float curvedProgress = ingredientMovementCurve.Evaluate(normalizedProgress);
+
+        currentItem.transform.position = Vector3.LerpUnclamped(ingredientSnapPoint.position, ingredientProgressEndPoint.position, curvedProgress);
+
+        if (rotateIngredientWithProgress)
+            currentItem.transform.rotation = Quaternion.SlerpUnclamped(ingredientSnapPoint.rotation, ingredientProgressEndPoint.rotation, curvedProgress);
     }
 }
