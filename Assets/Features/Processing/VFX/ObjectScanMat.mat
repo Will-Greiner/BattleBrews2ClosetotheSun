@@ -22,7 +22,6 @@ Material:
     RenderType: TransparentCutout
   disabledShaderPasses:
   - MOTIONVECTORS
-  - DepthOnly
   m_LockedProperties: _CastShadows
   m_SavedProperties:
     serializedVersion: 3
@@ -67,11 +66,11 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _ZTest: 4
-    - _ZWrite: 0
-    - _ZWriteControl: 2
+    - _ZWrite: 1
+    - _ZWriteControl: 1
     m_Colors:
-    - _BottomColor: {r: 0.99215686, g: 0.33043987, b: 0, a: 1}
-    - _Color: {r: 2.2907047, g: 1.1894575, b: 0.2398643, a: 1}
+    - _BottomColor: {r: 1.9843137, g: 0.2901961, b: 0, a: 1}
+    - _Color: {r: 1.5660378, g: 0.87296444, b: 0.051708825, a: 1}
     - _Direction: {r: 0, g: -0.5, b: 0, a: 0}
     - _DistortionSpeed: {r: 0, g: -0.6, b: 0, a: 0}
     - _DistortionTiling: {r: -14, g: 0.14, b: 0, a: 0}
