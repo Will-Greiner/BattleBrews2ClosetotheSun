@@ -20,9 +20,6 @@ public class PotionData : ScriptableObject
     [Min(1)] [SerializeField] private int firstRequestRound = 1;
     [Min(1)] [SerializeField] private int lastRequestRound = 99;
 
-    [Header("Discovery")]
-    [SerializeField] private bool isDiscovered;
-
     public string PotionName => potionName;
     public Sprite Icon => icon;
     public string Description => description;
@@ -31,16 +28,10 @@ public class PotionData : ScriptableObject
     public int RequiredTotalIngredients => CalculateRequiredTotalIngredients();
     public int FirstRequestRound => firstRequestRound;
     public int LastRequestRound => lastRequestRound;
-    public bool IsDiscovered => isDiscovered;
 
     public bool IsAvailableForRequest(int round)
     {
         return round >= firstRequestRound && round <= lastRequestRound;
-    }
-
-    public void SetDiscovered(bool discovered)
-    {
-        isDiscovered = discovered;
     }
 
     public bool HasValidRecipe()

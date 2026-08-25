@@ -10,7 +10,11 @@ public class IngredientSpawner : MonoBehaviour, IHandInteractable
         if (grabController == null || grabController.IsHoldingItem)
             return false;
 
-        return ingredient != null && ingredient.Prefab != null;
+        if (ingredient == null || ingredient.Prefab == null)
+            return false;
+
+        ContentAvailabilityService availability = ContentAvailabilityService.Instance;
+        return availability == null || availability.IsIngredientUnlocked(ingredient);
     }
 
     public void Interact(GrabController grabController)
@@ -48,6 +52,11 @@ public class IngredientSpawner : MonoBehaviour, IHandInteractable
     {
         if (ingredient == null)
             return string.Empty;
+
+        ContentAvailabilityService availability = ContentAvailabilityService.Instance;
+
+        if (availability != null && !availability.IsIngredientUnlocked(ingredient))
+            return $"{ingredient.IngredientName} dispenser locked";
 
         return $"Take {ingredient.IngredientName}";
     }

@@ -62,7 +62,7 @@ public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedba
             minigameActive = false;
 
             if (grabController != null)
-                grabController.SetInputEnabled(true);
+                grabController.ReleaseInputLock(this);
         }
     }
 
@@ -101,7 +101,7 @@ public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedba
         minigameActive = true;
 
         if (grabController != null)
-            grabController.SetInputEnabled(false);
+            grabController.AcquireInputLock(this);
 
         constellationMinigame.Begin(currentSample.PropertyLevel, CompleteDiscovery);
     }
@@ -148,7 +148,7 @@ public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedba
         minigameActive = false;
 
         if (grabController != null)
-            grabController.SetInputEnabled(true);
+            grabController.ReleaseInputLock(this);
     }
 
     private void PlayDiscoveryEffects()

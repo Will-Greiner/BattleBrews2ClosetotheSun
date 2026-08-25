@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c343da450e7b38847839d106b4ecd8cf, type: 3}
+  m_Name: BunsenBurner
+  m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
+  displayName: Arcane Burner
+  description: Heat ingredients to reveal their second hidden property.
+  icon: {fileID: 0}
+  persistentId: 4bb84326aff04bf7875337c9ec691f11
+  price: 175
+  firstAvailableRound: 2
+  offerType: 0
+  unlockId: processing.level.2
+  maximumLevel: 1
+  prerequisites:
+  - {fileID: 11400000, guid: 6d776e5a0e294b343aae4b2fe9ff7b89, type: 2}

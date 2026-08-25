@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PotionDatabase", menuName = "Scriptable Objects/PotionDatabase")]
@@ -10,22 +11,27 @@ public class PotionDatabase : ScriptableObject
 
     public PotionData GetRandomAvailablePotion(int round)
     {
+        return GetRandomAvailablePotion(round, null);
+    }
+
+    public PotionData GetRandomAvailablePotion(int round, Func<PotionData, bool> additionalFilter)
+    {
         int availableCount = 0;
 
         foreach (PotionData potion in potions)
         {
-            if (potion != null && potion.IsAvailableForRequest(round))
+            if (potion != null && potion.IsAvailableForRequest(round) && (additionalFilter == null || additionalFilter(potion)))
                 availableCount++;
         }
 
         if (availableCount == 0)
             return null;
 
-        int selectedIndex = Random.Range(0, availableCount);
+        int selectedIndex = UnityEngine.Random.Range(0, availableCount);
 
         foreach (PotionData potion in potions)
         {
-            if (potion == null || !potion.IsAvailableForRequest(round))
+            if (potion == null || !potion.IsAvailableForRequest(round) || (additionalFilter != null && !additionalFilter(potion)))
                 continue;
 
             if (selectedIndex == 0)

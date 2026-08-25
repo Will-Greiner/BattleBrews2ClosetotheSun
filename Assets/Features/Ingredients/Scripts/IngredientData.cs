@@ -13,6 +13,10 @@ public class IngredientData : ScriptableObject
     [TextArea] [SerializeField] private string description;
     [HideInInspector] [SerializeField] private string persistentId;
 
+    [Header("Progression")]
+    [Tooltip("Leave empty when this ingredient is available from the start.")]
+    [SerializeField] private string unlockId;
+
     [Header("World Item")]
     [SerializeField] private GameObject prefab;
 
@@ -24,6 +28,7 @@ public class IngredientData : ScriptableObject
     public Sprite Icon => icon;
     public string Description => description;
     public string PersistentId => persistentId;
+    public string UnlockId => unlockId;
     public GameObject Prefab => prefab;
     public IReadOnlyList<ItemPropertyData> Properties => properties;
     public int PropertyCount => properties.Count;

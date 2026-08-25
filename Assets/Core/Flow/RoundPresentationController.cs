@@ -37,7 +37,7 @@ public class RoundPresentationController : MonoBehaviour
             roundReportUI.Hide();
 
         if (grabController != null)
-            grabController.SetInputEnabled(false);
+            grabController.AcquireInputLock(this);
     }
 
     private void OnEnable()
@@ -117,7 +117,7 @@ public class RoundPresentationController : MonoBehaviour
             characterManager.ClearCharacter();
 
         if (grabController != null)
-            grabController.SetInputEnabled(false);
+            grabController.AcquireInputLock(this);
     }
 
     private void BeginRoundStart(EncounterData encounter, PotionData requestedPotion)
@@ -139,7 +139,7 @@ public class RoundPresentationController : MonoBehaviour
     private IEnumerator RoundStartRoutine(EncounterData encounter, PotionData requestedPotion)
     {
         if (grabController != null)
-            grabController.SetInputEnabled(false);
+            grabController.AcquireInputLock(this);
 
         if (roundReportUI != null)
             roundReportUI.Hide();
@@ -160,7 +160,7 @@ public class RoundPresentationController : MonoBehaviour
             GameManager.Instance.ActivateCurrentRound();
 
         if (grabController != null)
-            grabController.SetInputEnabled(true);
+            grabController.ReleaseInputLock(this);
 
         presentationRoutine = null;
     }
@@ -168,7 +168,7 @@ public class RoundPresentationController : MonoBehaviour
     private IEnumerator RoundResolutionRoutine(BattleOutcome outcome, EncounterData encounter, PotionData requestedPotion, PotionData deliveredPotion)
     {
         if (grabController != null)
-            grabController.SetInputEnabled(false);
+            grabController.AcquireInputLock(this);
 
         if (potionRequestUI != null)
             potionRequestUI.Hide();

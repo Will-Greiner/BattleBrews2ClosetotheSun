@@ -133,9 +133,6 @@ public class CauldronController : MonoBehaviour
         else
             Debug.LogError($"{spawnedPotion.name} does not have a PotionItem component.", spawnedPotion);
 
-        if (!isFailure)
-            potion.SetDiscovered(true);
-
         PlayPotionCreatedEffects(isFailure);
         ClearCauldron();
         PotionCreated?.Invoke(potion);

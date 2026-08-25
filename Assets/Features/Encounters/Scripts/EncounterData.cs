@@ -55,7 +55,9 @@ public class EncounterData : ScriptableObject
             return null;
         }
 
-        PotionData selectedPotion = potionDatabase.GetRandomAvailablePotion(round);
+        ContentAvailabilityService availability = ContentAvailabilityService.Instance;
+        PotionData selectedPotion = potionDatabase.GetRandomAvailablePotion(round,
+            potion => availability == null || availability.CanRequestPotion(potion, round));
 
         if (selectedPotion == null)
             Debug.LogError($"{name} could not find a potion available during round {round}.", this);

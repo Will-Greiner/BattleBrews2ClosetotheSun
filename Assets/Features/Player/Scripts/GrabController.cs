@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,13 +24,14 @@ public class GrabController : MonoBehaviour
     private GrabbableItem heldItem;
     private ConfigurableJoint grabJoint;
     private Rigidbody handRigidbody;
-    private bool inputEnabled = true;
+    private bool manualInputEnabled = true;
+    private readonly HashSet<object> inputLockOwners = new();
     private ObjectHighlight receiverHighlight;
 
     public Camera PlayerCamera => playerCamera;
     public GrabbableItem HeldItem => heldItem;
     public bool IsHoldingItem => heldItem != null;
-    public bool InputEnabled => inputEnabled;
+    public bool InputEnabled => manualInputEnabled && inputLockOwners.Count == 0;
 
     private void Awake()
     {
@@ -46,7 +48,7 @@ public class GrabController : MonoBehaviour
 
     private void Update()
     {
-        if (!inputEnabled || Mouse.current == null || playerCamera == null)
+        if (!InputEnabled || Mouse.current == null || playerCamera == null)
         {
             ClearReceiverHighlight();
             HideInteractionPrompt();
@@ -436,9 +438,38 @@ public class GrabController : MonoBehaviour
 
     public void SetInputEnabled(bool enabled)
     {
-        inputEnabled = enabled;
+        manualInputEnabled = enabled;
 
-        if (!inputEnabled)
+        if (!InputEnabled)
+        {
+            ClearReceiverHighlight();
+            HideInteractionPrompt();
+        }
+    }
+
+    public void AcquireInputLock(object owner)
+    {
+        if (owner == null)
+            return;
+
+        inputLockOwners.Add(owner);
+        ClearReceiverHighlight();
+        HideInteractionPrompt();
+    }
+
+    public void ReleaseInputLock(object owner)
+    {
+        if (owner == null)
+            return;
+
+        inputLockOwners.Remove(owner);
+    }
+
+    public void ClearAllInputLocks()
+    {
+        inputLockOwners.Clear();
+
+        if (!InputEnabled)
         {
             ClearReceiverHighlight();
             HideInteractionPrompt();

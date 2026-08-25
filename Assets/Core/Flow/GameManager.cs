@@ -14,6 +14,7 @@ public enum GameState
     RoundStarting,
     RoundActive,
     RoundResolving,
+    ShopActive,
     GameOver
 }
 
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     [Header("Content")]
     [SerializeField] private EncounterData[] encounters;
     [SerializeField] private PotionDatabase potionDatabase;
+    [SerializeField] private EconomySettings economySettings;
 
     [Header("Game")]
     [Min(1)]
@@ -42,6 +44,9 @@ public class GameManager : MonoBehaviour
     public event Action<EncounterData, PotionData> RoundStarted;
     public event Action<EncounterData, PotionData> RoundActivated;
     public event Action<BattleOutcome, EncounterData, PotionData, PotionData> RoundResolved;
+    public event Action<int> RoundRewarded;
+    public event Action ShopStarted;
+    public event Action ShopEnded;
     public event Action GameEnded;
 
     public EncounterData CurrentEncounter { get; private set; }
@@ -179,6 +184,19 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        State = GameState.ShopActive;
+        ShopStarted?.Invoke();
+
+        if (ShopPhaseController.Instance == null)
+            CompleteShopPhase();
+    }
+
+    public void CompleteShopPhase()
+    {
+        if (State != GameState.ShopActive)
+            return;
+
+        ShopEnded?.Invoke();
         StartNextRound();
     }
 
@@ -192,6 +210,13 @@ public class GameManager : MonoBehaviour
             Lives = Mathf.Max(0, Lives - 1);
             LivesChanged?.Invoke(Lives, startingLives);
         }
+
+        int reward = economySettings != null ? economySettings.GetRoundReward(CurrentOutcome, CurrentRound) : (CurrentOutcome == BattleOutcome.Win ? 100 : 20);
+
+        if (ProgressionManager.Instance != null)
+            ProgressionManager.Instance.AddCurrency(reward);
+
+        RoundRewarded?.Invoke(reward);
 
         RoundResolved?.Invoke(CurrentOutcome, CurrentEncounter, RequestedPotion, DeliveredPotion);
     }
