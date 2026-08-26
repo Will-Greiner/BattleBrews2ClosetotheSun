@@ -1,21 +1,49 @@
 using UnityEngine;
 
-public class PotionDeliveryReceiver : MonoBehaviour, IItemReceiver
+public class PotionDeliveryReceiver : MonoBehaviour, IItemReceiver, IItemHoverFeedback
 {
     [Header("Prompt")]
     [SerializeField] private string deliverAction = "[LMB] Deliver";
 
+    [Header("Hatch")]
+    [SerializeField] private Transform hatch;
+    [SerializeField] private float openXAngleOffset = 90f;
+    [Min(0.01f)] [SerializeField] private float hatchRotationSpeed = 8f;
+
+    private Quaternion closedHatchRotation;
+    private bool hatchOpen;
+
+    private void Awake()
+    {
+        if (hatch != null)
+            closedHatchRotation = hatch.localRotation;
+    }
+
+    private void Update()
+    {
+        if (hatch == null)
+            return;
+
+        Quaternion target = hatchOpen
+            ? closedHatchRotation * Quaternion.Euler(openXAngleOffset, 0f, 0f)
+            : closedHatchRotation;
+        float rotationT = 1f - Mathf.Exp(-hatchRotationSpeed * Time.deltaTime);
+        hatch.localRotation = Quaternion.Slerp(hatch.localRotation, target, rotationT);
+    }
+
+    private void OnDisable()
+    {
+        hatchOpen = false;
+
+        if (hatch != null)
+            hatch.localRotation = closedHatchRotation;
+    }
+
     public bool CanReceiveItem(GrabbableItem item)
     {
-        if (item == null || GameManager.Instance == null)
-            return false;
-
-        PotionItem potionItem = item.GetComponent<PotionItem>();
-
-        if (potionItem == null || potionItem.Data == null)
-            return false;
-
-        return GameManager.Instance.CanDeliverPotion(potionItem.Data);
+        return item != null
+            && GameManager.Instance != null
+            && GameManager.Instance.State == GameState.RoundActive;
     }
 
     public void ReceiveItem(GrabbableItem item)
@@ -25,10 +53,11 @@ public class PotionDeliveryReceiver : MonoBehaviour, IItemReceiver
 
         PotionItem potionItem = item.GetComponent<PotionItem>();
 
-        if (potionItem == null || potionItem.Data == null)
-            return;
+        bool deliveryAccepted = potionItem != null && potionItem.Data != null
+            ? GameManager.Instance.DeliverPotion(potionItem.Data)
+            : GameManager.Instance.FailCurrentRound();
 
-        if (!GameManager.Instance.DeliverPotion(potionItem.Data))
+        if (!deliveryAccepted)
             return;
 
         Destroy(item.gameObject);
@@ -39,11 +68,11 @@ public class PotionDeliveryReceiver : MonoBehaviour, IItemReceiver
         if (item == null)
             return string.Empty;
 
-        PotionItem potionItem = item.GetComponent<PotionItem>();
+        return $"{deliverAction} {item.DisplayName}";
+    }
 
-        if (potionItem == null || potionItem.Data == null)
-            return string.Empty;
-
-        return $"{deliverAction} {potionItem.Data.PotionName}";
+    public void SetItemHover(bool hovering, GrabbableItem item)
+    {
+        hatchOpen = hovering && item != null;
     }
 }

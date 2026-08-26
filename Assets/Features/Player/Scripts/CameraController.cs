@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
+    [Header("Input")]
+    [SerializeField] private GrabController grabController;
+
     [Header("Rotation")]
     [SerializeField] private float rotationSpeed = 45f;
     [SerializeField] private float rotationLimit = 60f;
@@ -18,6 +21,9 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        if (grabController == null)
+            grabController = FindFirstObjectByType<GrabController>();
+
         currentYaw = NormalizeAngle(transform.localEulerAngles.y);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
@@ -25,6 +31,17 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (grabController != null && !grabController.InputEnabled)
+        {
+            targetSpeed = 0f;
+            currentSpeed = 0f;
+            currentYaw = NormalizeAngle(transform.localEulerAngles.y);
+            return;
+        }
+
+        if (Mouse.current == null || Screen.width <= 0)
+            return;
+
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         float normalizedX = mousePosition.x / Screen.width;
 

@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f283b85c7a0ed864c8295233548d8dc0, type: 2}
     - target: {fileID: -8679921383154817045, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.08534372
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.48164588
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52,9 +52,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -765134959985286654, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
       propertyPath: m_Name
       value: Potato Bag
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314505919143015208, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3368757603849769734, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -63,5 +75,96 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2847506062419937401}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7516409919836499175}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4426466159018753180}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7061889601162698740}
   m_SourcePrefab: {fileID: 100100000, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+--- !u!1 &4609376208558659472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 045ed977fe657534c9a0521d139e6a1d, type: 3}
+  m_PrefabInstance: {fileID: 3690316081845217985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &-2847506062419937401
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609376208558659472}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-7516409919836499175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609376208558659472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88c7997231adb04da33d2b586a983e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrabbableItem
+  displayName: Item
+  grabPoint: {fileID: 0}
+  permanentlyEnableGravityWhenGrabbed: 0
+  ignorePhysicsUntilFirstGrab: 0
+  grabPromptOverride: 
+  heldPromptOverride: 
+--- !u!114 &-4426466159018753180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609376208558659472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76726c76b173ac4db1111d7dbaa33f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
+  ingredientData: {fileID: 0}
+--- !u!114 &7061889601162698740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609376208558659472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0086287ae1816498d8531e12dd478e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectHighlight
+  highlightMaterial: {fileID: 2100000, guid: ee24d4f71d6f9be4e8dee87570bf4558, type: 2}
+  highlightColor: {r: 0.38426393, g: 0.22031999, b: 0.648, a: 1}
+  colorPropertyName: _HighlightColor
+  includeInactiveRenderers: 1

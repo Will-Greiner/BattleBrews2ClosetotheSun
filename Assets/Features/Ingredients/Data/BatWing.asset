@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23965523e9864734e9390afee1b5c12c, type: 3}
-  m_Name: HorseHoof
+  m_Name: BatWing
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
-  ingredientName: Horse Hoof
+  ingredientName: Bat Wing
   icon: {fileID: 0}
   description: 
   persistentId: c844486e64f04dfea3ce22be39f3a03b
-  unlockId: hoof
-  prefab: {fileID: 4570771058291320902, guid: 2d0451de21340d947a4080551c4bc301, type: 3}
+  unlockId: wing
+  prefab: {fileID: 7946623481557631128, guid: aeb100052c6989349aebea0cdca70822, type: 3}
   properties:
   - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
   - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}

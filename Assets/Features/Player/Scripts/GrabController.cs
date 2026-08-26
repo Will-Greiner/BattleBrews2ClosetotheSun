@@ -27,6 +27,7 @@ public class GrabController : MonoBehaviour
     private bool manualInputEnabled = true;
     private readonly HashSet<object> inputLockOwners = new();
     private ObjectHighlight receiverHighlight;
+    private IItemHoverFeedback receiverHoverFeedback;
 
     public Camera PlayerCamera => playerCamera;
     public GrabbableItem HeldItem => heldItem;
@@ -505,29 +506,68 @@ public class GrabController : MonoBehaviour
 
         IItemReceiver receiver = FindItemReceiver(hit.collider);
 
-        if (receiver == null || !receiver.CanReceiveItem(heldItem))
+        if (receiver == null)
         {
             ClearReceiverHighlight();
             return;
         }
 
+        IItemHoverFeedback newHoverFeedback = receiver as IItemHoverFeedback;
+
+        if (!receiver.CanReceiveItem(heldItem))
+        {
+            if (newHoverFeedback == null)
+            {
+                ClearReceiverHighlight();
+                return;
+            }
+
+            if (newHoverFeedback != receiverHoverFeedback)
+            {
+                ClearReceiverHighlight();
+                receiverHoverFeedback = newHoverFeedback;
+                receiverHoverFeedback.SetItemHover(true, heldItem);
+            }
+
+            if (receiverHighlight != null)
+            {
+                receiverHighlight.Hide();
+                receiverHighlight = null;
+            }
+
+            return;
+        }
+
         ObjectHighlight newHighlight = hit.collider.GetComponentInParent<ObjectHighlight>();
 
-        if (newHighlight == receiverHighlight)
+        if (newHighlight == receiverHighlight && newHoverFeedback == receiverHoverFeedback)
             return;
 
         ClearReceiverHighlight();
         receiverHighlight = newHighlight;
+        receiverHoverFeedback = newHoverFeedback;
 
         if (receiverHighlight != null)
             receiverHighlight.Show();
+
+        receiverHoverFeedback?.SetItemHover(true, heldItem);
     }
 
     private void ClearReceiverHighlight()
     {
+        ClearReceiverHoverFeedback();
+
         if (receiverHighlight != null)
             receiverHighlight.Hide();
 
         receiverHighlight = null;
+    }
+
+    private void ClearReceiverHoverFeedback()
+    {
+        if (receiverHoverFeedback != null)
+            receiverHoverFeedback.SetItemHover(false, heldItem);
+
+        receiverHoverFeedback = null;
     }
 }

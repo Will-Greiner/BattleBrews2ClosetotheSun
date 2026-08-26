@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8842446980565003225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4028491703808242569}
+  m_Layer: 7
+  m_Name: HoldPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4028491703808242569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8842446980565003225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1339, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8466802387969679562}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8217563628180719393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14,15 +45,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
     - target: {fileID: -8679921383154817045, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.23330796
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000023841858
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.0481217
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52,17 +83,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7412544095347182223, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -6032673869979491822, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+    - target: {fileID: -4471778207753738644, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -3877546402171501823, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+    - target: {fileID: 162641453763452034, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: m_Name
       value: Blood Bag
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314505919143015208, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337453114889028763, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6051214141603175137, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -70,6 +125,105 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4028491703808242569}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -761625740084600449}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4079730077983713053}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -889992131392327112}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3269274599624869721}
   m_SourcePrefab: {fileID: 100100000, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+--- !u!4 &8466802387969679562 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+  m_PrefabInstance: {fileID: 8217563628180719393}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9136624165198822000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ba35a48258e0a6d4892b0c9a3c31f618, type: 3}
+  m_PrefabInstance: {fileID: 8217563628180719393}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &-761625740084600449
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136624165198822000}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-4079730077983713053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136624165198822000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88c7997231adb04da33d2b586a983e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrabbableItem
+  displayName: Unicorn Blood
+  grabPoint: {fileID: 4028491703808242569}
+  permanentlyEnableGravityWhenGrabbed: 0
+  ignorePhysicsUntilFirstGrab: 0
+  grabPromptOverride: 
+  heldPromptOverride: 
+--- !u!114 &-889992131392327112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136624165198822000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76726c76b173ac4db1111d7dbaa33f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
+  ingredientData: {fileID: 11400000, guid: bd768ddce60fa43469e082ae8116b017, type: 2}
+--- !u!114 &3269274599624869721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136624165198822000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0086287ae1816498d8531e12dd478e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectHighlight
+  highlightMaterial: {fileID: 2100000, guid: ee24d4f71d6f9be4e8dee87570bf4558, type: 2}
+  highlightColor: {r: 0.38426393, g: 0.22031999, b: 0.648, a: 1}
+  colorPropertyName: _HighlightColor
+  includeInactiveRenderers: 1

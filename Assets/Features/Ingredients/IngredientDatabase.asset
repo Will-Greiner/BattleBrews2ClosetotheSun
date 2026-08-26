@@ -14,4 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IngredientDatabase
   ingredients:
   - {fileID: 11400000, guid: d0e91350edcd0b341ab3bc3df2efbcd4, type: 2}
+  - {fileID: 11400000, guid: e1e242ccb8efba84e968929f25f4fee7, type: 2}
+  - {fileID: 11400000, guid: c1f32944d410ffe4caea5a485d08e345, type: 2}
+  - {fileID: 11400000, guid: 1879bf7e18dc1c84d865b92a11d34263, type: 2}
+  - {fileID: 11400000, guid: c0fb2c28df1df79449068da34ceb6556, type: 2}
+  - {fileID: 11400000, guid: d42328de88fa08f48bd1e9c2cbff345c, type: 2}
+  - {fileID: 11400000, guid: bdc168a4dab3fbf48a79b8a533c02c8b, type: 2}
+  - {fileID: 11400000, guid: 1d7365f79f33ed3449c48c7468a3003c, type: 2}
+  - {fileID: 11400000, guid: 571e186e12966bc4e97b9e2dbdf1b563, type: 2}
   - {fileID: 11400000, guid: 462ef331ff65a5045b1b48ec589423db, type: 2}
+  - {fileID: 11400000, guid: dcfe0207b62c8ae4eabc39bdd4e0765f, type: 2}
+  - {fileID: 11400000, guid: bd768ddce60fa43469e082ae8116b017, type: 2}

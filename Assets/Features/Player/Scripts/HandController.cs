@@ -14,6 +14,14 @@ public class HandController : MonoBehaviour
     [SerializeField] private float depthMoveSpeed = 3f;
     [SerializeField] private float defaultDistance = 2f;
 
+    [Header("Held Item Depth")]
+    [Tooltip("Keep ordinary held objects at a stable depth instead of following surfaces behind the cursor.")]
+    [SerializeField] private bool preserveDepthWhileHolding = true;
+    [Tooltip("Distance moved per mouse-wheel notch while holding an ordinary item.")]
+    [Min(0f)] [SerializeField] private float heldDepthScrollSpeed = 1.25f;
+    [Tooltip("How quickly the hand settles at the selected held-item depth.")]
+    [Min(0.01f)] [SerializeField] private float heldDepthMoveSpeed = 8f;
+
     [Header("Automatic Depth")]
     [SerializeField] private LayerMask depthLayers = ~0;
     [SerializeField] private LayerMask ignoredWhileHolding;
@@ -32,6 +40,8 @@ public class HandController : MonoBehaviour
     private ObjectHighlight focusedHighlight;
     private float focusedDistance;
     private float focusLostTimer;
+    private float heldItemDistance;
+    private GrabbableItem lastHeldItem;
 
     public float Distance => handDistance;
     public GrabbableItem FocusedItem => focusedItem;
@@ -65,6 +75,14 @@ public class HandController : MonoBehaviour
 
         bool isHolding = grabController != null && grabController.IsHoldingItem;
         bool isStirring = IsStirring();
+
+        if (isHolding && preserveDepthWhileHolding)
+        {
+            UpdateHeldItemDepth(mouseRay);
+            return;
+        }
+
+        lastHeldItem = null;
         int layerMask = depthLayers;
 
         if (isHolding)
@@ -119,6 +137,33 @@ public class HandController : MonoBehaviour
         }
 
         handDistance = Mathf.MoveTowards(handDistance, targetDistance, depthMoveSpeed * Time.deltaTime);
+        transform.position = mouseRay.GetPoint(handDistance);
+        UpdateHandRotation(mouseRay);
+    }
+
+    private void UpdateHeldItemDepth(Ray mouseRay)
+    {
+        GrabbableItem heldItem = grabController != null ? grabController.HeldItem : null;
+
+        if (heldItem == null)
+            return;
+
+        if (heldItem != lastHeldItem)
+        {
+            lastHeldItem = heldItem;
+            heldItemDistance = Mathf.Clamp(handDistance, minDistance, maxDistance);
+            ClearFocus();
+        }
+
+        float scroll = Mouse.current.scroll.ReadValue().y;
+
+        if (Mathf.Abs(scroll) > 0.01f)
+        {
+            float normalizedNotches = scroll / 120f;
+            heldItemDistance = Mathf.Clamp(heldItemDistance + normalizedNotches * heldDepthScrollSpeed, minDistance, maxDistance);
+        }
+
+        handDistance = Mathf.MoveTowards(handDistance, heldItemDistance, heldDepthMoveSpeed * Time.deltaTime);
         transform.position = mouseRay.GetPoint(handDistance);
         UpdateHandRotation(mouseRay);
     }

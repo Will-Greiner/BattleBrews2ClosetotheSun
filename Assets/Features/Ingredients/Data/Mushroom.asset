@@ -17,6 +17,6 @@ MonoBehaviour:
   description: 
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: mushroom
-  prefab: {fileID: 8377358475073678697, guid: 9ea9d1f07c7777a4c9e7c2fe83418d56, type: 3}
+  prefab: {fileID: 1843440888381559825, guid: 140970d1d507d9542822fb24b628ce43, type: 3}
   properties:
   - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}

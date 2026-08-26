@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5639001382568574917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 292667270164713438}
+  m_Layer: 7
+  m_Name: HoldPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &292667270164713438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639001382568574917}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1386, z: -0.0294}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3757537711391994620}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3724421772827301143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +41,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.08534372
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18,7 +49,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.48164588
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56,8 +87,111 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horse Hoof
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 292667270164713438}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5478103460111056093}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4024555155300327586}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7225860532194347633}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1994807933969844571}
   m_SourcePrefab: {fileID: 100100000, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+--- !u!4 &3757537711391994620 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+  m_PrefabInstance: {fileID: 3724421772827301143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4570771058291320902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b62f920d507230c4ba4328d6feeeff19, type: 3}
+  m_PrefabInstance: {fileID: 3724421772827301143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &-5478103460111056093
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570771058291320902}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4024555155300327586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570771058291320902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88c7997231adb04da33d2b586a983e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrabbableItem
+  displayName: Horse Hoof
+  grabPoint: {fileID: 292667270164713438}
+  permanentlyEnableGravityWhenGrabbed: 0
+  ignorePhysicsUntilFirstGrab: 0
+  grabPromptOverride: 
+  heldPromptOverride: 
+--- !u!114 &-7225860532194347633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570771058291320902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76726c76b173ac4db1111d7dbaa33f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
+  ingredientData: {fileID: 11400000, guid: 1879bf7e18dc1c84d865b92a11d34263, type: 2}
+--- !u!114 &-1994807933969844571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570771058291320902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0086287ae1816498d8531e12dd478e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectHighlight
+  highlightMaterial: {fileID: 2100000, guid: ee24d4f71d6f9be4e8dee87570bf4558, type: 2}
+  highlightColor: {r: 0.38426393, g: 0.22031999, b: 0.648, a: 1}
+  colorPropertyName: _HighlightColor
+  includeInactiveRenderers: 1
