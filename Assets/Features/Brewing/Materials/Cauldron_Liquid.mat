@@ -45,7 +45,7 @@ Material:
     - _BubbleThreshold: 0.82
     - _CellDensity1: 2
     - _CellDensity2: 4
-    - _Displacement: 0.1
+    - _Displacement: -0.07
     - _Drain: 0
     - _EdgeRippleFrequency: 2
     - _EdgeRippleSpeed: 2.5
@@ -60,14 +60,14 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Reaction: 0
-    - _Roughness: 0.84
+    - _Roughness: 0.55
     - _StirStrength: 0
     m_Colors:
     - _BaseColor: {r: 0.29300088, g: 0.5408803, b: 0.15818188, a: 1}
     - _BubbleColor: {r: 0.27649856, g: 0.34591186, b: 0.21429127, a: 1}
     - _FoamColor: {r: 1.03007, g: 1.8847762, b: 0.19558977, a: 1}
     - _LightColor: {r: 0.5099495, g: 0.7987421, b: 0.12307645, a: 1}
-    - _MixtureColor: {r: 0.29411766, g: 0.5411765, b: 0.15686277, a: 1}
+    - _MixtureColor: {r: 0.35052672, g: 0.15686275, b: 0.5411765, a: 1}
     - _ReactionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
