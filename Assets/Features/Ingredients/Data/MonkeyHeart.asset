@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Monkey Heart
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.92, g: 0.05, b: 0.35, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: heart
   prefab: {fileID: 4293072629713336178, guid: 89892808c5db3ab43a39dce232fe95b5, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 651e37cbcc557dc4f82154cf31312a97, type: 2}
+  - {fileID: 11400000, guid: 440b6b83b24a27343b86e7ed4489c1ce, type: 2}
+  - {fileID: 11400000, guid: a79a59c01513e4b42b260cce8a9382b0, type: 2}

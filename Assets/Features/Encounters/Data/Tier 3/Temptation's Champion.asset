@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26122990841bc5d478be377f2ad23465, type: 3}
+  m_Name: "Temptation's Champion"
+  m_EditorClassIdentifier: Assembly-CSharp::EncounterData
+  encounterName: "Temptation's Champion"
+  opponentName: "The Forbidden Fruit"
+  selectRandomPotion: 0
+  bestPotion: {fileID: 11400000, guid: a100000000000000000000000000000e, type: 2}
+  firstRound: 9
+  lastRound: 99
+  requestDialogue: "{opponent} keeps whispering temptations from across the arena. Brew me {potion} so I can understand what it is planning."
+  winOutcomeText: "The gladiator convinced {opponent} to taste itself. The resulting philosophical crisis ended the match."
+  loseOutcomeText: "The gladiator and {opponent} left together to pursue a business opportunity."
+

@@ -41,12 +41,13 @@ Material:
     - _Activity: 0
     - _BubbleDensity: 8
     - _BubbleSpeed: 0.5
-    - _BubbleStrength: 0.5
+    - _BubbleStrength: 0
     - _BubbleThreshold: 0.82
     - _CellDensity1: 2
     - _CellDensity2: 4
     - _Displacement: -0.07
     - _Drain: 0
+    - _DrainRingWidth: 0.1
     - _EdgeRippleFrequency: 2
     - _EdgeRippleSpeed: 2.5
     - _EdgeRippleStrength: 0.02

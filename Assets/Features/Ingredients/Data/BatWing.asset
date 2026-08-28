@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Bat Wing
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.36, g: 0.16, b: 0.82, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: wing
   prefab: {fileID: 7946623481557631128, guid: aeb100052c6989349aebea0cdca70822, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 97471c44e8cfc784e926be76f0429eaa, type: 2}
+  - {fileID: 11400000, guid: 47813c2af520b59469669a10f9ae1b80, type: 2}
+  - {fileID: 11400000, guid: 997920d2bcd9a4f4bba41d11b22f473e, type: 2}

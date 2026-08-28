@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26122990841bc5d478be377f2ad23465, type: 3}
+  m_Name: "Battle of Potential"
+  m_EditorClassIdentifier: Assembly-CSharp::EncounterData
+  encounterName: "Battle of Potential"
+  opponentName: "The Career Counselor"
+  selectRandomPotion: 0
+  bestPotion: {fileID: 11400000, guid: a1000000000000000000000000000012, type: 2}
+  firstRound: 11
+  lastRound: 99
+  requestDialogue: "{opponent} predicts every future move I make. Brew me {potion}. Let us give it a future too strange to anticipate."
+  winOutcomeText: "The potion revealed a destiny in restaurant management. {opponent} had not prepared for that."
+  loseOutcomeText: "The potion revealed the gladiator's destiny was losing this exact fight."
+

@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Strawberry
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 1, g: 0.08, b: 0.48, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: strawberry
   prefab: {fileID: 4175072006647630318, guid: 7abeb019999df574c81c2d5c91890ecc, type: 3}
   properties:
   - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 09381b246e7610d4f916eca038b93f1d, type: 2}
+  - {fileID: 11400000, guid: 562bc033d7439424d88fd9e32e699a71, type: 2}

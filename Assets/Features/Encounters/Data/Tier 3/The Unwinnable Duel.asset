@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26122990841bc5d478be377f2ad23465, type: 3}
+  m_Name: "The Unwinnable Duel"
+  m_EditorClassIdentifier: Assembly-CSharp::EncounterData
+  encounterName: "The Unwinnable Duel"
+  opponentName: "The Arena Champion"
+  selectRandomPotion: 0
+  bestPotion: {fileID: 11400000, guid: a100000000000000000000000000000c, type: 2}
+  firstRound: 8
+  lastRound: 99
+  requestDialogue: "I have seen {opponent} fight. I do not need to win. I need an {potion} the audience will mistake for strategy."
+  winOutcomeText: "The gladiator escaped through three windows. Only one of them was open."
+  loseOutcomeText: "The potion produced an exit sign but no actual exit."
+

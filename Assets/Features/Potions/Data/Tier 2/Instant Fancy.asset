@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
+  m_Name: "Instant Fancy"
+  m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  potionName: "Instant Fancy"
+  icon: {fileID: 0}
+  description: "Grants a monocle, an impressive accent, and absolutely no additional knowledge."
+  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  requirements:
+  - requirementType: 0
+    ingredient: {fileID: 11400000, guid: bdc168a4dab3fbf48a79b8a533c02c8b, type: 2}
+    property: {fileID: 0}
+    requiredCount: 1
+  - requirementType: 1
+    ingredient: {fileID: 0}
+    property: {fileID: 11400000, guid: 09381b246e7610d4f916eca038b93f1d, type: 2}
+    requiredCount: 1
+  - requirementType: 1
+    ingredient: {fileID: 0}
+    property: {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
+    requiredCount: 1
+  firstRequestRound: 6
+  lastRequestRound: 14
+

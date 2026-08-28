@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26122990841bc5d478be377f2ad23465, type: 3}
+  m_Name: "The Fight Outside Time"
+  m_EditorClassIdentifier: Assembly-CSharp::EncounterData
+  encounterName: "The Fight Outside Time"
+  opponentName: "Chronological Stability"
+  selectRandomPotion: 0
+  bestPotion: {fileID: 11400000, guid: a1000000000000000000000000000016, type: 2}
+  firstRound: 14
+  lastRound: 99
+  requestDialogue: "{opponent} has trapped the arena in a time loop. Brew me {potion}. If I do not know what I will become next, neither will it."
+  winOutcomeText: "The gladiator attacked yesterday and landed the winning blow tomorrow."
+  loseOutcomeText: "The gladiator became a blender. The judges are reviewing whether that counts as defeat."
+

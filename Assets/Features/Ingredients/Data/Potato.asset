@@ -15,8 +15,11 @@ MonoBehaviour:
   ingredientName: Potato
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 1, g: 0.34, b: 0.06, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: potato
   prefab: {fileID: 1836738030230703250, guid: 2fae6bc46c8643146aba71cd00ba95fc, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
+  - {fileID: 11400000, guid: d591e393de0a16f4b81bf68d90a0f2a3, type: 2}
+  - {fileID: 11400000, guid: 440b6b83b24a27343b86e7ed4489c1ce, type: 2}
+  - {fileID: 11400000, guid: a79a59c01513e4b42b260cce8a9382b0, type: 2}

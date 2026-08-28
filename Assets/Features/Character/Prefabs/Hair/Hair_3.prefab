@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ffca8ac553735514da7f31f61a8c9844, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ab2a29037523eda4bb23430af21065f2, type: 2}
     - target: {fileID: 919132149155446097, guid: ffca8ac553735514da7f31f61a8c9844, type: 3}
       propertyPath: m_Name
       value: hair_3

@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Rat
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.08, g: 0.72, b: 0.95, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: rat
   prefab: {fileID: 6071987975637580062, guid: 7aa03b12511fb38448f4101a22a5cd70, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 97471c44e8cfc784e926be76f0429eaa, type: 2}
+  - {fileID: 11400000, guid: cfd4aa1e657df7a4a9ad3ef575f03a17, type: 2}
+  - {fileID: 11400000, guid: f494844f5f1aeee4980e0e934d1a2a50, type: 2}

@@ -34,6 +34,9 @@ public class CauldronController : MonoBehaviour
 
     public IReadOnlyList<CauldronContribution> Contributions => contributions;
     public int ContributionCount => contributions.Count;
+    public int Capacity => maxContributions;
+    public bool IsGrossPotion(PotionData potion) => potion != null && potion == grossPotion;
+    public bool IsUnstablePotion(PotionData potion) => potion != null && potion == unstablePotion;
 
     public bool CanAcceptIngredient(GrabbableItem item)
     {

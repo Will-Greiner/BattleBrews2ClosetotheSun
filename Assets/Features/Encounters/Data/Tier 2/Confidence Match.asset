@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26122990841bc5d478be377f2ad23465, type: 3}
+  m_Name: "Confidence Match"
+  m_EditorClassIdentifier: Assembly-CSharp::EncounterData
+  encounterName: "Confidence Match"
+  opponentName: "Sir Probably-Knows-What-He-Is-Doing"
+  selectRandomPotion: 0
+  bestPotion: {fileID: 11400000, guid: a1000000000000000000000000000005, type: 2}
+  firstRound: 4
+  lastRound: 12
+  requestDialogue: "{opponent} has defeated thirty gladiators by looking confident during introductions. Brew me {potion}. I only need to look like I have a plan."
+  winOutcomeText: "Both fighters confidently pretended to understand the situation. {opponent} cracked first."
+  loseOutcomeText: "The gladiator confidently explained why losing was always part of the strategy."
+

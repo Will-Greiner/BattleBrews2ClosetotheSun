@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Shiv
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.22, g: 0.62, b: 0.95, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: shiv
   prefab: {fileID: 7407669928952983492, guid: 7858e0f1ace2e4a45a7d0a07c092f3de, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: d591e393de0a16f4b81bf68d90a0f2a3, type: 2}
+  - {fileID: 11400000, guid: 7aa6910daa2b60345b445615c3f8112b, type: 2}
+  - {fileID: 11400000, guid: 997920d2bcd9a4f4bba41d11b22f473e, type: 2}

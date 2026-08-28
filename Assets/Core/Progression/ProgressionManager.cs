@@ -213,6 +213,10 @@ public class ProgressionManager : MonoBehaviour
             foreach (string id in data.unlockedContentIds)
                 if (!string.IsNullOrWhiteSpace(id)) unlockedContentIds.Add(id);
 
+        // Baseline content must remain available when new defaults are added after a save was created.
+        foreach (string id in initiallyUnlockedContentIds)
+            if (!string.IsNullOrWhiteSpace(id)) unlockedContentIds.Add(id);
+
         if (data.discoveredPropertyIds != null)
             foreach (string id in data.discoveredPropertyIds)
                 if (!string.IsNullOrWhiteSpace(id)) discoveredPropertyIds.Add(id);

@@ -110,6 +110,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ac1e42941f63efd4c8777480bad16e6c, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6468413795821933055}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ac1e42941f63efd4c8777480bad16e6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2153923333682384703}
   m_SourcePrefab: {fileID: 100100000, guid: ac1e42941f63efd4c8777480bad16e6c, type: 3}
 --- !u!4 &1408699048805412169 stripped
 Transform:
@@ -195,3 +198,24 @@ MonoBehaviour:
   highlightColor: {r: 0.38426393, g: 0.22031999, b: 0.648, a: 1}
   colorPropertyName: _HighlightColor
   includeInactiveRenderers: 1
+--- !u!135 &2153923333682384703
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785506822141671411}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.025509957
+  m_Center: {x: 0.0022338734, y: -0.002744958, z: -0.0049608354}

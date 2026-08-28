@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c343da450e7b38847839d106b4ecd8cf, type: 3}
+  m_Name: Unicorn Blood
+  m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
+  displayName: 'Unicorn Blood '
+  description: Unlock unicorn blood.
+  icon: {fileID: 0}
+  persistentId: 4d000000000000000000000000000002
+  price: 0
+  firstAvailableRound: 1
+  offerType: 0
+  unlockId: blood
+  maximumLevel: 1
+  prerequisites: []

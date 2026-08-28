@@ -15,8 +15,11 @@ MonoBehaviour:
   ingredientName: Olives
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.48, g: 0.82, b: 0.08, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: olive
   prefab: {fileID: 8289907631778792091, guid: 5eac56e8f6cf2f148875afb3845d4db4, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
+  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: e169fec3cabff2c4f9cbbb11f77c3d6c, type: 2}
+  - {fileID: 11400000, guid: ca2ac5ffd74ab9542bd76759a1b05408, type: 2}

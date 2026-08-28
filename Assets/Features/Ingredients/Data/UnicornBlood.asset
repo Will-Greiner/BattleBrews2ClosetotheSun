@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Unicorn Blood
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.95, g: 0.1, b: 1, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: blood
   prefab: {fileID: 9136624165198822000, guid: fcd3067523a759f4191c3b3114ff4998, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 651e37cbcc557dc4f82154cf31312a97, type: 2}
+  - {fileID: 11400000, guid: e169fec3cabff2c4f9cbbb11f77c3d6c, type: 2}
+  - {fileID: 11400000, guid: e2e0ad40308f2b44084a53b10aaa1400, type: 2}

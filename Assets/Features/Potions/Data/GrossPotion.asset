@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
   potionName: Gross Potion
   icon: {fileID: 0}
-  description: 
+  description: A muddy failure produced when the ingredients do not match any known recipe.
   prefab: {fileID: 8390168086883276517, guid: b95bab4796dcfbd44b3bf2894cf44d83, type: 3}
-  requiredTotalIngredients: 3
-  propertyRequirements: []
-  specificIngredientRequirements: []
-  isDiscovered: 0
+  requirements: []
+  firstRequestRound: 1
+  lastRequestRound: 99

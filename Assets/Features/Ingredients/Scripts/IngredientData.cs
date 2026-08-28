@@ -11,6 +11,7 @@ public class IngredientData : ScriptableObject
     [SerializeField] private string ingredientName;
     [SerializeField] private Sprite icon;
     [TextArea] [SerializeField] private string description;
+    [ColorUsage(false, false)] [SerializeField] private Color brewColor = new Color(0.35f, 0.8f, 0.3f, 1f);
     [HideInInspector] [SerializeField] private string persistentId;
 
     [Header("Progression")]
@@ -27,6 +28,7 @@ public class IngredientData : ScriptableObject
     public string IngredientName => ingredientName;
     public Sprite Icon => icon;
     public string Description => description;
+    public Color BrewColor => brewColor;
     public string PersistentId => persistentId;
     public string UnlockId => unlockId;
     public GameObject Prefab => prefab;

@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Crow Beak
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.12, g: 0.3, b: 0.9, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: beak
   prefab: {fileID: 691683802500807619, guid: 51a06a9adbffae346819d20da1b6c5f6, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 2a6506cc02a40324880f9e230a2a0647, type: 2}
+  - {fileID: 11400000, guid: 09381b246e7610d4f916eca038b93f1d, type: 2}
+  - {fileID: 11400000, guid: 997920d2bcd9a4f4bba41d11b22f473e, type: 2}

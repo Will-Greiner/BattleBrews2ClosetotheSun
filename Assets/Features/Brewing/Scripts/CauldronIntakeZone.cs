@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -6,6 +7,9 @@ public class CauldronIntakeZone : MonoBehaviour, IItemReceiver, IItemRejectionFe
     [SerializeField] private CauldronController cauldron;
     [SerializeField] private string addIngredientPrompt = "[LMB] Drop into Cauldron";
     [SerializeField] private GrabController grabController;
+    [SerializeField] private CauldronSplashController splashController;
+
+    private readonly HashSet<int> splashedItems = new HashSet<int>();
 
     private void Awake()
     {
@@ -16,16 +20,37 @@ public class CauldronIntakeZone : MonoBehaviour, IItemReceiver, IItemRejectionFe
 
         if (cauldron == null)
             Debug.LogError($"{name}: No CauldronController has been assigned.", this);
+
+        if (splashController == null)
+            splashController = GetComponentInParent<CauldronSplashController>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        TrySplashHand(other);
         TryAcceptIngredient(other);
     }
 
     private void OnTriggerStay(Collider other)
     {
+        TrySplashHand(other);
         TryAcceptIngredient(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        GrabbableItem item = other.GetComponentInParent<GrabbableItem>();
+
+        if (item != null)
+            splashedItems.Remove(item.GetInstanceID());
+    }
+
+    private void TrySplashHand(Collider other)
+    {
+        HandController hand = other.GetComponentInParent<HandController>();
+
+        if (hand != null && splashController != null)
+            splashController.TryPlayHandSplash(other.ClosestPoint(transform.position));
     }
 
     private void TryAcceptIngredient(Collider other)
@@ -38,6 +63,11 @@ public class CauldronIntakeZone : MonoBehaviour, IItemReceiver, IItemRejectionFe
         if (item == null || item.IsHeld)
             return;
 
+        Vector3 impactPosition = item.transform.position;
+
+        if (splashedItems.Add(item.GetInstanceID()) && splashController != null)
+            splashController.PlayItemSplash(impactPosition);
+
         cauldron.TryAddIngredient(item);
     }
 
@@ -48,8 +78,15 @@ public class CauldronIntakeZone : MonoBehaviour, IItemReceiver, IItemRejectionFe
 
     public void ReceiveItem(GrabbableItem item)
     {
-        if (cauldron != null)
-            cauldron.TryAddIngredient(item);
+        if (cauldron == null || item == null)
+            return;
+
+        Vector3 impactPosition = item.transform.position;
+
+        if (splashedItems.Add(item.GetInstanceID()) && splashController != null)
+            splashController.PlayItemSplash(impactPosition);
+
+        cauldron.TryAddIngredient(item);
     }
 
     public string GetReceivePrompt(GrabbableItem item)

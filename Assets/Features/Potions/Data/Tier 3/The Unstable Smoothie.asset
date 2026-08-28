@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
+  m_Name: "The Unstable Smoothie"
+  m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  potionName: "The Unstable Smoothie"
+  icon: {fileID: 0}
+  description: "Randomly changes the drinker's age, shape, location, and position in the timeline."
+  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  requirements:
+  - requirementType: 0
+    ingredient: {fileID: 11400000, guid: d0e91350edcd0b341ab3bc3df2efbcd4, type: 2}
+    property: {fileID: 0}
+    requiredCount: 1
+  - requirementType: 0
+    ingredient: {fileID: 11400000, guid: 462ef331ff65a5045b1b48ec589423db, type: 2}
+    property: {fileID: 0}
+    requiredCount: 1
+  - requirementType: 1
+    ingredient: {fileID: 0}
+    property: {fileID: 11400000, guid: a79a59c01513e4b42b260cce8a9382b0, type: 2}
+    requiredCount: 2
+  - requirementType: 1
+    ingredient: {fileID: 0}
+    property: {fileID: 11400000, guid: e2e0ad40308f2b44084a53b10aaa1400, type: 2}
+    requiredCount: 2
+  firstRequestRound: 14
+  lastRequestRound: 99
+

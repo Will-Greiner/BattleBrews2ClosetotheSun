@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26122990841bc5d478be377f2ad23465, type: 3}
+  m_Name: "The Duel of Desire"
+  m_EditorClassIdentifier: Assembly-CSharp::EncounterData
+  encounterName: "The Duel of Desire"
+  opponentName: "The Heartbreaker"
+  selectRandomPotion: 0
+  bestPotion: {fileID: 11400000, guid: a100000000000000000000000000000f, type: 2}
+  firstRound: 9
+  lastRound: 99
+  requestDialogue: "{opponent} has charmed every gladiator sent against them. Give me {potion}. If this becomes dramatic, I intend to win the monologue."
+  winOutcomeText: "The betrayal pose was flawless. {opponent} was defeated emotionally and physically."
+  loseOutcomeText: "The gladiator fell in love, switched sides, and demanded a sequel."
+

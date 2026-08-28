@@ -15,8 +15,11 @@ MonoBehaviour:
   ingredientName: Mushroom
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.62, g: 0.12, b: 0.92, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: mushroom
   prefab: {fileID: 1843440888381559825, guid: 140970d1d507d9542822fb24b628ce43, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
+  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: cfb74ba6e1e417f4b87c3a55d4d8e6a3, type: 2}
+  - {fileID: 11400000, guid: a79a59c01513e4b42b260cce8a9382b0, type: 2}

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26122990841bc5d478be377f2ad23465, type: 3}
+  m_Name: Murphy Enters the Arena
+  m_EditorClassIdentifier: Assembly-CSharp::EncounterData
+  encounterName: Murphy Enters the Arena
+  opponentName: Murphy, Lord of Bad Timing
+  selectRandomPotion: 0
+  bestPotion: {fileID: 11400000, guid: 097df593ae55a6740a3f788f52cb6ae0, type: 2}
+  firstRound: 1
+  lastRound: 8
+  requestDialogue: '{opponent} never attacks directly. He waits until your sandal
+    snaps, your eye itches, and the sun gets in your face. Brew me a {potion}. I
+    want bad timing on my side.'
+  winOutcomeText: Murphy raised his sword just as his belt failed, the arena gate
+    jammed, and a pigeon chose violence. The gladiator barely had to swing.
+  loseOutcomeText: The gladiator charged heroically, sneezed inside the helmet, and
+    ran into the starting gate. Murphy called it a professional courtesy.

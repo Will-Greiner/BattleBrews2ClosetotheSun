@@ -15,9 +15,11 @@ MonoBehaviour:
   ingredientName: Teeth
   icon: {fileID: 0}
   description: 
+  brewColor: {r: 0.85, g: 1, b: 0.3, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: teeth
   prefab: {fileID: 1785506822141671411, guid: 3a72550ca5a22bc4999f52086285bbbf, type: 3}
   properties:
-  - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-  - {fileID: 11400000, guid: dd4829cb2e849f2499492ef621313d4d, type: 2}
+  - {fileID: 11400000, guid: 2a6506cc02a40324880f9e230a2a0647, type: 2}
+  - {fileID: 11400000, guid: cfd4aa1e657df7a4a9ad3ef575f03a17, type: 2}
+  - {fileID: 11400000, guid: e2e0ad40308f2b44084a53b10aaa1400, type: 2}
