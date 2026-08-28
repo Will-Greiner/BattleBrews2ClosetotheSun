@@ -2988,8 +2988,8 @@
     "m_ObjectId": "1232bd95dd4744c791cfac06ed95422c",
     "m_Title": "Displacement",
     "m_Position": {
-        "x": -1798.400390625,
-        "y": -1012.800048828125
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
@@ -3738,8 +3738,8 @@
     "m_ObjectId": "1cf0fa96f4e84ade8ce8fc86a45bc1e0",
     "m_Title": "Reaction Flash",
     "m_Position": {
-        "x": 190.39990234375,
-        "y": 907.9998779296875
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
@@ -9723,8 +9723,8 @@
     "m_ObjectId": "97e4731aaeb944ef9baa66afbda355b7",
     "m_Title": "Pattern",
     "m_Position": {
-        "x": -3160.800048828125,
-        "y": -158.4000244140625
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
@@ -10951,8 +10951,8 @@
     "m_ObjectId": "b6660f5702714f9e93632b6d4edf951b",
     "m_Title": "Swirl",
     "m_Position": {
-        "x": -8001.60009765625,
-        "y": -142.4000244140625
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
@@ -11313,8 +11313,8 @@
     "m_ObjectId": "bb657ab7774241bd94ec3588dfd2da2d",
     "m_Title": "Edge Ripple",
     "m_Position": {
-        "x": -3846.400146484375,
-        "y": -2131.199951171875
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
@@ -13679,8 +13679,8 @@
     "m_ObjectId": "dfdcba31cb9444e4a54bcfaa67ba9b35",
     "m_Title": "Edge Color",
     "m_Position": {
-        "x": -1470.400390625,
-        "y": 476.7999267578125
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
@@ -14948,8 +14948,8 @@
     "m_ObjectId": "fb5ad2bb88ed44f79df05230e3b7db8a",
     "m_Title": "Drain",
     "m_Position": {
-        "x": -1310.400390625,
-        "y": 1902.3997802734375
+        "x": 0.0,
+        "y": 0.0
     }
 }
 
