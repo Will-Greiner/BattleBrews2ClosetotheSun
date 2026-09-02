@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CartoonFlame
+  m_Name: MagicTrail
   m_Shader: {fileID: -6465566751694194690, guid: 290695a65c4bd11429f49ec41d67c5f6, type: 3}
-  m_Parent: {fileID: 2100000, guid: ff56bf2587785974aae4f32782379312, type: 2}
+  m_Parent: {fileID: 2100000, guid: a73e5414e9d159d4785edafa1eef406c, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -26,9 +26,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Float: 0.67
+    - _Float: 1
     m_Colors:
-    - _Color: {r: 4.3039074, g: 4.8497844, b: 6.4222364, a: 1}
+    - _Color: {r: 8.47419, g: 8.47419, b: 8.47419, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &4512693781907452629
