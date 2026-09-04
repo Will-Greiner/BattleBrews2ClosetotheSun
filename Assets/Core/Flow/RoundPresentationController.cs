@@ -10,6 +10,7 @@ public class RoundPresentationController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private PotionRequestUI potionRequestUI;
     [SerializeField] private RoundReportUI roundReportUI;
+    [SerializeField] private RoundObjectiveHUD roundObjectiveHUD;
 
     [Header("Player Input")]
     [SerializeField] private GrabController grabController;
@@ -93,6 +94,9 @@ public class RoundPresentationController : MonoBehaviour
 
     private void HandleRoundResolved(BattleOutcome outcome, EncounterData encounter, PotionData requestedPotion, PotionData deliveredPotion)
     {
+        if (roundObjectiveHUD != null)
+            roundObjectiveHUD.Hide();
+
         BeginRoundResolution(outcome, encounter, requestedPotion, deliveredPotion);
     }
 
@@ -144,17 +148,31 @@ public class RoundPresentationController : MonoBehaviour
         if (roundReportUI != null)
             roundReportUI.Hide();
 
+        if (roundObjectiveHUD != null)
+            roundObjectiveHUD.Hide();
+
         if (potionRequestUI != null)
             potionRequestUI.Hide();
 
+        // Create the randomly assembled fighter.
         if (characterManager != null)
             characterManager.GenerateCharacter();
 
+        // Wait here until the fighter reaches the stage point.
         if (fighterAnimationController != null)
             yield return fighterAnimationController.WalkIn();
 
+        // Only begin dialogue after the complete entrance.
         if (potionRequestUI != null)
+        {
             potionRequestUI.ShowRequest(encounter, requestedPotion);
+            yield return potionRequestUI.WaitForContinue();
+            potionRequestUI.Hide();
+        }
+
+        // Replace the full dialogue with the condensed objective.
+        if (roundObjectiveHUD != null)
+            roundObjectiveHUD.Show(encounter, requestedPotion);
 
         if (GameManager.Instance != null)
             GameManager.Instance.ActivateCurrentRound();

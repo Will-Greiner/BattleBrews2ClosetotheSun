@@ -11,6 +11,8 @@ public class CauldronController : MonoBehaviour
 
     [Header("Capacity")]
     [SerializeField] private int maxContributions = 15;
+    [Min(1)]
+    [SerializeField] private int maxDistinctIngredientTypes = 3;
 
     [Header("Potion Spawning")]
     [SerializeField] private Transform potionSpawnPoint;
@@ -35,6 +37,7 @@ public class CauldronController : MonoBehaviour
     public IReadOnlyList<CauldronContribution> Contributions => contributions;
     public int ContributionCount => contributions.Count;
     public int Capacity => maxContributions;
+    public int DistinctIngredientTypeCapacity => maxDistinctIngredientTypes;
     public bool IsGrossPotion(PotionData potion) => potion != null && potion == grossPotion;
     public bool IsUnstablePotion(PotionData potion) => potion != null && potion == unstablePotion;
 
@@ -44,7 +47,30 @@ public class CauldronController : MonoBehaviour
             return false;
 
         IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
-        return ingredientItem != null && ingredientItem.Data != null;
+
+        if (ingredientItem == null || ingredientItem.Data == null)
+            return false;
+
+        IngredientData incomingIngredient = ingredientItem.Data;
+        bool ingredientAlreadyPresent = false;
+        int distinctIngredientTypes = 0;
+        HashSet<IngredientData> seenIngredients = new();
+
+        foreach (CauldronContribution contribution in contributions)
+        {
+            IngredientData existingIngredient = contribution?.SourceIngredient;
+
+            if (existingIngredient == null)
+                continue;
+
+            if (existingIngredient == incomingIngredient)
+                ingredientAlreadyPresent = true;
+
+            if (seenIngredients.Add(existingIngredient))
+                distinctIngredientTypes++;
+        }
+
+        return ingredientAlreadyPresent || distinctIngredientTypes < maxDistinctIngredientTypes;
     }
 
     public bool TryAddIngredient(GrabbableItem item)

@@ -82,7 +82,7 @@ PrefabInstance:
     - target: {fileID: -8532172584448871376, guid: d2d8596945a0d9643b2495da4ec1fd2b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+      objectReference: {fileID: 2100000, guid: c29bea3df226bc44e9d5553eaef7ac04, type: 2}
     - target: {fileID: -7334951474422550414, guid: d2d8596945a0d9643b2495da4ec1fd2b, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -106,11 +106,11 @@ PrefabInstance:
     - target: {fileID: 5391900707453442821, guid: d2d8596945a0d9643b2495da4ec1fd2b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+      objectReference: {fileID: 2100000, guid: c29bea3df226bc44e9d5553eaef7ac04, type: 2}
     - target: {fileID: 8084854973141751649, guid: d2d8596945a0d9643b2495da4ec1fd2b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+      objectReference: {fileID: 2100000, guid: c29bea3df226bc44e9d5553eaef7ac04, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

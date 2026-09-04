@@ -48,6 +48,9 @@ public class HandController : MonoBehaviour
 
     private void Start()
     {
+        if (grabController == null)
+            grabController = FindFirstObjectByType<GrabController>();
+
         handDistance = Mathf.Clamp(handDistance, minDistance, maxDistance);
         defaultDistance = Mathf.Clamp(defaultDistance, minDistance, maxDistance);
         focusedDistance = handDistance;
@@ -59,6 +62,12 @@ public class HandController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (grabController != null && !grabController.InputEnabled)
+        {
+            ClearFocus();
+            return;
+        }
+
         if (Mouse.current == null || playerCamera == null)
             return;
 

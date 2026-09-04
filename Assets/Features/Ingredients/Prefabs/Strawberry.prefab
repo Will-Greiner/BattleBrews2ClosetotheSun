@@ -82,11 +82,11 @@ PrefabInstance:
     - target: {fileID: -7577739868436781572, guid: 7a4134c8ff5246e4a8188f74d4f9b89f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+      objectReference: {fileID: 2100000, guid: c29bea3df226bc44e9d5553eaef7ac04, type: 2}
     - target: {fileID: -4020508656404018160, guid: 7a4134c8ff5246e4a8188f74d4f9b89f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+      objectReference: {fileID: 2100000, guid: c29bea3df226bc44e9d5553eaef7ac04, type: 2}
     - target: {fileID: 919132149155446097, guid: 7a4134c8ff5246e4a8188f74d4f9b89f, type: 3}
       propertyPath: m_Name
       value: Strawberry
@@ -98,7 +98,7 @@ PrefabInstance:
     - target: {fileID: 1893194068992980029, guid: 7a4134c8ff5246e4a8188f74d4f9b89f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: fe3e30b0955d5334cb2effa9d52c2119, type: 2}
+      objectReference: {fileID: 2100000, guid: c29bea3df226bc44e9d5553eaef7ac04, type: 2}
     - target: {fileID: 3128833923634247652, guid: 7a4134c8ff5246e4a8188f74d4f9b89f, type: 3}
       propertyPath: m_Layer
       value: 7

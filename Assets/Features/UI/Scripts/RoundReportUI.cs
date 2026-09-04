@@ -54,7 +54,9 @@ public class RoundReportUI : MonoBehaviour
 
     private void Awake()
     {
-        continueButton.onClick.AddListener(HandleContinueClicked);
+        if (continueButton != null)
+            continueButton.onClick.AddListener(HandleContinueClicked);
+
         Hide();
     }
 
@@ -83,38 +85,38 @@ public class RoundReportUI : MonoBehaviour
         bool didWin = outcome == BattleOutcome.Win;
         Color outcomeColor = didWin ? winColor : loseColor;
 
-        resultText.text = didWin ? "VICTORY" : "DEFEAT";
-        resultText.color = outcomeColor;
-        gradeText.text = GetRandomEntry(didWin ? winGrades : loseGrades);
-        gradeText.color = outcomeColor;
-        encounterText.text = encounter.EncounterName;
-        outcomeText.text = didWin ? encounter.WinOutcomeText : encounter.LoseOutcomeText;
-        commentText.text = GetRandomEntry(didWin ? winComments : loseComments);
+        SetText(resultText, didWin ? "VICTORY" : "DEFEAT", outcomeColor);
+        SetText(gradeText, GetRandomEntry(didWin ? winGrades : loseGrades), outcomeColor);
+        SetText(encounterText, encounter.EncounterName);
+        SetText(outcomeText, didWin ? encounter.WinOutcomeText : encounter.LoseOutcomeText);
+        SetText(commentText, GetRandomEntry(didWin ? winComments : loseComments));
 
-        requestedPotionLabel.text = requestedPotion.PotionName;
-        requestedPotionIcon.sprite = requestedPotion.Icon;
-        requestedPotionIcon.enabled = requestedPotion.Icon != null;
+        SetText(requestedPotionLabel, requestedPotion.PotionName);
+        SetIcon(requestedPotionIcon, requestedPotion.Icon);
 
         if (deliveredPotion != null)
         {
-            deliveredPotionLabel.text = deliveredPotion.PotionName;
-            deliveredPotionIcon.sprite = deliveredPotion.Icon;
-            deliveredPotionIcon.enabled = deliveredPotion.Icon != null;
+            SetText(deliveredPotionLabel, deliveredPotion.PotionName);
+            SetIcon(deliveredPotionIcon, deliveredPotion.Icon);
         }
         else
         {
-            deliveredPotionLabel.text = "No Potion Delivered";
-            deliveredPotionIcon.sprite = null;
-            deliveredPotionIcon.enabled = false;
+            SetText(deliveredPotionLabel, "No Potion Delivered");
+            SetIcon(deliveredPotionIcon, null);
         }
 
         int remainingLives = GameManager.Instance != null ? GameManager.Instance.Lives : 0;
-        livesText.text = $"Lives Remaining: {remainingLives}";
+        SetText(livesText, $"Lives Remaining: {remainingLives}");
 
-        canvasGroup.alpha = 1f;
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
-        continueButton.interactable = true;
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+
+        if (continueButton != null)
+            continueButton.interactable = true;
     }
 
     public void Hide()
@@ -136,5 +138,25 @@ public class RoundReportUI : MonoBehaviour
             return string.Empty;
 
         return entries[Random.Range(0, entries.Length)];
+    }
+
+    private static void SetText(TMP_Text target, string value, Color? color = null)
+    {
+        if (target == null)
+            return;
+
+        target.text = value;
+
+        if (color.HasValue)
+            target.color = color.Value;
+    }
+
+    private static void SetIcon(Image target, Sprite sprite)
+    {
+        if (target == null)
+            return;
+
+        target.sprite = sprite;
+        target.enabled = sprite != null;
     }
 }

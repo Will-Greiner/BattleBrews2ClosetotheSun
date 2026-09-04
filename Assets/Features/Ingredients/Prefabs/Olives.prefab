@@ -82,7 +82,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0a5364baf2a17054e878db87a220c93c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: f283b85c7a0ed864c8295233548d8dc0, type: 2}
+      objectReference: {fileID: 2100000, guid: e6e59b78b47b41249a72886ff4f4c163, type: 2}
     - target: {fileID: 919132149155446097, guid: 0a5364baf2a17054e878db87a220c93c, type: 3}
       propertyPath: m_Name
       value: Olives
