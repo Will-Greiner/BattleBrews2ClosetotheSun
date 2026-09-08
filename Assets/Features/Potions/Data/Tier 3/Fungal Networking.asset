@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "Fungal Networking"
+  m_Name: Fungal Networking
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "Fungal Networking"
+  potionName: Fungal Networking
   icon: {fileID: 0}
-  description: "Allows communication, negotiation, and malicious gossip through nearby fungal networks."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Allows communication, negotiation, and malicious gossip through nearby
+    fungal networks.
+  prefab: {fileID: 5551657466303834545, guid: edfe8eed38e170c469686281f2e2166b, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: d42328de88fa08f48bd1e9c2cbff345c, type: 2}
@@ -31,4 +32,3 @@ MonoBehaviour:
     requiredCount: 1
   firstRequestRound: 11
   lastRequestRound: 99
-

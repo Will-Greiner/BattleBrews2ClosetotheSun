@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "The Landlord Special"
+  m_Name: The Landlord Special
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "The Landlord Special"
+  potionName: The Landlord Special
   icon: {fileID: 0}
-  description: "Summons indestructible tenants with extensive knowledge of housing law and very little patience."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Summons indestructible tenants with extensive knowledge of housing
+    law and very little patience.
+  prefab: {fileID: 5551657466303834545, guid: 757e844fa993683458505335d4a87cee, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: e1e242ccb8efba84e968929f25f4fee7, type: 2}
@@ -31,4 +32,3 @@ MonoBehaviour:
     requiredCount: 2
   firstRequestRound: 10
   lastRequestRound: 99
-

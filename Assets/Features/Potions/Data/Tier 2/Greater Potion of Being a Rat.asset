@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "Greater Potion of Being a Rat"
+  m_Name: Greater Potion of Being a Rat
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "Greater Potion of Being a Rat"
+  potionName: Greater Potion of Being a Rat
   icon: {fileID: 0}
-  description: "Makes the drinker legally, socially, and spiritually recognized as a rat."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Makes the drinker legally, socially, and spiritually recognized as
+    a rat.
+  prefab: {fileID: 5551657466303834545, guid: dd68c3baacf7087438240737cdb08361, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: 6e6e718e9c06f1f43a7dc335c60dc769, type: 2}
@@ -31,4 +32,3 @@ MonoBehaviour:
     requiredCount: 1
   firstRequestRound: 5
   lastRequestRound: 13
-

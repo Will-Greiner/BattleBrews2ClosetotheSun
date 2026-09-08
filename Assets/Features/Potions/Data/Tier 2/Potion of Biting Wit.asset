@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "Potion of Biting Wit"
+  m_Name: Potion of Biting Wit
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "Potion of Biting Wit"
+  potionName: Potion of Biting Wit
   icon: {fileID: 0}
-  description: "Converts sufficiently devastating insults into physical damage."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Converts sufficiently devastating insults into physical damage.
+  prefab: {fileID: 5551657466303834545, guid: 67ca01dadddef644480f1a114d5b4f25, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: dcfe0207b62c8ae4eabc39bdd4e0765f, type: 2}
@@ -31,4 +31,3 @@ MonoBehaviour:
     requiredCount: 1
   firstRequestRound: 7
   lastRequestRound: 15
-

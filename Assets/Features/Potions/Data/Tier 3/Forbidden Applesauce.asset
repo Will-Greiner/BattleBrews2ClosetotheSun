@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "Forbidden Applesauce"
+  m_Name: Forbidden Applesauce
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "Forbidden Applesauce"
+  potionName: Forbidden Applesauce
   icon: {fileID: 0}
-  description: "Delicious applesauce that whispers increasingly persuasive and poorly considered suggestions."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Delicious applesauce that whispers increasingly persuasive and poorly
+    considered suggestions.
+  prefab: {fileID: 5551657466303834545, guid: 86964815aedfbc749a12865cf331011b, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: d0e91350edcd0b341ab3bc3df2efbcd4, type: 2}
@@ -35,4 +36,3 @@ MonoBehaviour:
     requiredCount: 1
   firstRequestRound: 9
   lastRequestRound: 99
-

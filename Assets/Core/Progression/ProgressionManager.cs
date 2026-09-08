@@ -161,10 +161,13 @@ public class ProgressionManager : MonoBehaviour
             SaveNow();
     }
 
+    [ContextMenu("Reset All Ingredient Discovery")]
     public void ResetAllDiscovery()
     {
         discoveredPropertyIds.Clear();
         SaveNow();
+        ProgressionLoaded?.Invoke();
+        Debug.Log("Reset all discovered ingredient properties.", this);
     }
 
     public int GetUpgradeLevel(string id) => !string.IsNullOrWhiteSpace(id) && upgradeLevels.TryGetValue(id, out int level) ? level : 0;

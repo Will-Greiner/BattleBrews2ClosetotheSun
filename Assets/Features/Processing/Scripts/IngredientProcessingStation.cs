@@ -39,7 +39,7 @@ public class IngredientProcessingStation : MonoBehaviour
 
     public bool CanAcceptIngredient(GrabbableItem item)
     {
-        if (currentItem != null || item == null || item.IsHeld)
+        if (currentItem != null || item == null)
             return false;
 
         IngredientItem ingredientItem = item.GetComponent<IngredientItem>();
@@ -130,8 +130,12 @@ public class IngredientProcessingStation : MonoBehaviour
             currentItem.transform.SetPositionAndRotation(ingredientSnapPoint.position, ingredientSnapPoint.rotation);
         }
 
-        currentItem.enabled = false;
+        Collider[] itemColliders = currentItem.GetComponentsInChildren<Collider>();
 
+        foreach (Collider itemCollider in itemColliders)
+            itemCollider.enabled = false;
+
+        currentItem.enabled = false;
         UpdateIngredientProgressTransform();
     }
 
@@ -167,7 +171,7 @@ public class IngredientProcessingStation : MonoBehaviour
             return null;
         }
 
-        GameObject output = Instantiate(processedIngredientPrefab, outputPoint.position, outputPoint.rotation);
+        GameObject output = Instantiate(processedIngredientPrefab, outputPoint.position, outputPoint.rotation, outputPoint);
 
         GrabbableItem outputGrabbable = output.GetComponent<GrabbableItem>();
 

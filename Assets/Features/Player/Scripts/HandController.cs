@@ -277,14 +277,16 @@ public class HandController : MonoBehaviour
         MortarPestle mortarPestle = heldItem.GetComponent<MortarPestle>();
         BurnerBellows burnerBellows = heldItem.GetComponent<BurnerBellows>();
         PulverizerCrank pulverizerCrank = heldItem.GetComponent<PulverizerCrank>();
+        ProcessingTableHandle tableHandle = heldItem.GetComponent<ProcessingTableHandle>();
 
         bool isStirring = stirringStick != null && stirringStick.IsStirring;
         bool isPullingRope = clearRope != null && clearRope.IsBeingPulled;
         bool isPounding = mortarPestle != null && mortarPestle.IsBeingUsed;
         bool isSqueezingBellows = burnerBellows != null && burnerBellows.IsBeingUsed;
         bool isCranking = pulverizerCrank != null && pulverizerCrank.IsBeingUsed;
+        bool isTurningTable = tableHandle != null && tableHandle.IsBeingUsed;
 
-        if (!isStirring && !isPullingRope && !isPounding && !isSqueezingBellows && !isCranking)
+        if (!isStirring && !isPullingRope && !isPounding && !isSqueezingBellows && !isCranking && !isTurningTable)
             return false;
 
         Transform grabPoint = heldItem.GrabPoint;

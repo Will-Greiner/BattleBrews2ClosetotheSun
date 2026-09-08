@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Crush ingredients to reveal their first hidden property.
   icon: {fileID: 0}
   persistentId: 367d7ff9ff614aa89961a3054b7ce7a5
-  price: 100
+  price: 0
   firstAvailableRound: 1
   offerType: 0
   unlockId: processing.level.1

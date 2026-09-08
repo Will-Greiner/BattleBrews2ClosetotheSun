@@ -31,11 +31,13 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (grabController != null && !grabController.InputEnabled)
+        bool inputLocked = grabController != null && !grabController.InputEnabled;
+
+        bool tableIsGrabbed = grabController != null && grabController.HeldItem != null && grabController.HeldItem.GetComponent<ProcessingTableHandle>() != null;
+
+        if (inputLocked || tableIsGrabbed)
         {
-            targetSpeed = 0f;
-            currentSpeed = 0f;
-            currentYaw = NormalizeAngle(transform.localEulerAngles.y);
+            StopCameraMovement();
             return;
         }
 
@@ -45,7 +47,7 @@ public class CameraController : MonoBehaviour
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         float normalizedX = mousePosition.x / Screen.width;
 
-        targetSpeed = CalculateTargetSpeed(normalizedX);
+        targetSpeed = CalculateTargetSpeed(normalizedX) * GameSettings.CameraSpeedMultiplier;
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, 1f - Mathf.Exp(-acceleration * Time.deltaTime));
 
         currentYaw += currentSpeed * Time.deltaTime;
@@ -79,5 +81,14 @@ public class CameraController : MonoBehaviour
             angle -= 360f;
 
         return angle;
+    }
+
+    private void StopCameraMovement()
+    {
+        targetSpeed = 0f;
+        currentSpeed = 0f;
+
+        currentYaw = NormalizeAngle(
+            transform.localEulerAngles.y);
     }
 }

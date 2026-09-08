@@ -34,6 +34,12 @@ public class BurnerBellows : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip compressionClip;
 
+    [Header("Bellows Blend Shape")]
+    [SerializeField] private SkinnedMeshRenderer bellowsRenderer;
+    [SerializeField] private string compressionBlendShape = "Compress";
+    [SerializeField, Range(0f, 100f)] private float openBlendShapeWeight;
+    [SerializeField, Range(0f, 100f)] private float compressedBlendShapeWeight = 100f;
+
     private Rigidbody bellowsRigidbody;
     private GrabController currentHolder;
     private Coroutine returnRoutine;
@@ -41,6 +47,7 @@ public class BurnerBellows : MonoBehaviour
     private float currentCompression;
     private float targetCompression;
     private bool compressionArmed = true;
+    private int compressionBlendShapeIndex = -1;
 
     public bool IsBeingUsed => currentHolder != null;
     public float Compression => currentCompression;
@@ -55,6 +62,8 @@ public class BurnerBellows : MonoBehaviour
 
         if (station == null)
             Debug.LogError($"{name}: No IngredientProcessingStation has been assigned.", this);
+
+        CacheBlendShape();
     }
 
     private void Start()
@@ -127,6 +136,7 @@ public class BurnerBellows : MonoBehaviour
         float curvedCompression = compressionCurve.Evaluate(Mathf.Clamp01(compression));
         Quaternion compressedOffset = Quaternion.AngleAxis(compressionAngle * curvedCompression, rotationAxis);
         transform.localRotation = restLocalRotation * compressedOffset;
+        ApplyBlendShape(curvedCompression);
     }
 
     private void UpdateCompression()
@@ -196,10 +206,41 @@ public class BurnerBellows : MonoBehaviour
 
     private void SnapToRestRotation()
     {
-        transform.localRotation = restLocalRotation;
         currentCompression = 0f;
         targetCompression = 0f;
         compressionArmed = true;
+        ApplyCompressionRotation(0f);
         ConfigureKinematicBody();
+    }
+
+
+    private void CacheBlendShape()
+    {
+        if (bellowsRenderer == null)
+        {
+            Debug.LogError($"{name}: No bellows SkinnedMeshRenderer has been assigned.", this);
+            return;
+        }
+
+        if (bellowsRenderer.sharedMesh == null)
+        {
+            Debug.LogError($"{name}: The assigned bellows renderer has no mesh.", bellowsRenderer);
+            return;
+        }
+
+        compressionBlendShapeIndex = bellowsRenderer.sharedMesh.GetBlendShapeIndex(compressionBlendShape);
+
+        if (compressionBlendShapeIndex < 0)
+            Debug.LogError($"{name}: Blend shape '{compressionBlendShape}' was not found on {bellowsRenderer.sharedMesh.name}.", bellowsRenderer);
+    }
+
+
+    private void ApplyBlendShape(float compression)
+    {
+        if (bellowsRenderer == null || compressionBlendShapeIndex < 0)
+            return;
+
+        float weight = Mathf.Lerp(openBlendShapeWeight, compressedBlendShapeWeight, Mathf.Clamp01(compression));
+        bellowsRenderer.SetBlendShapeWeight(compressionBlendShapeIndex, weight);
     }
 }

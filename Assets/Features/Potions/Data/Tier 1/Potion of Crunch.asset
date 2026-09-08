@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "Potion of Crunch"
+  m_Name: Potion of Crunch
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "Potion of Crunch"
+  potionName: Potion of Crunch
   icon: {fileID: 0}
-  description: "Makes everything touched by the drinker produce an aggressive and inexplicably satisfying crunch."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Makes everything touched by the drinker produce an aggressive and
+    inexplicably satisfying crunch.
+  prefab: {fileID: 5551657466303834545, guid: 44d729eab86a39940a744e5e9c8008e2, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: dcfe0207b62c8ae4eabc39bdd4e0765f, type: 2}
@@ -27,4 +28,3 @@ MonoBehaviour:
     requiredCount: 1
   firstRequestRound: 2
   lastRequestRound: 9
-

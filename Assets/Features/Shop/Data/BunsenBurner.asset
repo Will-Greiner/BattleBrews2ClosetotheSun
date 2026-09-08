@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Heat ingredients to reveal their second hidden property.
   icon: {fileID: 0}
   persistentId: 4bb84326aff04bf7875337c9ec691f11
-  price: 175
-  firstAvailableRound: 2
+  price: 0
+  firstAvailableRound: 1
   offerType: 0
   unlockId: processing.level.2
   maximumLevel: 1

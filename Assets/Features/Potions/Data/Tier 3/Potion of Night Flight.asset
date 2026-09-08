@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "Potion of Night Flight"
+  m_Name: Potion of Night Flight
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "Potion of Night Flight"
+  potionName: Potion of Night Flight
   icon: {fileID: 0}
-  description: "Grants flight while creating an overwhelming attraction to nearby lamps."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Grants flight while creating an overwhelming attraction to nearby
+    lamps.
+  prefab: {fileID: 5551657466303834545, guid: bc8c598450e78ba46a705f8d7290d01f, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: f68e2d7378cbe7e49929a72cfd53b539, type: 2}
@@ -31,4 +32,3 @@ MonoBehaviour:
     requiredCount: 1
   firstRequestRound: 10
   lastRequestRound: 99
-

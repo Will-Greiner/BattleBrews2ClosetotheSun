@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
-  m_Name: "Ratatouille's Revenge"
+  m_Name: Ratatouille's Revenge
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
-  potionName: "Ratatouille's Revenge"
+  potionName: Ratatouille's Revenge
   icon: {fileID: 0}
-  description: "Summons an extremely talented and extremely judgmental rat chef."
-  prefab: {fileID: 8390168086883276517, guid: 0a50351af7d4d104088f2699bf372bcf, type: 3}
+  description: Summons an extremely talented and extremely judgmental rat chef.
+  prefab: {fileID: 5551657466303834545, guid: 04c41fd68b02c7841ac5015980ebe627, type: 3}
   requirements:
   - requirementType: 0
     ingredient: {fileID: 11400000, guid: 6e6e718e9c06f1f43a7dc335c60dc769, type: 2}
@@ -31,4 +31,3 @@ MonoBehaviour:
     requiredCount: 1
   firstRequestRound: 4
   lastRequestRound: 12
-

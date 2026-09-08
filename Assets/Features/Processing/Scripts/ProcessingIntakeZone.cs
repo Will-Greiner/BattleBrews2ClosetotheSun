@@ -1,12 +1,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class ProcessingIntakeZone : MonoBehaviour
+public class ProcessingIntakeZone : MonoBehaviour, IItemReceiver, IItemRejectionFeedback
 {
     [SerializeField] private IngredientProcessingStation station;
     [SerializeField] private GrabController grabController;
     [Min(0f)] [SerializeField] private float feedbackDuration = 1.5f;
     [Min(0f)] [SerializeField] private float repeatedFeedbackDelay = 1f;
+    [SerializeField] private string processPrompt = "Insert";
 
     private GrabbableItem lastRejectedItem;
     private float nextFeedbackTime;
@@ -62,5 +63,29 @@ public class ProcessingIntakeZone : MonoBehaviour
         lastRejectedItem = item;
         nextFeedbackTime = Time.time + repeatedFeedbackDelay;
         grabController.ShowTemporaryPrompt(station.GetRejectionMessage(item), feedbackDuration);
+    }
+
+    public bool CanReceiveItem(GrabbableItem item)
+    {
+        return station != null && station.CanAcceptIngredient(item);
+    }
+
+    public void ReceiveItem(GrabbableItem item)
+    {
+        if (station == null || item == null)
+            return;
+
+        station.TryAcceptIngredient(item);
+    }
+
+    public string GetReceivePrompt(GrabbableItem item)
+    {
+        return CanReceiveItem(item) ? processPrompt : string.Empty;
+    }
+
+    public void ShowRejectionFeedback(GrabbableItem item)
+    {
+        if (grabController != null && station != null)
+            grabController.ShowTemporaryPrompt(station.GetRejectionMessage(item), feedbackDuration);
     }
 }

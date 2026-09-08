@@ -361,6 +361,14 @@ public class GrabController : MonoBehaviour
             return true;
         }
 
+        ProcessingTableHandle tableHandle = heldItem.GetComponent<ProcessingTableHandle>();
+
+        if (tableHandle != null)
+        {
+            tableHandle.BeginTurning(this);
+            return true;
+        }
+
         Rigidbody body = heldItem.Rigidbody;
         body.linearVelocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
@@ -432,6 +440,11 @@ public class GrabController : MonoBehaviour
 
         if (pulverizerCrank != null)
             pulverizerCrank.EndCranking();
+
+        ProcessingTableHandle tableHandle = transferredItem.GetComponent<ProcessingTableHandle>();
+
+        if (tableHandle != null)
+            tableHandle.EndTurning();
 
         transferredItem.OnReleased();
         return transferredItem;
