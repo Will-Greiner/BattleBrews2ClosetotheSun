@@ -98,7 +98,10 @@ public class ShopPhaseController : MonoBehaviour
         if (playerRoot == null) return Quaternion.identity;
 
         if (shopFacingPoint == null)
-            return playerRoot.rotation * Quaternion.Euler(0f, 180f, 0f);
+        {
+            Debug.LogError($"{name}: A Shop Facing Point must be assigned for a reliable shop transition.", this);
+            return playerRoot.rotation;
+        }
 
         Vector3 direction = shopFacingPoint.position - playerRoot.position;
         direction.y = 0f;

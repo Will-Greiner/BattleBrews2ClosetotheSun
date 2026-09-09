@@ -31,6 +31,7 @@ public class BurnerBellows : MonoBehaviour
 
     [Header("Feedback")]
     [SerializeField] private ParticleSystem flameBurst;
+    [SerializeField] private BellowsScaler bellowsScaler;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip compressionClip;
 
@@ -62,6 +63,9 @@ public class BurnerBellows : MonoBehaviour
 
         if (station == null)
             Debug.LogError($"{name}: No IngredientProcessingStation has been assigned.", this);
+
+        if (bellowsScaler == null)
+            bellowsScaler = station != null ? station.GetComponentInChildren<BellowsScaler>(true) : null;
 
         CacheBlendShape();
     }
@@ -150,8 +154,8 @@ public class BurnerBellows : MonoBehaviour
         compressionArmed = false;
         PlayCompressionFeedback();
 
-        if (station != null && station.HasIngredient)
-            station.AddProgress(progressPerCompression);
+        if (station != null && station.HasIngredient && station.AddProgress(progressPerCompression) && bellowsScaler != null)
+            bellowsScaler.Stoke();
     }
 
     private void BeginReturn()

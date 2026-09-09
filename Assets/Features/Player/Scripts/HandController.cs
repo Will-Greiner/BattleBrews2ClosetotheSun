@@ -15,11 +15,9 @@ public class HandController : MonoBehaviour
     [SerializeField] private float defaultDistance = 2f;
 
     [Header("Held Item Depth")]
-    [Tooltip("Keep ordinary held objects at a stable depth instead of following surfaces behind the cursor.")]
-    [SerializeField] private bool preserveDepthWhileHolding = true;
-    [Tooltip("Distance moved per mouse-wheel notch while holding an ordinary item.")]
-    [Min(0f)] [SerializeField] private float heldDepthScrollSpeed = 1.25f;
-    [Tooltip("How quickly the hand settles at the selected held-item depth.")]
+    [Tooltip("Camera-relative distance that ordinary held objects move toward and remain at until released.")]
+    [Min(0.01f)] [SerializeField] private float heldDistance = 2f;
+    [Tooltip("How quickly the hand settles at the fixed held-item distance.")]
     [Min(0.01f)] [SerializeField] private float heldDepthMoveSpeed = 8f;
 
     [Header("Automatic Depth")]
@@ -35,16 +33,43 @@ public class HandController : MonoBehaviour
     [SerializeField] private Vector3 rotationOffset;
     [SerializeField] private float rotationSmoothSpeed = 30f;
 
+    [Header("Motion Tracking")]
+    [Tooltip("Higher values make release momentum react more immediately to the latest hand movement.")]
+    [Min(0.01f)] [SerializeField] private float velocityResponse = 18f;
+
     private Quaternion targetRotation;
     private GrabbableItem focusedItem;
     private ObjectHighlight focusedHighlight;
     private float focusedDistance;
     private float focusLostTimer;
-    private float heldItemDistance;
     private GrabbableItem lastHeldItem;
+    private Vector3 previousPosition;
+    private Quaternion previousRotation;
+    private Vector3 smoothedVelocity;
+    private Vector3 smoothedAngularVelocity;
+    private Renderer[] handRenderers;
 
     public float Distance => handDistance;
     public GrabbableItem FocusedItem => focusedItem;
+    public Vector3 Velocity => smoothedVelocity;
+    public Vector3 AngularVelocity => smoothedAngularVelocity;
+
+    private void Awake()
+    {
+        handRenderers = GetComponentsInChildren<Renderer>(true);
+    }
+
+    public void SetVisualsVisible(bool visible)
+    {
+        if (handRenderers == null)
+            handRenderers = GetComponentsInChildren<Renderer>(true);
+
+        foreach (Renderer handRenderer in handRenderers)
+        {
+            if (handRenderer != null)
+                handRenderer.enabled = visible;
+        }
+    }
 
     private void Start()
     {
@@ -55,6 +80,8 @@ public class HandController : MonoBehaviour
         defaultDistance = Mathf.Clamp(defaultDistance, minDistance, maxDistance);
         focusedDistance = handDistance;
         targetRotation = transform.rotation;
+        previousPosition = transform.position;
+        previousRotation = transform.rotation;
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
@@ -65,6 +92,7 @@ public class HandController : MonoBehaviour
         if (grabController != null && !grabController.InputEnabled)
         {
             ClearFocus();
+            ResetMotionTracking();
             return;
         }
 
@@ -72,6 +100,7 @@ public class HandController : MonoBehaviour
             return;
 
         UpdateHandTransform();
+        UpdateMotionTracking();
     }
 
     private void UpdateHandTransform()
@@ -83,9 +112,7 @@ public class HandController : MonoBehaviour
             return;
 
         bool isHolding = grabController != null && grabController.IsHoldingItem;
-        bool isStirring = IsStirring();
-
-        if (isHolding && preserveDepthWhileHolding)
+        if (isHolding)
         {
             UpdateHeldItemDepth(mouseRay);
             return;
@@ -102,47 +129,36 @@ public class HandController : MonoBehaviour
 
         float targetDistance = defaultDistance;
 
-        if (isStirring)
-        {
-            targetDistance = GetStirringDistance(mouseRay);
-        }
-        else
-        {
-            bool foundSurface = Physics.Raycast(mouseRay, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Ignore);
+        bool foundSurface = Physics.Raycast(mouseRay, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Ignore);
 
-            if (foundSurface)
+        if (foundSurface)
+        {
+            GrabbableItem hitItem = hit.collider.GetComponentInParent<GrabbableItem>();
+
+            if (!isHolding && hitItem != null && hitItem.CanGrab())
             {
-                GrabbableItem hitItem = hit.collider.GetComponentInParent<GrabbableItem>();
+                SetFocus(hitItem, hit.distance);
+                targetDistance = focusedDistance;
+            }
+            else if (!isHolding)
+            {
+                ObjectHighlight hitHighlight = hit.collider.GetComponentInParent<ObjectHighlight>();
 
-                if (!isHolding && hitItem != null && hitItem.CanGrab())
+                if (hitHighlight != null)
                 {
-                    SetFocus(hitItem, hit.distance);
+                    SetFocus(hitHighlight, hit.distance);
                     targetDistance = focusedDistance;
-                }
-                else if (!isHolding)
-                {
-                    ObjectHighlight hitHighlight = hit.collider.GetComponentInParent<ObjectHighlight>();
-
-                    if (hitHighlight != null)
-                    {
-                        SetFocus(hitHighlight, hit.distance);
-                        targetDistance = focusedDistance;
-                    }
-                    else
-                    {
-                        ClearFocus();
-                        targetDistance = GetSurfaceDistance(hit.distance);
-                    }
                 }
                 else
                 {
+                    ClearFocus();
                     targetDistance = GetSurfaceDistance(hit.distance);
                 }
             }
-            else if (!isHolding && MaintainFocus())
-            {
-                targetDistance = focusedDistance;
-            }
+        }
+        else if (!isHolding && MaintainFocus())
+        {
+            targetDistance = focusedDistance;
         }
 
         handDistance = Mathf.MoveTowards(handDistance, targetDistance, depthMoveSpeed * Time.deltaTime);
@@ -160,40 +176,13 @@ public class HandController : MonoBehaviour
         if (heldItem != lastHeldItem)
         {
             lastHeldItem = heldItem;
-            heldItemDistance = Mathf.Clamp(handDistance, minDistance, maxDistance);
             ClearFocus();
         }
 
-        float scroll = Mouse.current.scroll.ReadValue().y;
-
-        if (Mathf.Abs(scroll) > 0.01f)
-        {
-            float normalizedNotches = scroll / 120f;
-            heldItemDistance = Mathf.Clamp(heldItemDistance + normalizedNotches * heldDepthScrollSpeed, minDistance, maxDistance);
-        }
-
-        handDistance = Mathf.MoveTowards(handDistance, heldItemDistance, heldDepthMoveSpeed * Time.deltaTime);
+        float targetHeldDistance = Mathf.Clamp(heldDistance, minDistance, maxDistance);
+        handDistance = Mathf.MoveTowards(handDistance, targetHeldDistance, heldDepthMoveSpeed * Time.deltaTime);
         transform.position = mouseRay.GetPoint(handDistance);
         UpdateHandRotation(mouseRay);
-    }
-
-    private bool IsStirring()
-    {
-        if (grabController == null || grabController.HeldItem == null)
-            return false;
-
-        StirringStick stirringStick = grabController.HeldItem.GetComponent<StirringStick>();
-        return stirringStick != null && stirringStick.IsStirring;
-    }
-
-    private float GetStirringDistance(Ray mouseRay)
-    {
-        if (grabController == null || grabController.HeldItem == null)
-            return defaultDistance;
-
-        Vector3 grabPointPosition = grabController.HeldItem.GrabPoint.position;
-        float projectedDistance = Vector3.Dot(grabPointPosition - mouseRay.origin, mouseRay.direction);
-        return Mathf.Clamp(projectedDistance, minDistance, maxDistance);
     }
 
     private void SetFocus(GrabbableItem item, float hitDistance)
@@ -302,5 +291,35 @@ public class HandController : MonoBehaviour
         targetRotation = Quaternion.LookRotation(mouseRay.direction, playerCamera.transform.up) * Quaternion.Euler(rotationOffset);
         float rotationT = 1f - Mathf.Exp(-rotationSmoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationT);
+    }
+
+    private void UpdateMotionTracking()
+    {
+        float deltaTime = Time.unscaledDeltaTime;
+
+        if (deltaTime <= Mathf.Epsilon)
+            return;
+
+        Vector3 frameVelocity = (transform.position - previousPosition) / deltaTime;
+        Quaternion rotationDelta = transform.rotation * Quaternion.Inverse(previousRotation);
+        rotationDelta.ToAngleAxis(out float angleDegrees, out Vector3 axis);
+
+        if (angleDegrees > 180f)
+            angleDegrees -= 360f;
+
+        Vector3 frameAngularVelocity = axis.sqrMagnitude > Mathf.Epsilon ? axis.normalized * angleDegrees * Mathf.Deg2Rad / deltaTime : Vector3.zero;
+        float response = 1f - Mathf.Exp(-velocityResponse * deltaTime);
+        smoothedVelocity = Vector3.Lerp(smoothedVelocity, frameVelocity, response);
+        smoothedAngularVelocity = Vector3.Lerp(smoothedAngularVelocity, frameAngularVelocity, response);
+        previousPosition = transform.position;
+        previousRotation = transform.rotation;
+    }
+
+    private void ResetMotionTracking()
+    {
+        smoothedVelocity = Vector3.zero;
+        smoothedAngularVelocity = Vector3.zero;
+        previousPosition = transform.position;
+        previousRotation = transform.rotation;
     }
 }

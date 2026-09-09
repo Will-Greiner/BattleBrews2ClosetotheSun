@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,16 @@ public class CameraController : MonoBehaviour
     private float currentYaw;
     private float currentSpeed;
     private float targetSpeed;
+    private Transform playerRoot;
+    private Quaternion forwardPlayerRotation;
+    private Quaternion forwardPivotRotation;
+
+    private void Awake()
+    {
+        playerRoot = transform.parent;
+        forwardPlayerRotation = playerRoot != null ? playerRoot.rotation : Quaternion.identity;
+        forwardPivotRotation = transform.localRotation;
+    }
 
     private void Start()
     {
@@ -87,8 +98,47 @@ public class CameraController : MonoBehaviour
     {
         targetSpeed = 0f;
         currentSpeed = 0f;
+        currentYaw = NormalizeAngle(transform.localEulerAngles.y);
+    }
 
-        currentYaw = NormalizeAngle(
-            transform.localEulerAngles.y);
+    public IEnumerator FaceForward(float duration)
+    {
+        StopCameraMovement();
+        Quaternion startingPivotRotation = transform.localRotation;
+        Quaternion startingPlayerRotation = playerRoot != null ? playerRoot.rotation : Quaternion.identity;
+
+        if (duration <= 0f)
+        {
+            SetForwardRotation();
+            yield break;
+        }
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float normalizedTime = Mathf.Clamp01(elapsedTime / duration);
+            float smoothTime = Mathf.SmoothStep(0f, 1f, normalizedTime);
+            transform.localRotation = Quaternion.SlerpUnclamped(startingPivotRotation, forwardPivotRotation, smoothTime);
+
+            if (playerRoot != null)
+                playerRoot.rotation = Quaternion.SlerpUnclamped(startingPlayerRotation, forwardPlayerRotation, smoothTime);
+
+            currentYaw = NormalizeAngle(transform.localEulerAngles.y);
+            yield return null;
+        }
+
+        SetForwardRotation();
+        StopCameraMovement();
+    }
+
+    private void SetForwardRotation()
+    {
+        if (playerRoot != null)
+            playerRoot.rotation = forwardPlayerRotation;
+
+        transform.localRotation = forwardPivotRotation;
+        currentYaw = NormalizeAngle(forwardPivotRotation.eulerAngles.y);
     }
 }

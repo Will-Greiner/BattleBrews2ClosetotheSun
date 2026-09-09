@@ -31,6 +31,9 @@ public class FighterAnimationController : MonoBehaviour
 
     [SerializeField] private AnimationCurve movementCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
+    [Header("Audio")]
+    [SerializeField] private AudioCue grumbleCue;
+
     public bool IsMoving { get; private set; }
     public bool IsOnStage { get; private set; }
 
@@ -56,6 +59,8 @@ public class FighterAnimationController : MonoBehaviour
 
         fighterRoot.SetPositionAndRotation(entrancePoint.position, entrancePoint.rotation);
         SetFighterVisible(true);
+
+        AudioManager.Instance?.PlayAtPosition(grumbleCue, fighterRoot.position);
 
         SetWalking(true);
 

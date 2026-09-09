@@ -80,6 +80,9 @@ public class GrabbableItem : MonoBehaviour
     {
         IsHeld = true;
 
+        if (ingredientItem != null && ingredientItem.Data != null)
+            AudioManager.Instance?.PlayAtPosition(ingredientItem.Data.PickupCue, transform.position);
+
         if (awaitingFirstGrab)
         {
             awaitingFirstGrab = false;

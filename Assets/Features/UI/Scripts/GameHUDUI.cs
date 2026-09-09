@@ -12,7 +12,12 @@ public class GameHUDUI : MonoBehaviour
     [SerializeField] private Color warningTimerColor = Color.red;
 
     [Min(0f)]
-    [SerializeField] private float warningTime = 10f;
+    [SerializeField] private float warningTime = 30f;
+
+    [Header("Timer Warning")]
+    [SerializeField] private AudioCue warningCue;
+
+    private bool warningPlayed;
 
     private bool isSubscribedToGameManager;
     private bool isSubscribedToTimeManager;
@@ -66,6 +71,7 @@ public class GameHUDUI : MonoBehaviour
 
     private void HandleRoundChanged(int currentRound, int totalRounds)
     {
+        warningPlayed = false;
         SetRoundText(currentRound, totalRounds);
     }
 
@@ -103,8 +109,15 @@ public class GameHUDUI : MonoBehaviour
         int totalSeconds = Mathf.CeilToInt(timeRemaining);
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
+        bool warningActive = timeRemaining > 0f && timeRemaining <= warningTime;
 
         timerText.text = $"{minutes:00}:{seconds:00}";
-        timerText.color = timeRemaining > 0f && timeRemaining <= warningTime ? warningTimerColor : normalTimerColor;
+        timerText.color = warningActive ? warningTimerColor : normalTimerColor;
+
+        if (warningActive && !warningPlayed)
+        {
+            warningPlayed = true;
+            AudioManager.Instance?.Play(warningCue);
+        }
     }
 }

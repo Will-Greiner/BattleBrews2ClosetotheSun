@@ -24,6 +24,9 @@ public class IngredientData : ScriptableObject
     [Header("Properties")]
     [Tooltip("Property order determines discovery level. Element 0 is Level 1, Element 1 is Level 2, and Element 2 is Level 3.")]
     [SerializeField] private List<ItemPropertyData> properties = new();
+    
+    [Header("Audio")]
+    [SerializeField] private AudioCue pickupCue;
 
     public string IngredientName => ingredientName;
     public Sprite Icon => icon;
@@ -34,6 +37,7 @@ public class IngredientData : ScriptableObject
     public GameObject Prefab => prefab;
     public IReadOnlyList<ItemPropertyData> Properties => properties;
     public int PropertyCount => properties.Count;
+    public AudioCue PickupCue => pickupCue;
 
     public bool HasProperty(ItemPropertyData property)
     {

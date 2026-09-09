@@ -23,3 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
   - {fileID: 11400000, guid: 47813c2af520b59469669a10f9ae1b80, type: 2}
   - {fileID: 11400000, guid: 562bc033d7439424d88fd9e32e699a71, type: 2}
+  pickupCue: {fileID: 11400000, guid: 43c0ea88a1370a34fbb0c5af82c72323, type: 2}

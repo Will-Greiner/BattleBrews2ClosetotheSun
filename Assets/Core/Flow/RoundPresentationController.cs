@@ -14,8 +14,15 @@ public class RoundPresentationController : MonoBehaviour
 
     [Header("Player Input")]
     [SerializeField] private GrabController grabController;
+    [SerializeField] private CameraController cameraController;
+    [Min(0f)] [SerializeField] private float faceForwardDuration = 0.35f;
 
     [Header("Outcome Effects")]
+    [Tooltip("Looping fight-cloud prefab played before the round outcome is revealed.")]
+    [SerializeField] private GameObject fightDustCloudPrefab;
+    [SerializeField] private Transform dustCloudPoint;
+    [Min(0f)] [SerializeField] private float fightDustDuration = 2.25f;
+    [Min(0f)] [SerializeField] private float fightDustFadeDuration = 0.75f;
     [SerializeField] private ParticleSystem winParticles;
     [SerializeField] private ParticleSystem loseParticles;
     [SerializeField] private AudioSource audioSource;
@@ -27,10 +34,14 @@ public class RoundPresentationController : MonoBehaviour
     [SerializeField] private float reportDelay = 1.5f;
 
     private Coroutine presentationRoutine;
+    private GameObject activeFightDustCloud;
     private bool isSubscribed;
 
     private void Awake()
     {
+        if (cameraController == null)
+            cameraController = FindFirstObjectByType<CameraController>();
+
         if (potionRequestUI != null)
             potionRequestUI.Hide();
 
@@ -63,6 +74,8 @@ public class RoundPresentationController : MonoBehaviour
             StopCoroutine(presentationRoutine);
             presentationRoutine = null;
         }
+
+        ClearFightDustCloud();
     }
 
     private void SubscribeToGameManager()
@@ -107,6 +120,8 @@ public class RoundPresentationController : MonoBehaviour
             StopCoroutine(presentationRoutine);
             presentationRoutine = null;
         }
+
+        ClearFightDustCloud();
 
         if (potionRequestUI != null)
             potionRequestUI.Hide();
@@ -191,12 +206,16 @@ public class RoundPresentationController : MonoBehaviour
         if (potionRequestUI != null)
             potionRequestUI.Hide();
 
+        if (cameraController != null)
+            yield return cameraController.FaceForward(faceForwardDuration);
+
         if (fighterAnimationController != null)
             yield return fighterAnimationController.WalkOut();
 
         if (characterManager != null)
             characterManager.ClearCharacter();
 
+        yield return PlayFightDustCloud();
         PlayOutcomeEffects(outcome);
 
         if (reportDelay > 0f)
@@ -206,6 +225,43 @@ public class RoundPresentationController : MonoBehaviour
             roundReportUI.ShowReport(outcome, encounter, requestedPotion, deliveredPotion);
 
         presentationRoutine = null;
+    }
+
+    private IEnumerator PlayFightDustCloud()
+    {
+        if (fightDustCloudPrefab == null || dustCloudPoint == null)
+            yield break;
+
+        ClearFightDustCloud();
+        activeFightDustCloud = Instantiate(fightDustCloudPrefab, dustCloudPoint.position, dustCloudPoint.rotation);
+        ParticleSystem[] particleSystems = activeFightDustCloud.GetComponentsInChildren<ParticleSystem>(true);
+
+        foreach (ParticleSystem particleSystem in particleSystems)
+        {
+            particleSystem.gameObject.SetActive(true);
+            particleSystem.Clear(true);
+            particleSystem.Play(true);
+        }
+
+        if (fightDustDuration > 0f)
+            yield return new WaitForSeconds(fightDustDuration);
+
+        foreach (ParticleSystem particleSystem in particleSystems)
+            particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
+        if (fightDustFadeDuration > 0f)
+            yield return new WaitForSeconds(fightDustFadeDuration);
+
+        ClearFightDustCloud();
+    }
+
+    private void ClearFightDustCloud()
+    {
+        if (activeFightDustCloud == null)
+            return;
+
+        Destroy(activeFightDustCloud);
+        activeFightDustCloud = null;
     }
 
     private void PlayOutcomeEffects(BattleOutcome outcome)

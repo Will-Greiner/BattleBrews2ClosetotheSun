@@ -9,6 +9,7 @@ public class MainMenuController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private GrabController grabController;
+    [SerializeField] private HandController handController;
     [SerializeField] private CanvasGroup menuCanvasGroup;
     [SerializeField] private Button playButton;
     [SerializeField] private Button continueButton;
@@ -28,10 +29,17 @@ public class MainMenuController : MonoBehaviour
         AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     private bool isStarting;
+    private bool gameplayStarted;
 
     private void Awake()
     {
         GameSettings.LoadAndApply();
+
+        if (handController == null)
+            handController = FindFirstObjectByType<HandController>();
+
+        if (handController != null)
+            handController.SetVisualsVisible(false);
 
         if (playerCamera != null)
         {
@@ -44,6 +52,8 @@ public class MainMenuController : MonoBehaviour
         if (loadButton != null) loadButton.onClick.AddListener(ShowLoadSlots);
         if (settingsButton != null) settingsButton.onClick.AddListener(ShowSettings);
         if (saveSlotMenu != null) saveSlotMenu.SlotsChanged += RefreshContinueButton;
+        if (saveSlotMenu != null) saveSlotMenu.Closed += ReturnToMainMenuPanel;
+        if (settingsMenu != null) settingsMenu.Closed += ReturnToMainMenuPanel;
 
         if (grabController != null)
             grabController.AcquireInputLock(this);
@@ -66,6 +76,8 @@ public class MainMenuController : MonoBehaviour
         if (loadButton != null) loadButton.onClick.RemoveListener(ShowLoadSlots);
         if (settingsButton != null) settingsButton.onClick.RemoveListener(ShowSettings);
         if (saveSlotMenu != null) saveSlotMenu.SlotsChanged -= RefreshContinueButton;
+        if (saveSlotMenu != null) saveSlotMenu.Closed -= ReturnToMainMenuPanel;
+        if (settingsMenu != null) settingsMenu.Closed -= ReturnToMainMenuPanel;
 
         if (grabController != null)
             grabController.ReleaseInputLock(this);
@@ -78,24 +90,34 @@ public class MainMenuController : MonoBehaviour
 
     public void ContinueGame()
     {
-        int slot = PlayerPrefs.GetInt(LastSelectedSlotKey, 0);
-
-        if (slot >= 1 && slot <= SaveManager.SlotCount && SaveManager.SlotExists(slot))
+        if (TryGetLastSelectedValidSlot(out int slot))
             LoadGameFromSlot(slot);
     }
 
     public void ShowLoadSlots()
     {
+        if (isStarting || saveSlotMenu == null)
+            return;
+
+        HideMenu();
         saveSlotMenu?.Show(SaveSlotMenuMode.Load, LoadGameFromSlot);
     }
 
     public void ShowNewGameSlots()
     {
+        if (isStarting || saveSlotMenu == null)
+            return;
+
+        HideMenu();
         saveSlotMenu?.Show(SaveSlotMenuMode.NewGame, StartNewGameInSlot);
     }
 
     public void ShowSettings()
     {
+        if (isStarting || settingsMenu == null)
+            return;
+
+        HideMenu();
         settingsMenu?.Show();
     }
 
@@ -108,7 +130,7 @@ public class MainMenuController : MonoBehaviour
             ProgressionManager.Instance.LoadSlot(slot);
 
         RememberSelectedSlot(slot);
-        saveSlotMenu?.Hide();
+        saveSlotMenu?.HideWithoutNotification();
         StartCoroutine(StartGameRoutine());
     }
 
@@ -121,7 +143,7 @@ public class MainMenuController : MonoBehaviour
             ProgressionManager.Instance.CreateNewSlot(slot);
 
         RememberSelectedSlot(slot);
-        saveSlotMenu?.Hide();
+        saveSlotMenu?.HideWithoutNotification();
         StartCoroutine(StartGameRoutine());
     }
 
@@ -133,8 +155,31 @@ public class MainMenuController : MonoBehaviour
 
     private void RefreshContinueButton()
     {
-        int slot = PlayerPrefs.GetInt(LastSelectedSlotKey, 0);
-        if (continueButton != null) continueButton.interactable = slot >= 1 && slot <= SaveManager.SlotCount && SaveManager.SlotExists(slot);
+        bool hasValidSave = TryGetLastSelectedValidSlot(out _);
+
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(hasValidSave);
+    }
+
+    private bool TryGetLastSelectedValidSlot(out int slot)
+    {
+        slot = PlayerPrefs.GetInt(LastSelectedSlotKey, 0);
+
+        if (slot >= 1 && slot <= SaveManager.SlotCount && SaveManager.Load(slot) != null)
+            return true;
+
+        slot = 0;
+        PlayerPrefs.DeleteKey(LastSelectedSlotKey);
+        return false;
+    }
+
+    private void ReturnToMainMenuPanel()
+    {
+        if (!isStarting && !gameplayStarted)
+        {
+            RefreshContinueButton();
+            ShowMenu();
+        }
     }
 
     private IEnumerator StartGameRoutine()
@@ -191,6 +236,10 @@ public class MainMenuController : MonoBehaviour
 
     private void FinishTransition()
     {
+        gameplayStarted = true;
+
+        if (handController != null)
+            handController.SetVisualsVisible(true);
 
         // StartGame raises RoundStarted. RoundPresentationController then
         // generates the fighter, walks them in, and begins the dialogue.

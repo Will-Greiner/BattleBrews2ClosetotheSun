@@ -13,6 +13,9 @@ public class CauldronSplashController : MonoBehaviour
     [Header("Hand Contact")]
     [Min(0f)] [SerializeField] private float handSplashCooldown = 0.2f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioCue splashCue;
+
     private static readonly int DrainId = Shader.PropertyToID("_Drain");
 
     private Renderer liquidRenderer;
@@ -60,6 +63,8 @@ public class CauldronSplashController : MonoBehaviour
         splash.name = "Splash";
 
         Animator animator = splash.GetComponentInChildren<Animator>();
+
+        AudioManager.Instance.PlayAtPosition(splashCue, contactPosition);
 
         if (animator != null)
             animator.Play(0, 0, 0f);

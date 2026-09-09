@@ -18,6 +18,7 @@ public class SaveSlotMenuUI : MonoBehaviour
     private SaveSlotMenuMode mode;
 
     public event Action SlotsChanged;
+    public event Action Closed;
 
     public bool IsOpen => canvasGroup != null && canvasGroup.alpha > 0.99f;
 
@@ -42,7 +43,12 @@ public class SaveSlotMenuUI : MonoBehaviour
 
     public void Hide()
     {
-        SetVisible(false);
+        Hide(true);
+    }
+
+    public void HideWithoutNotification()
+    {
+        Hide(false);
     }
 
     public void Refresh()
@@ -77,5 +83,14 @@ public class SaveSlotMenuUI : MonoBehaviour
         canvasGroup.alpha = visible ? 1f : 0f;
         canvasGroup.interactable = visible;
         canvasGroup.blocksRaycasts = visible;
+    }
+
+    private void Hide(bool notify)
+    {
+        bool wasOpen = IsOpen;
+        SetVisible(false);
+
+        if (notify && wasOpen)
+            Closed?.Invoke();
     }
 }

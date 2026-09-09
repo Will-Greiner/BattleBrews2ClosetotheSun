@@ -8,6 +8,7 @@ public class GrabController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private HandController handController;
+    [SerializeField] private HandAnimationController handAnimationController;
     [SerializeField] private InteractionPromptUI interactionPromptUI;
 
     [Header("Detection")]
@@ -20,6 +21,13 @@ public class GrabController : MonoBehaviour
 
     [Header("Safety")]
     [SerializeField] private float breakDistance = 8f;
+
+    [Header("Throwing")]
+    [Tooltip("Multiplier applied to the hand's recent movement when an ordinary item is released.")]
+    [Min(0f)] [SerializeField] private float throwStrength = 1.15f;
+    [Min(0f)] [SerializeField] private float maximumThrowSpeed = 12f;
+    [Min(0f)] [SerializeField] private float angularThrowStrength = 0.35f;
+    [Min(0f)] [SerializeField] private float maximumAngularSpeed = 20f;
 
     private GrabbableItem heldItem;
     private ConfigurableJoint grabJoint;
@@ -41,6 +49,9 @@ public class GrabController : MonoBehaviour
         if (handRigidbody == null)
             handRigidbody = gameObject.AddComponent<Rigidbody>();
 
+        if (handAnimationController == null)
+            handAnimationController = GetComponentInChildren<HandAnimationController>();
+
         handRigidbody.isKinematic = true;
         handRigidbody.useGravity = false;
         handRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
@@ -53,17 +64,20 @@ public class GrabController : MonoBehaviour
         {
             ClearReceiverHighlight();
             HideInteractionPrompt();
+            handAnimationController?.SetInteractionState(false, false);
             return;
         }
 
         UpdateReceiverHighlight();
         UpdateInteractionPrompt();
+        UpdateHandAnimationState();
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             HandlePrimaryPress();
             UpdateReceiverHighlight();
             UpdateInteractionPrompt();
+            UpdateHandAnimationState();
         }
 
         if (Mouse.current.leftButton.wasReleasedThisFrame)
@@ -71,6 +85,7 @@ public class GrabController : MonoBehaviour
             HandlePrimaryRelease();
             UpdateReceiverHighlight();
             UpdateInteractionPrompt();
+            UpdateHandAnimationState();
         }
     }
 
@@ -199,6 +214,16 @@ public class GrabController : MonoBehaviour
     {
         if (interactionPromptUI != null)
             interactionPromptUI.Hide();
+    }
+
+    private void UpdateHandAnimationState()
+    {
+        if (handAnimationController == null)
+            return;
+
+        bool holding = heldItem != null;
+        bool hovering = holding ? receiverHighlight != null || receiverHoverFeedback != null : !string.IsNullOrWhiteSpace(GetEmptyHandPrompt());
+        handAnimationController.SetInteractionState(holding, hovering);
     }
 
     private bool TryUseHeldItemOnReceiver()
@@ -397,7 +422,13 @@ public class GrabController : MonoBehaviour
 
     public bool Release()
     {
-        return TakeHeldItem() != null;
+        GrabbableItem releasedItem = TakeHeldItem();
+
+        if (releasedItem == null)
+            return false;
+
+        ApplyReleaseMomentum(releasedItem);
+        return true;
     }
 
     public GrabbableItem TakeHeldItem()
@@ -448,6 +479,22 @@ public class GrabController : MonoBehaviour
 
         transferredItem.OnReleased();
         return transferredItem;
+    }
+
+    private void ApplyReleaseMomentum(GrabbableItem item)
+    {
+        if (item == null || item.Rigidbody == null || handController == null || IsConstrainedInteraction(item))
+            return;
+
+        Vector3 releaseVelocity = Vector3.ClampMagnitude(handController.Velocity * throwStrength, maximumThrowSpeed);
+        Vector3 releaseAngularVelocity = Vector3.ClampMagnitude(handController.AngularVelocity * angularThrowStrength, maximumAngularSpeed);
+        item.Rigidbody.linearVelocity = releaseVelocity;
+        item.Rigidbody.angularVelocity = releaseAngularVelocity;
+    }
+
+    private bool IsConstrainedInteraction(GrabbableItem item)
+    {
+        return item.GetComponent<StirringStick>() != null || item.GetComponent<CauldronRope>() != null || item.GetComponent<MortarPestle>() != null || item.GetComponent<BurnerBellows>() != null || item.GetComponent<PulverizerCrank>() != null || item.GetComponent<ProcessingTableHandle>() != null;
     }
 
     public void SetInputEnabled(bool enabled)

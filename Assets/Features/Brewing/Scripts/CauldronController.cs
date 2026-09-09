@@ -25,8 +25,8 @@ public class CauldronController : MonoBehaviour
     [Header("Potion Effects")]
     [SerializeField] private ParticleSystem goodPotionSpawnParticles;
     [SerializeField] private ParticleSystem badPotionSpawnParticles;
-    [SerializeField] private AudioClip goodPotionClip;
-    [SerializeField] private AudioClip badPotionClip;
+    [SerializeField] private AudioCue goodPotionCue;
+    [SerializeField] private AudioCue badPotionCue;
 
     [Header("Current Ingredients")]
     [SerializeField] private List<CauldronContribution> contributions = new();
@@ -179,12 +179,12 @@ public class CauldronController : MonoBehaviour
     private void PlayPotionCreatedEffects(bool isFailure)
     {
         ParticleSystem particles = isFailure ? badPotionSpawnParticles : goodPotionSpawnParticles;
-        AudioClip clip = isFailure ? badPotionClip : goodPotionClip;
+        AudioCue cue = isFailure ? badPotionCue : goodPotionCue;
 
         if (particles != null)
             particles.Play();
 
-        if (audioSource != null && clip != null)
-            audioSource.PlayOneShot(clip);
+        if (audioSource != null && cue != null)
+            AudioManager.Instance.PlayAtPosition(cue, potionSpawnPoint.position);
     }
 }

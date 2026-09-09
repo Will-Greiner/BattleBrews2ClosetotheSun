@@ -21,6 +21,9 @@ public class CauldronIntakeZone : MonoBehaviour, IItemReceiver, IItemRejectionFe
         if (cauldron == null)
             Debug.LogError($"{name}: No CauldronController has been assigned.", this);
 
+        if (grabController == null)
+            grabController = FindFirstObjectByType<GrabController>();
+
         if (splashController == null)
             splashController = GetComponentInParent<CauldronSplashController>();
     }
@@ -47,6 +50,9 @@ public class CauldronIntakeZone : MonoBehaviour, IItemReceiver, IItemRejectionFe
 
     private void TrySplashHand(Collider other)
     {
+        if (grabController != null && !grabController.InputEnabled)
+            return;
+
         HandController hand = other.GetComponentInParent<HandController>();
 
         if (hand != null && splashController != null)

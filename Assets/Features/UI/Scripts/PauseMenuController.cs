@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PauseMenuController : MonoBehaviour
@@ -26,6 +27,8 @@ public class PauseMenuController : MonoBehaviour
 
     private bool isPaused;
     private float previousTimeScale = 1f;
+    private CursorLockMode previousCursorLockMode;
+    private bool previousCursorVisible;
 
     public bool IsPaused => isPaused;
 
@@ -35,6 +38,7 @@ public class PauseMenuController : MonoBehaviour
         if (settingsButton != null) settingsButton.onClick.AddListener(ShowSettings);
         if (mainMenuButton != null) mainMenuButton.onClick.AddListener(ReturnToMainMenu);
         if (quitButton != null) quitButton.onClick.AddListener(QuitGame);
+        if (settingsMenu != null) settingsMenu.Closed += HandleSettingsClosed;
         SetVisible(false);
     }
 
@@ -67,6 +71,7 @@ public class PauseMenuController : MonoBehaviour
         if (settingsButton != null) settingsButton.onClick.RemoveListener(ShowSettings);
         if (mainMenuButton != null) mainMenuButton.onClick.RemoveListener(ReturnToMainMenu);
         if (quitButton != null) quitButton.onClick.RemoveListener(QuitGame);
+        if (settingsMenu != null) settingsMenu.Closed -= HandleSettingsClosed;
     }
 
     public void Pause()
@@ -76,10 +81,17 @@ public class PauseMenuController : MonoBehaviour
 
         isPaused = true;
         previousTimeScale = Time.timeScale;
+        previousCursorLockMode = Cursor.lockState;
+        previousCursorVisible = Cursor.visible;
         Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         grabController?.AcquireInputLock(this);
         RefreshRequestInformation();
         SetVisible(true);
+
+        if (EventSystem.current != null && resumeButton != null)
+            EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
     }
 
     public void Resume()
@@ -90,12 +102,18 @@ public class PauseMenuController : MonoBehaviour
         settingsMenu?.Hide();
         SetVisible(false);
         Time.timeScale = previousTimeScale;
+        Cursor.lockState = previousCursorLockMode;
+        Cursor.visible = previousCursorVisible;
         grabController?.ReleaseInputLock(this);
         isPaused = false;
     }
 
     public void ShowSettings()
     {
+        if (!isPaused || settingsMenu == null)
+            return;
+
+        SetVisible(false);
         settingsMenu?.Show();
     }
 
@@ -123,6 +141,17 @@ public class PauseMenuController : MonoBehaviour
             return false;
 
         return grabController == null || grabController.InputEnabled;
+    }
+
+    private void HandleSettingsClosed()
+    {
+        if (!isPaused)
+            return;
+
+        SetVisible(true);
+
+        if (EventSystem.current != null && settingsButton != null)
+            EventSystem.current.SetSelectedGameObject(settingsButton.gameObject);
     }
 
     private void RefreshRequestInformation()

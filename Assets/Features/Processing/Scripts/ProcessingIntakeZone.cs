@@ -56,13 +56,6 @@ public class ProcessingIntakeZone : MonoBehaviour, IItemReceiver, IItemRejection
             lastRejectedItem = null;
             return;
         }
-
-        if (grabController == null || item == lastRejectedItem && Time.time < nextFeedbackTime)
-            return;
-
-        lastRejectedItem = item;
-        nextFeedbackTime = Time.time + repeatedFeedbackDelay;
-        grabController.ShowTemporaryPrompt(station.GetRejectionMessage(item), feedbackDuration);
     }
 
     public bool CanReceiveItem(GrabbableItem item)
