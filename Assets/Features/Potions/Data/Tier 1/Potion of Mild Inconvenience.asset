@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Potion of Mild Inconvenience
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 1
+  potionColor: {r: 0.84938824, g: 1, b: 0.481, a: 1}
   potionName: Potion of Mild Inconvenience
   icon: {fileID: 0}
   description: Turns tiny annoyances into perfectly timed combat sabotage. Loose

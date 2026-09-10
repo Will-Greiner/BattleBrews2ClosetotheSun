@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Potion of Crunch
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 1
+  potionColor: {r: 0.9490196, g: 0, b: 0.10714728, a: 1}
   potionName: Potion of Crunch
   icon: {fileID: 0}
   description: Makes everything touched by the drinker produce an aggressive and

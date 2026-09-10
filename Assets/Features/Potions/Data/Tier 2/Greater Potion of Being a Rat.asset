@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Greater Potion of Being a Rat
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 2
+  potionColor: {r: 0, g: 1, b: 0.81407046, a: 1}
   potionName: Greater Potion of Being a Rat
   icon: {fileID: 0}
   description: Makes the drinker legally, socially, and spiritually recognized as

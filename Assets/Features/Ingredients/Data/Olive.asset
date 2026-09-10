@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Olive
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Olives
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: 54dbaef646ccf464d99a5a89c224ceb2, type: 3}
+  bookIllustration: {fileID: 21300000, guid: 54dbaef646ccf464d99a5a89c224ceb2, type: 3}
+  description: A pair of sophisticated olives. They add salt, dignity, and an unsolicited
+    opinion about proper glassware.
   brewColor: {r: 0.48, g: 0.82, b: 0.08, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: olive

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Potion of Pecking Order
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 2
+  potionColor: {r: 0.2365726, g: 0.26751402, b: 0.8509804, a: 1}
   potionName: Potion of Pecking Order
   icon: {fileID: 0}
   description: Marks the drinker as commander of every feathered creature nearby,

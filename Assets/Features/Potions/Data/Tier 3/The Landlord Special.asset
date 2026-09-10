@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: The Landlord Special
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 3
+  potionColor: {r: 0, g: 0.84900004, b: 0.25784454, a: 1}
   potionName: The Landlord Special
   icon: {fileID: 0}
   description: Summons indestructible tenants with extensive knowledge of housing

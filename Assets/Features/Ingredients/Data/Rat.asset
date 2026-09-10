@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Rat
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Rat
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: a8611d95f73e3264a80ef19850fc39dd, type: 3}
+  bookIllustration: {fileID: 21300000, guid: a8611d95f73e3264a80ef19850fc39dd, type: 3}
+  description: A resourceful arena rat. Knows three escape routes, two recipes, and
+    one lawyer.
   brewColor: {r: 0.08, g: 0.72, b: 0.95, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: rat

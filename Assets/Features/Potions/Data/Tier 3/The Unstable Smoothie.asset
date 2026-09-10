@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: The Unstable Smoothie
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 3
+  potionColor: {r: 0.90852785, g: 0.325, b: 1, a: 1}
   potionName: The Unstable Smoothie
   icon: {fileID: 0}
   description: Randomly changes the drinker's age, shape, location, and position

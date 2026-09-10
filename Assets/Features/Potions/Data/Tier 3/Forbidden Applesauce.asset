@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Forbidden Applesauce
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 3
+  potionColor: {r: 0.7882353, g: 0, b: 0.19937713, a: 1}
   potionName: Forbidden Applesauce
   icon: {fileID: 0}
   description: Delicious applesauce that whispers increasingly persuasive and poorly

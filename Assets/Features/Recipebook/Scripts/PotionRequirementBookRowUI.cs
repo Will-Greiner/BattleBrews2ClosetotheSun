@@ -18,12 +18,9 @@ public class PotionRequirementBookRowUI : MonoBehaviour
         gameObject.SetActive(true);
 
         if (requirementIcon != null)
-        {
-            requirementIcon.sprite = requirement.Icon;
-            requirementIcon.enabled = requirement.Icon != null;
-        }
+            requirementIcon.gameObject.SetActive(false);
 
         if (requirementNameText != null)
-            requirementNameText.text = requirement.DisplayName;
+            requirementNameText.text = $"{requirement.DisplayName}  x{requirement.RequiredCount}";
     }
 }

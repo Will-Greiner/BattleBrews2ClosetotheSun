@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: UnicornBlood
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Unicorn Blood
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: 36f226f5a94372b49b1b1c313b74ab5e, type: 3}
+  bookIllustration: {fileID: 21300000, guid: 36f226f5a94372b49b1b1c313b74ab5e, type: 3}
+  description: Shimmering unicorn blood sold in a very ordinary bag. Magical, potent,
+    and ethically complicated.
   brewColor: {r: 0.95, g: 0.1, b: 1, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: blood

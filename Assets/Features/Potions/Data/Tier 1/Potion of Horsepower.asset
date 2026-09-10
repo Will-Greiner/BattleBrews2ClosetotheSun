@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Potion of Horsepower
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 1
+  potionColor: {r: 1, g: 0.39732143, b: 0, a: 1}
   potionName: Potion of Horsepower
   icon: {fileID: 0}
   description: Grants tremendous running speed accompanied by involuntary galloping

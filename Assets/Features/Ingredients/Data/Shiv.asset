@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Shiv
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Shiv
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: 4af6ee1807cc8554183fad0983145035, type: 3}
+  bookIllustration: {fileID: 21300000, guid: 4af6ee1807cc8554183fad0983145035, type: 3}
+  description: A crude little shiv whose previous owner insisted it was a specialized
+    culinary instrument.
   brewColor: {r: 0.22, g: 0.62, b: 0.95, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: shiv

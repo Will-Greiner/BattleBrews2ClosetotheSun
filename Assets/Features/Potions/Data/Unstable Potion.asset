@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Unstable Potion
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 4
+  potionColor: {r: 0.90852785, g: 0.325, b: 1, a: 1}
   potionName: Unstable Potion
   icon: {fileID: 0}
   description: A volatile result caused by adding more valid ingredients than the recipe requires.

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: HorseHoof
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Horse Hoof
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: d5ad60fb3c91a6f43bbd914348f4d5a9, type: 3}
+  bookIllustration: {fileID: 21300000, guid: d5ad60fb3c91a6f43bbd914348f4d5a9, type: 3}
+  description: A well-traveled horse hoof that still smells faintly of hay, speed,
+    and poor decisions.
   brewColor: {r: 1, g: 0.55, b: 0.08, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: hoof

@@ -1,6 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PotionBottleType
+{
+    Bottle1 = 1,
+    Bottle2 = 2,
+    Bottle3 = 3,
+    Bottle4 = 4
+}
+
 [CreateAssetMenu(fileName = "New Potion", menuName = "Scriptable Objects/Potion")]
 public class PotionData : ScriptableObject
 {
@@ -8,6 +16,8 @@ public class PotionData : ScriptableObject
     [SerializeField] private string potionName;
     [SerializeField] private Sprite icon;
     [TextArea] [SerializeField] private string description;
+    [SerializeField] private PotionBottleType bottleType = PotionBottleType.Bottle1;
+    [ColorUsage(false, false)] [SerializeField] private Color potionColor = Color.green;
 
     [Header("World Item")]
     [SerializeField] private GameObject prefab;
@@ -23,6 +33,8 @@ public class PotionData : ScriptableObject
     public string PotionName => potionName;
     public Sprite Icon => icon;
     public string Description => description;
+    public PotionBottleType BottleType => bottleType;
+    public Color PotionColor => potionColor;
     public GameObject Prefab => prefab;
     public IReadOnlyList<RecipeRequirement> Requirements => requirements;
     public int RequiredTotalIngredients => CalculateRequiredTotalIngredients();

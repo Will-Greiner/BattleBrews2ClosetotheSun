@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Liquid Courage, Technically
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 2
+  potionColor: {r: 1, g: 0.056179777, b: 0, a: 1}
   potionName: Liquid Courage, Technically
   icon: {fileID: 0}
   description: Produces overwhelming confidence without producing any corresponding

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: MonkeyHeart
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Monkey Heart
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: aa33c07b11c239a47b982ea4ea7a302f, type: 3}
+  bookIllustration: {fileID: 21300000, guid: aa33c07b11c239a47b982ea4ea7a302f, type: 3}
+  description: A restless little heart brimming with curiosity, mischief, and the
+    urge to touch every forbidden lever.
   brewColor: {r: 0.92, g: 0.05, b: 0.35, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: heart

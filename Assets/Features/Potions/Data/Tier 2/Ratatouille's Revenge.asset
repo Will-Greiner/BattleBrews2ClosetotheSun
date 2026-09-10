@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Ratatouille's Revenge
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 2
+  potionColor: {r: 0.060353246, g: 0.8509804, b: 0, a: 1}
   potionName: Ratatouille's Revenge
   icon: {fileID: 0}
   description: Summons an extremely talented and extremely judgmental rat chef.

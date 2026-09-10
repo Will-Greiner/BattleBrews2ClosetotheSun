@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Cockroach
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Cockroach
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: ae4db93f4cd706749a91e7e543bfeb3c, type: 3}
+  bookIllustration: {fileID: 21300000, guid: ae4db93f4cd706749a91e7e543bfeb3c, type: 3}
+  description: A remarkably durable cockroach. It has survived poison, fire, and
+    several strongly worded eviction notices.
   brewColor: {r: 0.05, g: 0.72, b: 0.62, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: cockroach

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Potion of Weaponized Romance
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 3
+  potionColor: {r: 1, g: 0, b: 0.4329896, a: 1}
   potionName: Potion of Weaponized Romance
   icon: {fileID: 0}
   description: Converts dramatic attraction, heartbreak, and betrayal into concentrated

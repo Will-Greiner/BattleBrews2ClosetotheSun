@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Potion of Plausible Deniability
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 3
+  potionColor: {r: 0.10723925, g: 0.81461746, b: 0.9490196, a: 1}
   potionName: Potion of Plausible Deniability
   icon: {fileID: 0}
   description: Splits every action into several equally credible versions, forcing

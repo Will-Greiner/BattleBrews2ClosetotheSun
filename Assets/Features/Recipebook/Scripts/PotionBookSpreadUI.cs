@@ -21,7 +21,10 @@ public class PotionBookSpreadUI : MonoBehaviour
     [Min(0)] [SerializeField] private int startingPotionIndex;
 
     private readonly List<PotionRequirementBookRowUI> spawnedRows = new();
+    private readonly GameObject[] bottleRoots = new GameObject[4];
+    private readonly Image[] bottleFills = new Image[4];
     private int currentPotionIndex;
+    private bool illustrationVisible = true;
 
     public int CurrentIndex => currentPotionIndex;
     public int EntryCount => potionDatabase != null && potionDatabase.Potions != null ? potionDatabase.Potions.Count : 0;
@@ -29,9 +32,30 @@ public class PotionBookSpreadUI : MonoBehaviour
     public bool HasNext => currentPotionIndex < EntryCount - 1;
     public PotionData CurrentPotion => GetPotion(currentPotionIndex);
 
+    public void SetIllustrationVisible(bool visible)
+    {
+        illustrationVisible = visible;
+
+        if (!visible)
+        {
+            HideBottleImages();
+
+            if (descriptionText != null)
+                descriptionText.gameObject.SetActive(false);
+
+            return;
+        }
+
+        PotionData potion = CurrentPotion;
+
+        if (potion != null)
+            DisplayPotion(potion);
+    }
+
     private void Awake()
     {
         currentPotionIndex = ClampPotionIndex(startingPotionIndex);
+        CacheBottleImages();
     }
 
     public void Refresh()
@@ -78,11 +102,16 @@ public class PotionBookSpreadUI : MonoBehaviour
             entryImage.enabled = potion.Icon != null;
         }
 
+        DisplayBottle(potion);
+
         if (potionNameText != null)
             potionNameText.text = potion.PotionName;
 
         if (descriptionText != null)
+        {
             descriptionText.text = potion.Description;
+            descriptionText.gameObject.SetActive(illustrationVisible && !string.IsNullOrWhiteSpace(potion.Description));
+        }
 
         if (requirementContainer == null || requirementRowPrefab == null)
             return;
@@ -92,12 +121,9 @@ public class PotionBookSpreadUI : MonoBehaviour
             if (requirement == null)
                 continue;
 
-            for (int unitIndex = 0; unitIndex < requirement.RequiredCount; unitIndex++)
-            {
-                PotionRequirementBookRowUI row = Instantiate(requirementRowPrefab, requirementContainer);
-                row.Display(requirement);
-                spawnedRows.Add(row);
-            }
+            PotionRequirementBookRowUI row = Instantiate(requirementRowPrefab, requirementContainer);
+            row.Display(requirement);
+            spawnedRows.Add(row);
         }
     }
 
@@ -128,11 +154,16 @@ public class PotionBookSpreadUI : MonoBehaviour
             entryImage.enabled = false;
         }
 
+        HideBottleImages();
+
         if (potionNameText != null)
             potionNameText.text = string.Empty;
 
         if (descriptionText != null)
+        {
             descriptionText.text = string.Empty;
+            descriptionText.gameObject.SetActive(false);
+        }
 
         ClearRequirementRows();
     }
@@ -146,5 +177,57 @@ public class PotionBookSpreadUI : MonoBehaviour
         }
 
         spawnedRows.Clear();
+    }
+
+    private void CacheBottleImages()
+    {
+        Transform[] descendants = transform.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform descendant in descendants)
+        {
+            for (int index = 0; index < bottleRoots.Length; index++)
+            {
+                if (descendant.name != $"PotionImage{index + 1}")
+                    continue;
+
+                bottleRoots[index] = descendant.gameObject;
+                bottleFills[index] = FindNamedImage(descendant, "PotionFill");
+                break;
+            }
+        }
+    }
+
+    private void DisplayBottle(PotionData potion)
+    {
+        int selectedIndex = Mathf.Clamp((int)potion.BottleType - 1, 0, bottleRoots.Length - 1);
+
+        for (int index = 0; index < bottleRoots.Length; index++)
+        {
+            if (bottleRoots[index] != null)
+                bottleRoots[index].SetActive(illustrationVisible && index == selectedIndex);
+        }
+
+        if (bottleFills[selectedIndex] != null)
+            bottleFills[selectedIndex].color = potion.PotionColor;
+    }
+
+    private void HideBottleImages()
+    {
+        foreach (GameObject bottleRoot in bottleRoots)
+        {
+            if (bottleRoot != null)
+                bottleRoot.SetActive(false);
+        }
+    }
+
+    private static Image FindNamedImage(Transform root, string imageName)
+    {
+        foreach (Image image in root.GetComponentsInChildren<Image>(true))
+        {
+            if (image.name == imageName)
+                return image;
+        }
+
+        return null;
     }
 }

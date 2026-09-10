@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Potion of Biting Wit
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 2
+  potionColor: {r: 0.36799997, g: 0.93471074, b: 1, a: 1}
   potionName: Potion of Biting Wit
   icon: {fileID: 0}
   description: Converts sufficiently devastating insults into physical damage.

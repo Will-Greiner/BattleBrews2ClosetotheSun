@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: Fungal Networking
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 3
+  potionColor: {r: 0.5555877, g: 0.17160001, b: 0.8666667, a: 1}
   potionName: Fungal Networking
   icon: {fileID: 0}
   description: Allows communication, negotiation, and malicious gossip through nearby

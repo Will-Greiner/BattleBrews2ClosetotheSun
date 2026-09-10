@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b202bd7f056b640b923bdae6c5d413, type: 3}
   m_Name: GrossPotion
   m_EditorClassIdentifier: Assembly-CSharp::PotionData
+  bottleType: 4
+  potionColor: {r: 0.34117648, g: 0.31595784, b: 0.038552955, a: 1}
   potionName: Gross Potion
   icon: {fileID: 0}
   description: A muddy failure produced when the ingredients do not match any known

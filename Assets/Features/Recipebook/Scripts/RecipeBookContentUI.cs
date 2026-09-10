@@ -90,6 +90,9 @@ public class RecipeBookContentUI : MonoBehaviour
         if (potionContentRoot != null)
             potionContentRoot.SetActive(currentSection == RecipeBookSection.Potions);
 
+        ingredientSpread?.SetIllustrationVisible(currentSection == RecipeBookSection.Ingredients);
+        potionSpread?.SetIllustrationVisible(currentSection == RecipeBookSection.Potions);
+
         if (currentSection == RecipeBookSection.Ingredients)
             ingredientSpread?.Refresh();
         else

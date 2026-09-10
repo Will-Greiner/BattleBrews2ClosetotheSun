@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: BatWing
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientName: Bat Wing
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: 502d40f77f29c684d9d4d9c56dbeab7f, type: 3}
+  bookIllustration: {fileID: 21300000, guid: 502d40f77f29c684d9d4d9c56dbeab7f, type: 3}
+  description: A leathery bat wing with excellent dramatic instincts. It twitches
+    whenever someone says something ominous.
   brewColor: {r: 0.36, g: 0.16, b: 0.82, a: 1}
   persistentId: c844486e64f04dfea3ce22be39f3a03b
   unlockId: wing

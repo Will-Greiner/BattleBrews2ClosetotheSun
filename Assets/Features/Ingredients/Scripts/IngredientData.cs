@@ -10,6 +10,8 @@ public class IngredientData : ScriptableObject
     [Header("Identity")]
     [SerializeField] private string ingredientName;
     [SerializeField] private Sprite icon;
+    [Tooltip("Large illustration shown on the ingredient page. Falls back to Icon when left empty.")]
+    [SerializeField] private Sprite bookIllustration;
     [TextArea] [SerializeField] private string description;
     [ColorUsage(false, false)] [SerializeField] private Color brewColor = new Color(0.35f, 0.8f, 0.3f, 1f);
     [HideInInspector] [SerializeField] private string persistentId;
@@ -30,6 +32,7 @@ public class IngredientData : ScriptableObject
 
     public string IngredientName => ingredientName;
     public Sprite Icon => icon;
+    public Sprite BookIllustration => bookIllustration != null ? bookIllustration : icon;
     public string Description => description;
     public Color BrewColor => brewColor;
     public string PersistentId => persistentId;

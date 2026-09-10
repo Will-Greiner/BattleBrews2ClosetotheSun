@@ -20,12 +20,31 @@ public class IngredientBookSpreadUI : MonoBehaviour
     [Min(0)] [SerializeField] private int startingIngredientIndex;
 
     private int currentIngredientIndex;
+    private bool illustrationVisible = true;
 
     public int CurrentIndex => currentIngredientIndex;
     public int EntryCount => ingredientDatabase != null && ingredientDatabase.Ingredients != null ? ingredientDatabase.Ingredients.Count : 0;
     public bool HasPrevious => currentIngredientIndex > 0;
     public bool HasNext => currentIngredientIndex < EntryCount - 1;
     public IngredientData CurrentIngredient => GetIngredient(currentIngredientIndex);
+
+    public void SetIllustrationVisible(bool visible)
+    {
+        illustrationVisible = visible;
+
+        if (!visible)
+        {
+            if (entryImage != null)
+                entryImage.enabled = false;
+
+            if (descriptionText != null)
+                descriptionText.gameObject.SetActive(false);
+
+            return;
+        }
+
+        DisplayIngredient(CurrentIngredient);
+    }
 
     private void Awake()
     {
@@ -90,15 +109,19 @@ public class IngredientBookSpreadUI : MonoBehaviour
 
         if (entryImage != null)
         {
-            entryImage.sprite = ingredient.Icon;
-            entryImage.enabled = ingredient.Icon != null;
+            entryImage.sprite = ingredient.BookIllustration;
+            bool hasIllustration = ingredient.BookIllustration != null;
+            entryImage.enabled = illustrationVisible && hasIllustration;
         }
 
         if (ingredientNameText != null)
             ingredientNameText.text = ingredient.IngredientName;
 
         if (descriptionText != null)
+        {
             descriptionText.text = ingredient.Description;
+            descriptionText.gameObject.SetActive(illustrationVisible && !string.IsNullOrWhiteSpace(ingredient.Description));
+        }
 
         IngredientDiscoveryManager discoveryManager = IngredientDiscoveryManager.Instance;
 
@@ -146,7 +169,10 @@ public class IngredientBookSpreadUI : MonoBehaviour
             ingredientNameText.text = string.Empty;
 
         if (descriptionText != null)
+        {
             descriptionText.text = string.Empty;
+            descriptionText.gameObject.SetActive(false);
+        }
 
         foreach (IngredientPropertyRowUI row in propertyRows)
         {
