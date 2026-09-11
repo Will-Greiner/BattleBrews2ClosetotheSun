@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A resourceful arena rat. Knows three escape routes, two recipes, and
     one lawyer.
   brewColor: {r: 0.08, g: 0.72, b: 0.95, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: 6e6e718e9c06f1f43a7dc335c60dc769
   unlockId: rat
   prefab: {fileID: 6071987975637580062, guid: 7aa03b12511fb38448f4101a22a5cd70, type: 3}
   properties:

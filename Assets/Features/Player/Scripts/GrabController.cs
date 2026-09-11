@@ -10,6 +10,7 @@ public class GrabController : MonoBehaviour
     [SerializeField] private HandController handController;
     [SerializeField] private HandAnimationController handAnimationController;
     [SerializeField] private InteractionPromptUI interactionPromptUI;
+    [SerializeField] private Transform grabTarget;
 
     [Header("Detection")]
     [SerializeField] private float interactionDistance = 10f;
@@ -51,6 +52,9 @@ public class GrabController : MonoBehaviour
 
         if (handAnimationController == null)
             handAnimationController = GetComponentInChildren<HandAnimationController>();
+
+        if (grabTarget == null)
+            grabTarget = FindChildByName(transform, "GrabTarget");
 
         handRigidbody.isKinematic = true;
         handRigidbody.useGravity = false;
@@ -97,7 +101,8 @@ public class GrabController : MonoBehaviour
         if (heldItem.GetComponent<StirringStick>() != null || heldItem.GetComponent<CauldronRope>() != null || heldItem.GetComponent<MortarPestle>() != null || heldItem.GetComponent<BurnerBellows>() != null || heldItem.GetComponent<PulverizerCrank>() != null)
             return;
 
-        float distance = Vector3.Distance(heldItem.GrabPoint.position, transform.position);
+        Vector3 handAnchorPosition = grabTarget != null ? grabTarget.position : transform.position;
+        float distance = Vector3.Distance(heldItem.GrabPoint.position, handAnchorPosition);
 
         if (distance > breakDistance)
             Release();
@@ -404,7 +409,7 @@ public class GrabController : MonoBehaviour
         grabJoint.connectedBody = handRigidbody;
         grabJoint.autoConfigureConnectedAnchor = false;
         grabJoint.anchor = body.transform.InverseTransformPoint(heldItem.GrabPoint.position);
-        grabJoint.connectedAnchor = Vector3.zero;
+        grabJoint.connectedAnchor = handRigidbody.transform.InverseTransformPoint(grabTarget != null ? grabTarget.position : transform.position);
         grabJoint.xMotion = ConfigurableJointMotion.Locked;
         grabJoint.yMotion = ConfigurableJointMotion.Locked;
         grabJoint.zMotion = ConfigurableJointMotion.Locked;
@@ -418,6 +423,17 @@ public class GrabController : MonoBehaviour
         grabJoint.projectionAngle = 180f;
 
         return true;
+    }
+
+    private static Transform FindChildByName(Transform parent, string childName)
+    {
+        foreach (Transform child in parent.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.name == childName)
+                return child;
+        }
+
+        return null;
     }
 
     public bool Release()

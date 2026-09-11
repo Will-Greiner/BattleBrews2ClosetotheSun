@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A glossy crow beak ideal for pecking, prying, and repeating secrets
     with suspicious accuracy.
   brewColor: {r: 0.12, g: 0.3, b: 0.9, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: c1f32944d410ffe4caea5a485d08e345
   unlockId: beak
   prefab: {fileID: 691683802500807619, guid: 51a06a9adbffae346819d20da1b6c5f6, type: 3}
   properties:

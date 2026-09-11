@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A crude little shiv whose previous owner insisted it was a specialized
     culinary instrument.
   brewColor: {r: 0.22, g: 0.62, b: 0.95, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: 571e186e12966bc4e97b9e2dbdf1b563
   unlockId: shiv
   prefab: {fileID: 7407669928952983492, guid: 7858e0f1ace2e4a45a7d0a07c092f3de, type: 3}
   properties:

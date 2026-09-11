@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A sweet strawberry with an aggressively romantic aroma and a flair
     for unnecessary declarations of love.
   brewColor: {r: 1, g: 0.08, b: 0.48, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: 462ef331ff65a5045b1b48ec589423db
   unlockId: strawberry
   prefab: {fileID: 4175072006647630318, guid: 7abeb019999df574c81c2d5c91890ecc, type: 3}
   properties:

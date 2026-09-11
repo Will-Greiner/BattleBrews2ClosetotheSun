@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A loose collection of teeth. None match, all sparkle, and at least
     one appears to be judging you.
   brewColor: {r: 0.85, g: 1, b: 0.3, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: dcfe0207b62c8ae4eabc39bdd4e0765f
   unlockId: teeth
   prefab: {fileID: 1785506822141671411, guid: 3a72550ca5a22bc4999f52086285bbbf, type: 3}
   properties:

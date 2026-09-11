@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A suspiciously perfect apple. Crisp, bright, and just smug enough
     to suggest it knows how the story ends.
   brewColor: {r: 0.95, g: 0.16, b: 0.12, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: d0e91350edcd0b341ab3bc3df2efbcd4
   unlockId: apple
   prefab: {fileID: 5889618982859372677, guid: f4bb44576fca1c748af3afb4bfbb7824, type: 3}
   properties:

@@ -100,7 +100,7 @@ public class AudioManager : MonoBehaviour
         SetMixerVolume("MusicVolume", GameSettings.MusicVolume);
         SetMixerVolume("SFXVolume", GameSettings.SoundEffectsVolume);
         SetMixerVolume("UIVolume", GameSettings.UserInterfaceVolume);
-        SetMixerVolume("AmbienceVolume", GameSettings.SoundEffectsVolume);
+        SetMixerVolume("AmbienceVolume", GameSettings.AmbienceVolume);
     }
 
     private void SetMixerVolume(string parameterName, float linearVolume)

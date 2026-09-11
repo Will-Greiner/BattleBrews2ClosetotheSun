@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A damp mushroom connected to a vast underground social network. Most
     of its messages are gossip.
   brewColor: {r: 0.62, g: 0.12, b: 0.92, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: d42328de88fa08f48bd1e9c2cbff345c
   unlockId: mushroom
   prefab: {fileID: 1843440888381559825, guid: 140970d1d507d9542822fb24b628ce43, type: 3}
   properties:

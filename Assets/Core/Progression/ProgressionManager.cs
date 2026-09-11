@@ -229,5 +229,10 @@ public class ProgressionManager : MonoBehaviour
                 if (upgrade != null && !string.IsNullOrWhiteSpace(upgrade.id)) upgradeLevels[upgrade.id] = Mathf.Max(0, upgrade.level);
     }
 
-    private static string GetPropertyKey(IngredientData ingredient, int level) => $"{ingredient.PersistentId}:property:{level}";
+    private static string GetPropertyKey(IngredientData ingredient, int level)
+    {
+        ItemPropertyData property = ingredient != null ? ingredient.GetPropertyAtLevel(level) : null;
+        string propertyIdentity = property != null ? property.name : $"level-{level}";
+        return $"{ingredient.PersistentId}:ingredient:{ingredient.name}:property:{propertyIdentity}";
+    }
 }

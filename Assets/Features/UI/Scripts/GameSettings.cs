@@ -3,12 +3,23 @@ using UnityEngine;
 
 public static class GameSettings
 {
+    public enum DisplayMode
+    {
+        Fullscreen,
+        BorderlessWindow,
+        Windowed
+    }
+
     private const string MasterVolumeKey = "settings.masterVolume";
     private const string MusicVolumeKey = "settings.musicVolume";
     private const string SoundEffectsVolumeKey = "settings.soundEffectsVolume";
     private const string UserInterfaceVolumeKey = "settings.userInterfaceVolume";
+    private const string AmbienceVolumeKey = "settings.ambienceVolume";
     private const string CameraSpeedKey = "settings.cameraSpeed";
     private const string FullscreenKey = "settings.fullscreen";
+    private const string DisplayModeKey = "settings.displayMode";
+    private const string ResolutionWidthKey = "settings.resolutionWidth";
+    private const string ResolutionHeightKey = "settings.resolutionHeight";
     private const string QualityKey = "settings.quality";
     private const string VSyncKey = "settings.vSync";
     private const string SubtitlesKey = "settings.subtitles";
@@ -19,8 +30,12 @@ public static class GameSettings
     public static float MusicVolume { get; private set; } = 1f;
     public static float SoundEffectsVolume { get; private set; } = 1f;
     public static float UserInterfaceVolume { get; private set; } = 1f;
+    public static float AmbienceVolume { get; private set; } = 1f;
     public static float CameraSpeedMultiplier { get; private set; } = 1f;
-    public static bool Fullscreen { get; private set; } = true;
+    public static DisplayMode CurrentDisplayMode { get; private set; } = DisplayMode.BorderlessWindow;
+    public static int ResolutionWidth { get; private set; }
+    public static int ResolutionHeight { get; private set; }
+    public static bool Fullscreen => CurrentDisplayMode != DisplayMode.Windowed;
     public static int QualityLevel { get; private set; }
     public static bool VSync { get; private set; } = true;
     public static bool Subtitles { get; private set; } = true;
@@ -35,8 +50,12 @@ public static class GameSettings
         MusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
         SoundEffectsVolume = PlayerPrefs.GetFloat(SoundEffectsVolumeKey, 1f);
         UserInterfaceVolume = PlayerPrefs.GetFloat(UserInterfaceVolumeKey, 1f);
+        AmbienceVolume = PlayerPrefs.GetFloat(AmbienceVolumeKey, 1f);
         CameraSpeedMultiplier = PlayerPrefs.GetFloat(CameraSpeedKey, 1f);
-        Fullscreen = PlayerPrefs.GetInt(FullscreenKey, Screen.fullScreen ? 1 : 0) == 1;
+        int defaultDisplayMode = Screen.fullScreenMode == FullScreenMode.Windowed ? (int)DisplayMode.Windowed : (int)DisplayMode.BorderlessWindow;
+        CurrentDisplayMode = (DisplayMode)Mathf.Clamp(PlayerPrefs.GetInt(DisplayModeKey, defaultDisplayMode), 0, 2);
+        ResolutionWidth = Mathf.Max(640, PlayerPrefs.GetInt(ResolutionWidthKey, Screen.width));
+        ResolutionHeight = Mathf.Max(480, PlayerPrefs.GetInt(ResolutionHeightKey, Screen.height));
         QualityLevel = Mathf.Clamp(PlayerPrefs.GetInt(QualityKey, QualitySettings.GetQualityLevel()), 0, Mathf.Max(0, QualitySettings.names.Length - 1));
         VSync = PlayerPrefs.GetInt(VSyncKey, QualitySettings.vSyncCount > 0 ? 1 : 0) == 1;
         Subtitles = PlayerPrefs.GetInt(SubtitlesKey, 1) == 1;
@@ -74,6 +93,13 @@ public static class GameSettings
         SaveAndNotify();
     }
 
+    public static void SetAmbienceVolume(float value)
+    {
+        AmbienceVolume = Mathf.Clamp01(value);
+        PlayerPrefs.SetFloat(AmbienceVolumeKey, AmbienceVolume);
+        SaveAndNotify();
+    }
+
     public static void SetCameraSpeed(float value)
     {
         CameraSpeedMultiplier = Mathf.Clamp(value, 0.25f, 2f);
@@ -83,9 +109,25 @@ public static class GameSettings
 
     public static void SetFullscreen(bool value)
     {
-        Fullscreen = value;
-        Screen.fullScreen = Fullscreen;
-        PlayerPrefs.SetInt(FullscreenKey, Fullscreen ? 1 : 0);
+        SetDisplayMode(value ? (int)DisplayMode.BorderlessWindow : (int)DisplayMode.Windowed);
+    }
+
+    public static void SetDisplayMode(int value)
+    {
+        CurrentDisplayMode = (DisplayMode)Mathf.Clamp(value, 0, 2);
+        PlayerPrefs.SetInt(DisplayModeKey, (int)CurrentDisplayMode);
+        PlayerPrefs.SetInt(FullscreenKey, CurrentDisplayMode == DisplayMode.Windowed ? 0 : 1);
+        ApplyResolutionAndDisplayMode();
+        SaveAndNotify();
+    }
+
+    public static void SetResolution(int width, int height)
+    {
+        ResolutionWidth = Mathf.Max(640, width);
+        ResolutionHeight = Mathf.Max(480, height);
+        PlayerPrefs.SetInt(ResolutionWidthKey, ResolutionWidth);
+        PlayerPrefs.SetInt(ResolutionHeightKey, ResolutionHeight);
+        ApplyResolutionAndDisplayMode();
         SaveAndNotify();
     }
 
@@ -129,7 +171,7 @@ public static class GameSettings
     private static void Apply()
     {
         AudioListener.volume = MasterVolume;
-        Screen.fullScreen = Fullscreen;
+        ApplyResolutionAndDisplayMode();
 
         if (QualitySettings.names.Length > 0)
             QualitySettings.SetQualityLevel(QualityLevel, true);
@@ -137,6 +179,18 @@ public static class GameSettings
         QualitySettings.vSyncCount = VSync ? 1 : 0;
 
         Changed?.Invoke();
+    }
+
+    private static void ApplyResolutionAndDisplayMode()
+    {
+        FullScreenMode unityMode = CurrentDisplayMode switch
+        {
+            DisplayMode.Fullscreen => FullScreenMode.ExclusiveFullScreen,
+            DisplayMode.BorderlessWindow => FullScreenMode.FullScreenWindow,
+            _ => FullScreenMode.Windowed
+        };
+
+        Screen.SetResolution(ResolutionWidth, ResolutionHeight, unityMode);
     }
 
     private static void SaveAndNotify()

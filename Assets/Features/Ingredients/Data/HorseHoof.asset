@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A well-traveled horse hoof that still smells faintly of hay, speed,
     and poor decisions.
   brewColor: {r: 1, g: 0.55, b: 0.08, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: 1879bf7e18dc1c84d865b92a11d34263
   unlockId: hoof
   prefab: {fileID: 4570771058291320902, guid: 2d0451de21340d947a4080551c4bc301, type: 3}
   properties:

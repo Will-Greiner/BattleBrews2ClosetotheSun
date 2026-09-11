@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Shimmering unicorn blood sold in a very ordinary bag. Magical, potent,
     and ethically complicated.
   brewColor: {r: 0.95, g: 0.1, b: 1, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: bd768ddce60fa43469e082ae8116b017
   unlockId: blood
   prefab: {fileID: 9136624165198822000, guid: fcd3067523a759f4191c3b3114ff4998, type: 3}
   properties:

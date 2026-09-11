@@ -18,6 +18,9 @@ public class CauldronLiquidController : MonoBehaviour
     [SerializeField] private Color grossPotionColor = new Color(0.28f, 0.1f, 0.025f, 1f);
     [SerializeField] private Color unstablePotionColor = new Color(0.9f, 0.12f, 1f, 1f);
 
+    [Header("Colored Lighting")]
+    [SerializeField] private Light cauldronLight;
+
     private static readonly int ActivityId = Shader.PropertyToID("_Activity");
     private static readonly int StirStrengthId = Shader.PropertyToID("_StirStrength");
     private static readonly int ReactionId = Shader.PropertyToID("_Reaction");
@@ -42,12 +45,15 @@ public class CauldronLiquidController : MonoBehaviour
     private Vector3 fullLiquidLocalPosition;
     private Color mixtureColor;
     private Color targetMixtureColor;
+    private Color startingLiquidColor = new Color(0.293f, 0.541f, 0.158f, 1f);
+    private Color startingLightColor;
     private float mixtureAmount;
     private float targetMixtureAmount;
 
     public float VisualActivity => activity;
     public float DrainAmount => drain;
     public Color CurrentMixtureColor => mixtureColor;
+    public Color CurrentLiquidColor => Color.Lerp(startingLiquidColor, mixtureColor, mixtureAmount);
     public float MixtureAmount => mixtureAmount;
 
     private void Awake()
@@ -56,6 +62,16 @@ public class CauldronLiquidController : MonoBehaviour
         stirringStick = GetComponentInChildren<StirringStick>(true);
         liquidRenderer = FindLiquidRenderer();
         properties = new MaterialPropertyBlock();
+
+        if (liquidRenderer != null && liquidRenderer.sharedMaterial.HasProperty("_BaseColor"))
+            startingLiquidColor = liquidRenderer.sharedMaterial.GetColor("_BaseColor");
+
+        if (cauldronLight == null)
+            cauldronLight = FindCauldronLight();
+
+        if (cauldronLight != null)
+            startingLightColor = cauldronLight.color;
+
         previousContributionCount = cauldron.ContributionCount;
         targetMixtureColor = CalculateMixtureColor();
         mixtureColor = targetMixtureColor;
@@ -109,6 +125,9 @@ public class CauldronLiquidController : MonoBehaviour
         mixtureColor = Color.Lerp(mixtureColor, targetMixtureColor, 1f - Mathf.Exp(-colorResponseSpeed * Time.deltaTime));
         mixtureAmount = Mathf.MoveTowards(mixtureAmount, targetMixtureAmount, colorResponseSpeed * Time.deltaTime);
 
+        if (cauldronLight != null)
+            cauldronLight.color = mixtureAmount > 0f ? CurrentLiquidColor : startingLightColor;
+
         if (liquidTransform != null)
             liquidTransform.localPosition = fullLiquidLocalPosition + Vector3.down * (drain * drainSinkDistance);
 
@@ -121,6 +140,17 @@ public class CauldronLiquidController : MonoBehaviour
         properties.SetColor(MixtureColorId, mixtureColor);
         properties.SetFloat(MixtureAmountId, mixtureAmount);
         liquidRenderer.SetPropertyBlock(properties);
+    }
+
+    private Light FindCauldronLight()
+    {
+        foreach (Light candidate in GetComponentsInChildren<Light>(true))
+        {
+            if (candidate.name == "CauldronLight")
+                return candidate;
+        }
+
+        return null;
     }
 
     private Renderer FindLiquidRenderer()
@@ -167,7 +197,7 @@ public class CauldronLiquidController : MonoBehaviour
     private Color CalculateMixtureColor()
     {
         if (cauldron == null || cauldron.ContributionCount == 0)
-            return mixtureColor == default ? new Color(0.35f, 0.8f, 0.3f, 1f) : mixtureColor;
+            return startingLiquidColor;
 
         float hueX = 0f;
         float hueY = 0f;

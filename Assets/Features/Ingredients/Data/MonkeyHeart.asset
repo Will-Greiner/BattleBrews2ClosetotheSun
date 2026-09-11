@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A restless little heart brimming with curiosity, mischief, and the
     urge to touch every forbidden lever.
   brewColor: {r: 0.92, g: 0.05, b: 0.35, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: c0fb2c28df1df79449068da34ceb6556
   unlockId: heart
   prefab: {fileID: 4293072629713336178, guid: 89892808c5db3ab43a39dce232fe95b5, type: 3}
   properties:

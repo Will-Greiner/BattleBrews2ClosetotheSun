@@ -6,7 +6,7 @@ public class ShopPhaseController : MonoBehaviour
     public static ShopPhaseController Instance { get; private set; }
 
     [Header("Presentation")]
-    [SerializeField] private Transform playerRoot;
+    [SerializeField] private Camera playerCamera;
     [SerializeField] private Transform shopFacingPoint;
     [SerializeField] private GameObject shopkeeperRoot;
     [SerializeField] private CanvasGroup shopCanvas;
@@ -18,7 +18,9 @@ public class ShopPhaseController : MonoBehaviour
     [SerializeField] private GrabController grabController;
 
     private Coroutine routine;
-    private Quaternion playAreaRotation;
+    private Vector3 gameplayCameraPosition;
+    private Quaternion gameplayCameraRotation;
+    private bool gameplayCameraPoseSaved;
     private bool subscribed;
 
     public bool IsOpen { get; private set; }
@@ -27,6 +29,13 @@ public class ShopPhaseController : MonoBehaviour
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+
+        if (playerCamera == null && grabController != null)
+            playerCamera = grabController.PlayerCamera;
+
+        if (playerCamera == null)
+            playerCamera = Camera.main;
+
         SetShopVisible(false);
     }
 
@@ -41,6 +50,8 @@ public class ShopPhaseController : MonoBehaviour
 
         if (grabController != null)
             grabController.ReleaseInputLock(this);
+
+        RestoreGameplayCameraImmediately();
     }
 
     private void OnDestroy()
@@ -70,11 +81,14 @@ public class ShopPhaseController : MonoBehaviour
     private IEnumerator OpenRoutine()
     {
         if (grabController != null) grabController.AcquireInputLock(this);
-        if (playerRoot != null) playAreaRotation = playerRoot.rotation;
+        SaveGameplayCameraPose();
         if (shopkeeperRoot != null) shopkeeperRoot.SetActive(true);
 
-        Quaternion shopRotation = GetShopRotation();
-        yield return RotatePlayer(shopRotation);
+        if (playerCamera != null && shopFacingPoint != null)
+            yield return MoveCamera(playerCamera.transform.position, playerCamera.transform.rotation, shopFacingPoint.position, shopFacingPoint.rotation);
+        else if (shopFacingPoint == null)
+            Debug.LogError($"{name}: A Shop Facing Point must be assigned for the shop camera transition.", this);
+
         yield return FadeShop(1f);
         IsOpen = true;
         routine = null;
@@ -84,7 +98,11 @@ public class ShopPhaseController : MonoBehaviour
     {
         yield return FadeShop(0f);
         IsOpen = false;
-        yield return RotatePlayer(playAreaRotation);
+
+        if (playerCamera != null && gameplayCameraPoseSaved)
+            yield return MoveCamera(playerCamera.transform.position, playerCamera.transform.rotation, gameplayCameraPosition, gameplayCameraRotation);
+
+        gameplayCameraPoseSaved = false;
 
         if (shopkeeperRoot != null) shopkeeperRoot.SetActive(false);
         if (grabController != null) grabController.ReleaseInputLock(this);
@@ -93,36 +111,42 @@ public class ShopPhaseController : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.CompleteShopPhase();
     }
 
-    private Quaternion GetShopRotation()
+    private void SaveGameplayCameraPose()
     {
-        if (playerRoot == null) return Quaternion.identity;
+        if (playerCamera == null)
+            return;
 
-        if (shopFacingPoint == null)
-        {
-            Debug.LogError($"{name}: A Shop Facing Point must be assigned for a reliable shop transition.", this);
-            return playerRoot.rotation;
-        }
-
-        Vector3 direction = shopFacingPoint.position - playerRoot.position;
-        direction.y = 0f;
-        return direction.sqrMagnitude > 0.001f ? Quaternion.LookRotation(direction.normalized, Vector3.up) : playerRoot.rotation;
+        gameplayCameraPosition = playerCamera.transform.position;
+        gameplayCameraRotation = playerCamera.transform.rotation;
+        gameplayCameraPoseSaved = true;
     }
 
-    private IEnumerator RotatePlayer(Quaternion target)
+    private void RestoreGameplayCameraImmediately()
     {
-        if (playerRoot == null) yield break;
-        Quaternion start = playerRoot.rotation;
+        if (playerCamera == null || !gameplayCameraPoseSaved)
+            return;
+
+        playerCamera.transform.SetPositionAndRotation(gameplayCameraPosition, gameplayCameraRotation);
+        gameplayCameraPoseSaved = false;
+    }
+
+    private IEnumerator MoveCamera(Vector3 startPosition, Quaternion startRotation, Vector3 destinationPosition, Quaternion destinationRotation)
+    {
+        if (playerCamera == null)
+            yield break;
+
         float elapsed = 0f;
 
         while (elapsed < rotationDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             float t = rotationCurve.Evaluate(Mathf.Clamp01(elapsed / rotationDuration));
-            playerRoot.rotation = Quaternion.SlerpUnclamped(start, target, t);
+            playerCamera.transform.position = Vector3.LerpUnclamped(startPosition, destinationPosition, t);
+            playerCamera.transform.rotation = Quaternion.SlerpUnclamped(startRotation, destinationRotation, t);
             yield return null;
         }
 
-        playerRoot.rotation = target;
+        playerCamera.transform.SetPositionAndRotation(destinationPosition, destinationRotation);
     }
 
     private void SetShopVisible(bool visible)

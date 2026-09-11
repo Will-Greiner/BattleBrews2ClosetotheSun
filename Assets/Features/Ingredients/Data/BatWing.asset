@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A leathery bat wing with excellent dramatic instincts. It twitches
     whenever someone says something ominous.
   brewColor: {r: 0.36, g: 0.16, b: 0.82, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: f68e2d7378cbe7e49929a72cfd53b539
   unlockId: wing
   prefab: {fileID: 7946623481557631128, guid: aeb100052c6989349aebea0cdca70822, type: 3}
   properties:

@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A dependable potato with tremendous hidden potential and absolutely
     no need to brag about it.
   brewColor: {r: 1, g: 0.34, b: 0.06, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: 1d7365f79f33ed3449c48c7468a3003c
   unlockId: potato
   prefab: {fileID: 1836738030230703250, guid: 2fae6bc46c8643146aba71cd00ba95fc, type: 3}
   properties:

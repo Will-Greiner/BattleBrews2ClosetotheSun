@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A remarkably durable cockroach. It has survived poison, fire, and
     several strongly worded eviction notices.
   brewColor: {r: 0.05, g: 0.72, b: 0.62, a: 1}
-  persistentId: c844486e64f04dfea3ce22be39f3a03b
+  persistentId: e1e242ccb8efba84e968929f25f4fee7
   unlockId: cockroach
   prefab: {fileID: 2014549647235905502, guid: b1bf9948247bcdc438c442f6cea1e8bb, type: 3}
   properties:
