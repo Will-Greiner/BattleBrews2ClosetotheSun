@@ -250883,7 +250883,7 @@ MonoBehaviour:
   carouselPivot: {fileID: 5689983607706929586}
   localRotationAxis: {x: 0, y: 1, z: 0}
   mouseSensitivity: 0.6
-  maximumDegreesPerFrame: 30
+  maximumDegreesPerFrame: 15
   releaseDrag: 300
 --- !u!114 &8744084354921514521
 MonoBehaviour:
