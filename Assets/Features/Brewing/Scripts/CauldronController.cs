@@ -83,9 +83,11 @@ public class CauldronController : MonoBehaviour
         if (ingredientItem == null || ingredientItem.Data == null)
             return false;
 
-        contributions.Add(new CauldronContribution(ingredientItem.Data));
+        IngredientData addedIngredient = ingredientItem.Data;
+        contributions.Add(new CauldronContribution(addedIngredient));
         PlayIngredientAddedEffects();
         ContributionsChanged?.Invoke();
+        TutorialEvents.Report(TutorialTrigger.IngredientAdded, TutorialEvents.GetIngredientId(addedIngredient));
 
         item.gameObject.SetActive(false);
         Destroy(item.gameObject);
@@ -165,6 +167,7 @@ public class CauldronController : MonoBehaviour
         PlayPotionCreatedEffects(isFailure);
         ClearCauldron();
         PotionCreated?.Invoke(potion);
+        TutorialEvents.Report(TutorialTrigger.PotionCreated, TutorialEvents.GetPotionId(potion));
     }
 
     private void PlayIngredientAddedEffects()

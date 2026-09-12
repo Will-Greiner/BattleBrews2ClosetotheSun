@@ -73,6 +73,7 @@ public class IngredientProcessingStation : MonoBehaviour
         SnapCurrentIngredient();
         IngredientLoaded?.Invoke(currentIngredient);
         ProgressChanged?.Invoke(currentProgress, requiredProgress);
+        TutorialEvents.Report(TutorialTrigger.ProcessingIngredientInserted, TutorialEvents.GetIngredientId(currentIngredient));
         return true;
     }
 
@@ -81,7 +82,12 @@ public class IngredientProcessingStation : MonoBehaviour
         if (currentItem == null || amount <= 0f)
             return false;
 
+        bool processingJustStarted = currentProgress <= 0f;
         currentProgress = Mathf.Min(requiredProgress, currentProgress + amount);
+
+        if (processingJustStarted)
+            TutorialEvents.Report(TutorialTrigger.ProcessingStarted, $"processing.level.{propertyLevel}");
+
         UpdateIngredientProgressTransform();
         ProgressChanged?.Invoke(currentProgress, requiredProgress);
 
@@ -155,6 +161,7 @@ public class IngredientProcessingStation : MonoBehaviour
 
         ProgressChanged?.Invoke(currentProgress, requiredProgress);
         ProcessingCompleted?.Invoke(completedIngredient, propertyLevel, processedItem);
+        TutorialEvents.Report(TutorialTrigger.ProcessingCompleted, TutorialEvents.GetIngredientId(completedIngredient));
     }
 
     private ProcessedIngredientItem SpawnProcessedIngredient(IngredientData ingredient)

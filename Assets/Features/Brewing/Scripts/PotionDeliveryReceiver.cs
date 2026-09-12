@@ -60,6 +60,9 @@ public class PotionDeliveryReceiver : MonoBehaviour, IItemReceiver, IItemHoverFe
         if (!deliveryAccepted)
             return;
 
+        if (potionItem != null && potionItem.Data != null)
+            TutorialEvents.Report(TutorialTrigger.PotionDelivered, TutorialEvents.GetPotionId(potionItem.Data));
+
         Destroy(item.gameObject);
     }
 

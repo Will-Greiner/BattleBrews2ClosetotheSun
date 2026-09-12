@@ -27,6 +27,7 @@ public class ProgressionManager : MonoBehaviour
 
     public int Currency { get; private set; }
     public int ActiveSaveSlot => activeSaveSlot;
+    public bool TutorialCompleted { get; private set; }
 
     private void Awake()
     {
@@ -69,6 +70,7 @@ public class ProgressionManager : MonoBehaviour
         discoveredPropertyIds.Clear();
         upgradeLevels.Clear();
         Currency = startingCurrency;
+        TutorialCompleted = false;
         createdUtc = DateTime.UtcNow.ToString("O");
 
         foreach (string id in initiallyUnlockedContentIds)
@@ -129,6 +131,25 @@ public class ProgressionManager : MonoBehaviour
             SaveNow();
     }
 
+    public void CompleteTutorial(bool save = true)
+    {
+        if (TutorialCompleted)
+            return;
+
+        TutorialCompleted = true;
+
+        if (save)
+            SaveNow();
+    }
+
+    [ContextMenu("Reset Tutorial")]
+    public void ResetTutorial()
+    {
+        TutorialCompleted = false;
+        SaveNow();
+        Debug.Log("Reset tutorial progress for the active save slot.", this);
+    }
+
     public bool IsPropertyDiscovered(IngredientData ingredient, int level)
     {
         return ingredient != null && discoveredPropertyIds.Contains(GetPropertyKey(ingredient, level));
@@ -145,6 +166,7 @@ public class ProgressionManager : MonoBehaviour
             return false;
 
         PropertyDiscovered?.Invoke(ingredient, level, property);
+        TutorialEvents.Report(TutorialTrigger.PropertyDiscovered, TutorialEvents.GetIngredientId(ingredient));
         SaveNow();
         return true;
     }
@@ -192,6 +214,7 @@ public class ProgressionManager : MonoBehaviour
             createdUtc = string.IsNullOrWhiteSpace(createdUtc) ? DateTime.UtcNow.ToString("O") : createdUtc,
             lastPlayedUtc = DateTime.UtcNow.ToString("O"),
             currency = Currency,
+            tutorialCompleted = TutorialCompleted,
             currentRound = GameManager.Instance != null ? GameManager.Instance.CurrentRound : 0,
             lives = GameManager.Instance != null ? GameManager.Instance.Lives : 0,
             unlockedContentIds = new List<string>(unlockedContentIds),
@@ -210,6 +233,7 @@ public class ProgressionManager : MonoBehaviour
         discoveredPropertyIds.Clear();
         upgradeLevels.Clear();
         Currency = Mathf.Max(0, data.currency);
+        TutorialCompleted = data.tutorialCompleted;
         createdUtc = data.createdUtc;
 
         if (data.unlockedContentIds != null)

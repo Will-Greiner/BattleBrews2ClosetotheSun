@@ -44,6 +44,7 @@ public class ShopManager : MonoBehaviour
 
         progression.SaveNow();
         PurchaseCompleted?.Invoke(offer);
+        TutorialEvents.Report(TutorialTrigger.OfferPurchased, offer.UnlockId);
         OffersChanged?.Invoke();
         return true;
     }

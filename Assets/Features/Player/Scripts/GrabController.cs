@@ -351,6 +351,7 @@ public class GrabController : MonoBehaviour
 
         heldItem = item;
         heldItem.OnGrabbed();
+        TutorialEvents.Report(TutorialTrigger.ItemGrabbed, TutorialEvents.GetItemId(heldItem));
 
         StirringStick stirringStick = heldItem.GetComponent<StirringStick>();
 

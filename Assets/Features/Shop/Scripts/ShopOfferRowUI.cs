@@ -10,6 +10,7 @@ public class ShopOfferRowUI : MonoBehaviour
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private TMP_Text priceText;
     [SerializeField] private Button purchaseButton;
+    [SerializeField] private TutorialTarget tutorialTarget;
 
     private ShopOfferData offer;
     private Action<ShopOfferData> purchaseRequested;
@@ -17,6 +18,9 @@ public class ShopOfferRowUI : MonoBehaviour
     private void Awake()
     {
         if (purchaseButton != null) purchaseButton.onClick.AddListener(HandlePurchase);
+
+        if (tutorialTarget == null)
+            tutorialTarget = GetComponent<TutorialTarget>();
     }
 
     private void OnDestroy()
@@ -28,6 +32,9 @@ public class ShopOfferRowUI : MonoBehaviour
     {
         offer = value;
         purchaseRequested = onPurchase;
+
+        if (tutorialTarget != null)
+            tutorialTarget.SetTargetId(offer != null ? $"shop-{offer.UnlockId}" : string.Empty);
 
         if (icon != null)
         {

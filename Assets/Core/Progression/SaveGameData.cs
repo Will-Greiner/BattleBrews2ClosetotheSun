@@ -10,6 +10,7 @@ public sealed class SaveGameData
     public int currentRound;
     public int lives;
     public int currency;
+    public bool tutorialCompleted;
     public List<string> unlockedContentIds = new();
     public List<string> discoveredPropertyIds = new();
     public List<UpgradeSaveData> upgrades = new();

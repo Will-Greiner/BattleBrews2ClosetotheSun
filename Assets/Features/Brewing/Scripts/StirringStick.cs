@@ -98,6 +98,7 @@ public class StirringStick : MonoBehaviour
 
         currentHolder = holder;
         isStirring = true;
+        TutorialEvents.Report(TutorialTrigger.StirringStarted);
         currentStickAngle = 0f;
         accumulatedStirAngle = 0f;
         previousMouseAngle = GetMouseAngle();

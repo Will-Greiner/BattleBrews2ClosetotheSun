@@ -94,6 +94,7 @@ public class ShopPhaseController : MonoBehaviour
         yield return FadeShop(1f);
         CursorManager.Instance?.ShowForUI(this);
         IsOpen = true;
+        TutorialEvents.Report(TutorialTrigger.ShopOpened);
         routine = null;
     }
 

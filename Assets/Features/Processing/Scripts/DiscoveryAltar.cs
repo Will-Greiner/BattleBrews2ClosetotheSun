@@ -80,6 +80,7 @@ public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedba
 
         currentItem = item;
         currentSample = item.GetComponent<ProcessedIngredientItem>();
+        TutorialEvents.Report(TutorialTrigger.AltarSampleInserted, TutorialEvents.GetIngredientId(currentSample.SourceIngredient));
         SnapSample();
 
         if (presentationRoutine != null)

@@ -147,6 +147,7 @@ public class RecipeBookController : MonoBehaviour, IHandInteractable
         isOpen = true;
         isTransitioning = false;
         transitionRoutine = null;
+        TutorialEvents.Report(TutorialTrigger.RecipeBookOpened);
 
         CursorManager.Instance?.ShowForUI(this);
     }
@@ -182,8 +183,7 @@ public class RecipeBookController : MonoBehaviour, IHandInteractable
 
         activeGrabController = null;
         transitionRoutine = null;
-
-        
+        TutorialEvents.Report(TutorialTrigger.RecipeBookClosed);
     }
 
     private void DisablePlayerControls()

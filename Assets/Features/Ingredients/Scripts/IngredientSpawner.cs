@@ -44,6 +44,8 @@ public class IngredientSpawner : MonoBehaviour, IHandInteractable
         Vector3 grabPointOffset = grabbableItem.GrabPoint.position - spawnedObject.transform.position;
         spawnedObject.transform.position -= grabPointOffset;
 
+        TutorialEvents.Report(TutorialTrigger.IngredientSpawned, TutorialEvents.GetIngredientId(ingredient));
+
         if (!grabController.Grab(grabbableItem))
             Destroy(spawnedObject);
     }
