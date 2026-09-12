@@ -16,9 +16,8 @@ MonoBehaviour:
   opponentName: "Crippling Self-Doubt"
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: e61bfe746d93da246a71adaac4c430e8, type: 2}
-  firstRound: 2
-  lastRound: 9
+  firstRound: 3
+  lastRound: 8
   requestDialogue: "{opponent} knows every mistake I have ever made. I need a {potion} before I enter that arena."
   winOutcomeText: "The potato said nothing. Somehow, it was exactly what the gladiator needed."
   loseOutcomeText: "The summoned vegetable was openly judgmental."
-

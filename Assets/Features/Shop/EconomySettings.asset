@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec47a22650e4894c99163a75865d28b, type: 3}
   m_Name: EconomySettings
   m_EditorClassIdentifier: Assembly-CSharp::EconomySettings
-  successReward: 100
+  successReward: 90
   failureReward: 20
-  additionalRewardPerRound: 10
+  additionalRewardPerRound: 8

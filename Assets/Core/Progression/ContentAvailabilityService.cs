@@ -2,15 +2,15 @@ using UnityEngine;
 
 public enum PotionRequestAvailabilityMode
 {
-    AllConfiguredPotions,
-    CurrentlyCraftableOnly
+    CurrentlyCraftableOnly,
+    AllConfiguredPotions
 }
 
 public class ContentAvailabilityService : MonoBehaviour
 {
     public static ContentAvailabilityService Instance { get; private set; }
 
-    [SerializeField] private PotionRequestAvailabilityMode potionRequestMode = PotionRequestAvailabilityMode.AllConfiguredPotions;
+    [SerializeField] private PotionRequestAvailabilityMode potionRequestMode = PotionRequestAvailabilityMode.CurrentlyCraftableOnly;
 
     public PotionRequestAvailabilityMode PotionRequestMode => potionRequestMode;
 

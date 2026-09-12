@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Potatoes
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Potatoes
-  description: Unlock potatoes.
+  description: Boil'em, mash-em, and put them in a brew
   icon: {fileID: 21300000, guid: 8da91f9b9a0e66c48aee507621e34b51, type: 3}
   persistentId: 4d000000000000000000000000000007
-  price: 0
+  price: 70
   firstAvailableRound: 1
   offerType: 0
   unlockId: potato

@@ -16,9 +16,8 @@ MonoBehaviour:
   opponentName: "Fleetfoot Fergus"
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: 19b38667f5fbd04479e2298766aa04d9, type: 2}
-  firstRound: 1
-  lastRound: 8
+  firstRound: 4
+  lastRound: 9
   requestDialogue: "I can beat {opponent}, but first I need to catch him. Brew me a {potion} - and include brakes if possible."
   winOutcomeText: "The gladiator caught {opponent} in three seconds and spent the next ten minutes trying to stop."
   loseOutcomeText: "Excellent speed. Poor direction. The arena wall remains undefeated."
-

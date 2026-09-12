@@ -16,7 +16,7 @@ MonoBehaviour:
   opponentName: Murphy, Lord of Bad Timing
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: 097df593ae55a6740a3f788f52cb6ae0, type: 2}
-  firstRound: 1
+  firstRound: 2
   lastRound: 8
   requestDialogue: '{opponent} never attacks directly. He waits until your sandal
     snaps, your eye itches, and the sun gets in your face. Brew me a {potion}. I

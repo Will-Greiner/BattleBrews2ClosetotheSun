@@ -32,5 +32,5 @@ MonoBehaviour:
     ingredient: {fileID: 0}
     property: {fileID: 11400000, guid: 09381b246e7610d4f916eca038b93f1d, type: 2}
     requiredCount: 1
-  firstRequestRound: 4
+  firstRequestRound: 7
   lastRequestRound: 12

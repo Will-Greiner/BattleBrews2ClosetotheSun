@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Unlock bat wings.
   icon: {fileID: 21300000, guid: 502d40f77f29c684d9d4d9c56dbeab7f, type: 3}
   persistentId: 4d000000000000000000000000000001
-  price: 0
-  firstAvailableRound: 1
+  price: 80
+  firstAvailableRound: 6
   offerType: 0
   unlockId: wings
   maximumLevel: 1

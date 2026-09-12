@@ -16,9 +16,8 @@ MonoBehaviour:
   opponentName: "Chef Pierre Vermin"
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: a1000000000000000000000000000006, type: 2}
-  firstRound: 4
+  firstRound: 5
   lastRound: 12
   requestDialogue: "{opponent} turned the last challenger into a reduction sauce. I need {potion} before I enter the Kitchen Coliseum."
   winOutcomeText: "The summoned chef criticized {opponent}'s seasoning so severely that he surrendered."
   loseOutcomeText: "The rat tasted the potion, insulted the gladiator, and joined {opponent}."
-

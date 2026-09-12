@@ -16,9 +16,8 @@ MonoBehaviour:
   opponentName: "Sir Probably-Knows-What-He-Is-Doing"
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: a1000000000000000000000000000005, type: 2}
-  firstRound: 4
+  firstRound: 7
   lastRound: 12
   requestDialogue: "{opponent} has defeated thirty gladiators by looking confident during introductions. Brew me {potion}. I only need to look like I have a plan."
   winOutcomeText: "Both fighters confidently pretended to understand the situation. {opponent} cracked first."
   loseOutcomeText: "The gladiator confidently explained why losing was always part of the strategy."
-

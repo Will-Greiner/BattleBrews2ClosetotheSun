@@ -21,12 +21,8 @@ MonoBehaviour:
   prefab: {fileID: 5551657466303834545, guid: 44d729eab86a39940a744e5e9c8008e2, type: 3}
   requirements:
   - requirementType: 0
-    ingredient: {fileID: 11400000, guid: dcfe0207b62c8ae4eabc39bdd4e0765f, type: 2}
+    ingredient: {fileID: 11400000, guid: d0e91350edcd0b341ab3bc3df2efbcd4, type: 2}
     property: {fileID: 0}
     requiredCount: 1
-  - requirementType: 1
-    ingredient: {fileID: 0}
-    property: {fileID: 11400000, guid: 65c72dc4e9e9ad246bbda4ca46314e34, type: 2}
-    requiredCount: 1
-  firstRequestRound: 2
-  lastRequestRound: 9
+  firstRequestRound: 1
+  lastRequestRound: 4

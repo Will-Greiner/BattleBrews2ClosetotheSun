@@ -16,9 +16,8 @@ MonoBehaviour:
   opponentName: "The Cavity Crawler"
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: a100000000000000000000000000000d, type: 2}
-  firstRound: 8
+  firstRound: 9
   lastRound: 99
   requestDialogue: "{opponent} eats teeth. Brew me a {potion} with so many magnificent teeth that it regrets being hungry."
   winOutcomeText: "The creature was overwhelmed by both the quantity and presentation."
   loseOutcomeText: "The new teeth were beautiful, but unfortunately very easy to eat."
-

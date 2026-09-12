@@ -16,9 +16,8 @@ MonoBehaviour:
   opponentName: "The Silence"
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: 0cfa20aac5a9f074badbe9342b46c30b, type: 2}
-  firstRound: 2
-  lastRound: 9
+  firstRound: 1
+  lastRound: 4
   requestDialogue: "{opponent} swallows every footstep, impact, and battle cry. Brew me a {potion}. I am going to make this fight unbearably loud."
   winOutcomeText: "The first punch sounded like an entire tavern eating breakfast. The Silence shattered."
   loseOutcomeText: "The gladiator became extremely crunchy but remained disappointingly quiet."
-

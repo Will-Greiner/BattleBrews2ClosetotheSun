@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Unlock strawberries.
   icon: {fileID: 21300000, guid: 607551008e3509a4baef415a94b47c70, type: 3}
   persistentId: 4d000000000000000000000000000007
-  price: 0
-  firstAvailableRound: 1
+  price: 45
+  firstAvailableRound: 3
   offerType: 0
   unlockId: strawberry
   maximumLevel: 1

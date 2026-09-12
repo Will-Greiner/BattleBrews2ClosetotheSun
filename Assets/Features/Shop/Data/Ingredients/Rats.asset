@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Rats
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Plate of Rats
-  description: Unlock the rats.
+  description: They are everywhere so why don't we put them to good use.
   icon: {fileID: 21300000, guid: a8611d95f73e3264a80ef19850fc39dd, type: 3}
   persistentId: 4d00000000000000000000000000000c
-  price: 0
+  price: 80
   firstAvailableRound: 1
   offerType: 0
   unlockId: rat

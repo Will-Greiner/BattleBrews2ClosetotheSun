@@ -39,16 +39,20 @@ public class SaveSlotMenuUI : MonoBehaviour
         slotSelected = onSlotSelected;
         Refresh();
         SetVisible(true);
+
+        CursorManager.Instance?.ShowForUI(this);
     }
 
     public void Hide()
     {
         Hide(true);
+        CursorManager.Instance?.HideForUI(this);
     }
 
     public void HideWithoutNotification()
     {
         Hide(false);
+        CursorManager.Instance?.HideForUI(this);
     }
 
     public void Refresh()

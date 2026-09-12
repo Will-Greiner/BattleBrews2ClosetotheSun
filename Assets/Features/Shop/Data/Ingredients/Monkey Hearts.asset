@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Unlock monkey hearts.
   icon: {fileID: 21300000, guid: aa33c07b11c239a47b982ea4ea7a302f, type: 3}
   persistentId: 4d000000000000000000000000000006
-  price: 0
-  firstAvailableRound: 1
+  price: 90
+  firstAvailableRound: 7
   offerType: 0
   unlockId: heart
   maximumLevel: 1

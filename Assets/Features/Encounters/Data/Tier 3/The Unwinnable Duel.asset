@@ -16,9 +16,8 @@ MonoBehaviour:
   opponentName: "The Arena Champion"
   selectRandomPotion: 0
   bestPotion: {fileID: 11400000, guid: a100000000000000000000000000000c, type: 2}
-  firstRound: 8
+  firstRound: 9
   lastRound: 99
   requestDialogue: "I have seen {opponent} fight. I do not need to win. I need an {potion} the audience will mistake for strategy."
   winOutcomeText: "The gladiator escaped through three windows. Only one of them was open."
   loseOutcomeText: "The potion produced an exit sign but no actual exit."
-
