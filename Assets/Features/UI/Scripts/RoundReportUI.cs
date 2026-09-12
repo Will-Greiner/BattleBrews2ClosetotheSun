@@ -117,6 +117,8 @@ public class RoundReportUI : MonoBehaviour
 
         if (continueButton != null)
             continueButton.interactable = true;
+
+        CursorManager.Instance?.ShowForUI(this);
     }
 
     public void Hide()
@@ -130,6 +132,8 @@ public class RoundReportUI : MonoBehaviour
 
         if (continueButton != null)
             continueButton.interactable = false;
+
+        CursorManager.Instance?.HideForUI(this);
     }
 
     private string GetRandomEntry(string[] entries)

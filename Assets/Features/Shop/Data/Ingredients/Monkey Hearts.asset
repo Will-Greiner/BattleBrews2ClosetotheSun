@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Monkey Hearts
   description: Unlock monkey hearts.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: aa33c07b11c239a47b982ea4ea7a302f, type: 3}
   persistentId: 4d000000000000000000000000000006
   price: 0
   firstAvailableRound: 1

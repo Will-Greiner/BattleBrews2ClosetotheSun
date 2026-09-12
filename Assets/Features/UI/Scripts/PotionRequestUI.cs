@@ -62,7 +62,9 @@ public class PotionRequestUI : MonoBehaviour
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
-            }
+
+        CursorManager.Instance?.ShowForUI(this);
+    }
 
     public void Hide()
     {
@@ -102,6 +104,8 @@ public class PotionRequestUI : MonoBehaviour
 
         if (roundObjectiveHUD != null)
             roundObjectiveHUD.Hide();
+
+        CursorManager.Instance?.HideForUI(this);
     }
 
     private IEnumerator TypeDialogue(string dialogue)

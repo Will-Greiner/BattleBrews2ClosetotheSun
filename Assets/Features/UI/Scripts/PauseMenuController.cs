@@ -81,17 +81,15 @@ public class PauseMenuController : MonoBehaviour
 
         isPaused = true;
         previousTimeScale = Time.timeScale;
-        previousCursorLockMode = Cursor.lockState;
-        previousCursorVisible = Cursor.visible;
         Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         grabController?.AcquireInputLock(this);
         RefreshRequestInformation();
         SetVisible(true);
 
         if (EventSystem.current != null && resumeButton != null)
             EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
+
+        CursorManager.Instance?.ShowForUI(this);
     }
 
     public void Resume()
@@ -102,10 +100,10 @@ public class PauseMenuController : MonoBehaviour
         settingsMenu?.Hide();
         SetVisible(false);
         Time.timeScale = previousTimeScale;
-        Cursor.lockState = previousCursorLockMode;
-        Cursor.visible = previousCursorVisible;
         grabController?.ReleaseInputLock(this);
         isPaused = false;
+
+        CursorManager.Instance?.HideForUI(this);
     }
 
     public void ShowSettings()

@@ -36,17 +36,15 @@ public class CameraController : MonoBehaviour
             grabController = FindFirstObjectByType<GrabController>();
 
         currentYaw = NormalizeAngle(transform.localEulerAngles.y);
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
     }
 
     private void Update()
     {
         bool inputLocked = grabController != null && !grabController.InputEnabled;
 
-        bool tableIsGrabbed = grabController != null && grabController.HeldItem != null && grabController.HeldItem.GetComponent<ProcessingTableHandle>() != null;
+        bool processingControlIsGrabbed = IsProcessingControlGrabbed();
 
-        if (inputLocked || tableIsGrabbed)
+        if (inputLocked || processingControlIsGrabbed)
         {
             StopCameraMovement();
             return;
@@ -65,6 +63,15 @@ public class CameraController : MonoBehaviour
         currentYaw = Mathf.Clamp(currentYaw, -rotationLimit, rotationLimit);
 
         transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
+    }
+
+    private bool IsProcessingControlGrabbed()
+    {
+        if (grabController == null || grabController.HeldItem == null)
+            return false;
+
+        GrabbableItem item = grabController.HeldItem;
+        return item.GetComponent<MortarPestle>() != null || item.GetComponent<BurnerBellows>() != null || item.GetComponent<PulverizerCrank>() != null || item.GetComponent<ProcessingTableHandle>() != null;
     }
 
     private float CalculateTargetSpeed(float normalizedX)

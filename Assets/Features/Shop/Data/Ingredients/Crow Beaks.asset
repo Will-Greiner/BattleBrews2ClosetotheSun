@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Crow Beaks
   description: Unlock crow beaks.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 93ec3395ded0dca40bc57f292c104eee, type: 3}
   persistentId: 4d00000000000000000000000000000a
   price: 0
   firstAvailableRound: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Cockroaches
   description: Unlock cockroaches.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ae4db93f4cd706749a91e7e543bfeb3c, type: 3}
   persistentId: 4d000000000000000000000000000008
   price: 0
   firstAvailableRound: 1

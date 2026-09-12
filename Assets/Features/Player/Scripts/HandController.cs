@@ -83,8 +83,6 @@ public class HandController : MonoBehaviour
         previousPosition = transform.position;
         previousRotation = transform.rotation;
 
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
     }
 
     private void LateUpdate()
@@ -279,9 +277,17 @@ public class HandController : MonoBehaviour
             return false;
 
         Transform grabPoint = heldItem.GrabPoint;
-        transform.position = grabPoint.position;
-        handDistance = Vector3.Distance(playerCamera.transform.position, grabPoint.position);
+
         UpdateHandRotation(mouseRay);
+
+        Transform handAnchor = grabController.GrabTarget;
+
+        if (handAnchor != null)
+            transform.position += grabPoint.position - handAnchor.position;
+        else
+            transform.position = grabPoint.position;
+
+        handDistance = Vector3.Distance(playerCamera.transform.position, transform.position);
 
         return true;
     }

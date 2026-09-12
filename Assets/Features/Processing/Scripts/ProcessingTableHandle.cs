@@ -16,10 +16,13 @@ public class ProcessingTableHandle : MonoBehaviour
     [Header("Feel")]
     [SerializeField] private float releaseDrag = 300f;
 
+    [Header("Smoothing")]
+    [SerializeField, Min(0.01f)] private float inputSharpness = 20f;
+
     private Rigidbody handleRigidbody;
     private GrabController currentHolder;
-    private float targetSpeed;
     private float currentSpeed;
+    private float smoothedMouseDelta;
 
     public bool IsBeingUsed => currentHolder != null;
 
@@ -45,33 +48,24 @@ public class ProcessingTableHandle : MonoBehaviour
 
         if (currentHolder != null && Mouse.current != null)
         {
+            float deltaTime = Time.unscaledDeltaTime;
+
+            if (deltaTime <= Mathf.Epsilon)
+                return;
+
             float mouseDelta = Mouse.current.delta.ReadValue().x;
+            float smoothing = 1f - Mathf.Exp(-inputSharpness * deltaTime);
+            smoothedMouseDelta = Mathf.Lerp(smoothedMouseDelta, mouseDelta, smoothing);
 
-            // Direct movement while held: the table follows the hand immediately.
-            float angleThisFrame = -mouseDelta * mouseSensitivity;
-
-            angleThisFrame = Mathf.Clamp(
-                angleThisFrame,
-                -maximumDegreesPerFrame,
-                maximumDegreesPerFrame);
-
+            float angleThisFrame = Mathf.Clamp(-smoothedMouseDelta * mouseSensitivity, -maximumDegreesPerFrame, maximumDegreesPerFrame);
             RotateTable(angleThisFrame);
-
-            // Remember the current movement for a subtle release coast.
-            currentSpeed = Time.unscaledDeltaTime > 0f
-                ? angleThisFrame / Time.unscaledDeltaTime
-                : 0f;
-
+            currentSpeed = angleThisFrame / deltaTime;
             return;
         }
 
-        // Only coast when the player has released the handle.
-        currentSpeed = Mathf.MoveTowards(
-            currentSpeed,
-            0f,
-            releaseDrag * Time.deltaTime);
-
-        RotateTable(currentSpeed * Time.deltaTime);
+        float releaseDeltaTime = Time.unscaledDeltaTime;
+        currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, releaseDrag * releaseDeltaTime);
+        RotateTable(currentSpeed * releaseDeltaTime);
     }
 
     private void RotateTable(float degrees)
@@ -93,10 +87,12 @@ public class ProcessingTableHandle : MonoBehaviour
 
         currentHolder = holder;
         currentSpeed = 0f;
+        smoothedMouseDelta = 0f;
     }
 
     public void EndTurning()
     {
         currentHolder = null;
+        smoothedMouseDelta = 0f;
     }
 }

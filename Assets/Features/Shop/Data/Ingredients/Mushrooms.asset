@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Mushrooms
   description: Unlock mushrooms.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 023bd498bf69dc24bb9a076ce2d69a29, type: 3}
   persistentId: 4d000000000000000000000000000003
   price: 0
   firstAvailableRound: 1

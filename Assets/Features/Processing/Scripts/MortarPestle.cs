@@ -211,4 +211,12 @@ public class MortarPestle : MonoBehaviour
         strikeArmed = true;
         ConfigureKinematicBody();
     }
+
+    private void LateUpdate()
+    {
+        if (currentHolder != null || returnRoutine != null || restPoint == null)
+            return;
+
+        transform.SetPositionAndRotation(restPoint.position, restPoint.rotation);
+    }
 }

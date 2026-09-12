@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 3471102716381664055}
   - component: {fileID: 8910872295146192692}
   - component: {fileID: 1290152373919742111}
+  - component: {fileID: -5508371048278236148}
   m_Layer: 7
   m_Name: ProcessedSample
   m_TagString: Untagged
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88c7997231adb04da33d2b586a983e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrabbableItem
-  displayName: Item
+  displayName: Burned Item
   grabPoint: {fileID: 3592142942795957341}
   permanentlyEnableGravityWhenGrabbed: 0
   ignorePhysicsUntilFirstGrab: 0
@@ -205,3 +206,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f5606b5b8df2a4c808bea0c3f845c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProcessedIngredientItem
+--- !u!114 &-5508371048278236148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694994373413825944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0086287ae1816498d8531e12dd478e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectHighlight
+  highlightMaterial: {fileID: 2100000, guid: ee24d4f71d6f9be4e8dee87570bf4558, type: 2}
+  highlightColor: {r: 0.38426393, g: 0.22031999, b: 0.648, a: 1}
+  colorPropertyName: _HighlightColor
+  includeInactiveRenderers: 1

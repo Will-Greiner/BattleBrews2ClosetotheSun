@@ -19,7 +19,7 @@ MonoBehaviour:
     whenever someone says something ominous.
   brewColor: {r: 0.36, g: 0.16, b: 0.82, a: 1}
   persistentId: f68e2d7378cbe7e49929a72cfd53b539
-  unlockId: wing
+  unlockId: wings
   prefab: {fileID: 7946623481557631128, guid: aeb100052c6989349aebea0cdca70822, type: 3}
   properties:
   - {fileID: 11400000, guid: 97471c44e8cfc784e926be76f0429eaa, type: 2}

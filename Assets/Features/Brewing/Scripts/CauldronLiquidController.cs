@@ -54,6 +54,7 @@ public class CauldronLiquidController : MonoBehaviour
     public float DrainAmount => drain;
     public Color CurrentMixtureColor => mixtureColor;
     public Color CurrentLiquidColor => Color.Lerp(startingLiquidColor, mixtureColor, mixtureAmount);
+    public Color StartingLiquidColor => startingLiquidColor;
     public float MixtureAmount => mixtureAmount;
 
     private void Awake()

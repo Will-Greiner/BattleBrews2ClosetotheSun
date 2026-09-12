@@ -20,10 +20,16 @@ public class CauldronSplashController : MonoBehaviour
 
     private Renderer liquidRenderer;
     private float nextHandSplashTime;
+    private CauldronLiquidController liquidController;
+    private static readonly int ColorId = Shader.PropertyToID("_Color");
+    private static readonly int BottomColorId = Shader.PropertyToID("_Bottom_Color");
+    private static readonly int MediumColorId = Shader.PropertyToID("_Medium_Color");
+    private static readonly int HighlightColorId = Shader.PropertyToID("_Highlight_Color");
 
     private void Awake()
     {
         liquidRenderer = FindLiquidRenderer();
+        liquidController = GetComponent<CauldronLiquidController>();
 
         if (liquidRenderer == null)
             Debug.LogError($"{name}: Could not find the cauldron liquid renderer for splash placement.", this);
@@ -61,6 +67,7 @@ public class CauldronSplashController : MonoBehaviour
         GameObject splash = Instantiate(splashPrefab, position, rotation, transform);
         splash.transform.localScale *= scale;
         splash.name = "Splash";
+        ApplySplashColor(splash);
 
         Animator animator = splash.GetComponentInChildren<Animator>();
 
@@ -83,5 +90,32 @@ public class CauldronSplashController : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void ApplySplashColor(GameObject splash)
+    {
+        if (splash == null || liquidController == null)
+            return;
+
+        Color liquidColor = liquidController.MixtureAmount > 0.001f ? liquidController.CurrentLiquidColor : liquidController.StartingLiquidColor;
+        Color bottomColor = Color.Lerp(liquidColor, Color.black, 0.25f);
+        Color mediumColor = Color.Lerp(liquidColor, Color.white, 0.08f);
+        Color highlightColor = Color.Lerp(liquidColor, Color.white, 0.55f);
+
+        bottomColor.a = liquidColor.a;
+        mediumColor.a = liquidColor.a;
+        highlightColor.a = liquidColor.a;
+
+        MaterialPropertyBlock properties = new();
+
+        foreach (Renderer splashRenderer in splash.GetComponentsInChildren<Renderer>(true))
+        {
+            splashRenderer.GetPropertyBlock(properties);
+            properties.SetColor(ColorId, liquidColor);
+            properties.SetColor(BottomColorId, bottomColor);
+            properties.SetColor(MediumColorId, mediumColor);
+            properties.SetColor(HighlightColorId, highlightColor);
+            splashRenderer.SetPropertyBlock(properties);
+        }
     }
 }

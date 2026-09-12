@@ -1,12 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedback
+public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedback, IItemHoverFeedback
 {
     [Header("References")]
     [SerializeField] private Transform sampleSnapPoint;
     [SerializeField] private RuneConstellationMinigame constellationMinigame;
     [SerializeField] private GrabController grabController;
+    [SerializeField] private ObjectHighlight altarHighlight;
 
     [Header("Prompt")]
     [SerializeField] private string receivePrompt = "[LMB] Place Sample";
@@ -55,6 +56,23 @@ public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedba
         return !discoveryManager.IsPropertyDiscovered(sample.SourceIngredient, sample.PropertyLevel);
     }
 
+    private void Awake()
+    {
+        if (altarHighlight == null)
+            altarHighlight = GetComponent<ObjectHighlight>();
+    }
+
+    public void SetItemHover(bool hovering, GrabbableItem item)
+    {
+        if (altarHighlight == null)
+            return;
+
+        if (hovering && item != null)
+            altarHighlight.Show();
+        else
+            altarHighlight.Hide();
+    }
+
     public void ReceiveItem(GrabbableItem item)
     {
         if (!CanReceiveItem(item))
@@ -77,6 +95,8 @@ public class DiscoveryAltar : MonoBehaviour, IItemReceiver, IItemRejectionFeedba
 
     private void OnDisable()
     {
+        altarHighlight?.Hide();
+
         if (presentationRoutine != null)
         {
             StopCoroutine(presentationRoutine);

@@ -145,7 +145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1475065446056245797}
-  - component: {fileID: 853703509217673305}
+  - component: {fileID: 5828246520744144501}
   m_Layer: 0
   m_Name: RequirementRow
   m_TagString: Untagged
@@ -173,7 +173,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &853703509217673305
+--- !u!114 &5828246520744144501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,8 +182,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1873128397144906029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49b556dd68601fe4b8605e2931159d0b, type: 3}
+  m_Script: {fileID: 11500000, guid: fccb47f201de2a942ac8889e37670de8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PotionRequirementRowUI
+  m_EditorClassIdentifier: Assembly-CSharp::PotionRequirementBookRowUI
   requirementIcon: {fileID: 0}
   requirementNameText: {fileID: 3499267815823021649}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Shivs
   description: Unlock shivs.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4af6ee1807cc8554183fad0983145035, type: 3}
   persistentId: 4d000000000000000000000000000009
   price: 0
   firstAvailableRound: 1

@@ -42,6 +42,7 @@ public class GrabController : MonoBehaviour
     public GrabbableItem HeldItem => heldItem;
     public bool IsHoldingItem => heldItem != null;
     public bool InputEnabled => manualInputEnabled && inputLockOwners.Count == 0;
+    public Transform GrabTarget => grabTarget;
 
     private void Awake()
     {

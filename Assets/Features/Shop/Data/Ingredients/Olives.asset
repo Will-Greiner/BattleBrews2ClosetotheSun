@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Olives
   description: Unlock olives
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 54dbaef646ccf464d99a5a89c224ceb2, type: 3}
   persistentId: 4d000000000000000000000000000004
   price: 0
   firstAvailableRound: 1

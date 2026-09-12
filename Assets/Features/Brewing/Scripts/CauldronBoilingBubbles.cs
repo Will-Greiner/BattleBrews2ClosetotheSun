@@ -4,9 +4,9 @@ using UnityEngine;
 public class CauldronBoilingBubbles : MonoBehaviour
 {
     [SerializeField] private Material bubbleMaterial;
-    [Min(0f)] [SerializeField] private float glowIntensity = 4f;
 
     private CauldronLiquidController liquid;
+    private static readonly int ColorId = Shader.PropertyToID("_Color");
 
     private void Awake()
     {
@@ -19,10 +19,6 @@ public class CauldronBoilingBubbles : MonoBehaviour
             return;
 
         Color liquidColor = liquid.CurrentLiquidColor;
-        Color glowColor = liquidColor * glowIntensity;
-        glowColor.a = liquidColor.a;
-
-        bubbleMaterial.SetColor("_Color", liquidColor);
-        bubbleMaterial.SetColor("_GlowColor", glowColor);
+        bubbleMaterial.SetColor(ColorId, liquidColor);
     }
 }

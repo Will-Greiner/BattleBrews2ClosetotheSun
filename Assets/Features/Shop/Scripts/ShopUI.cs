@@ -35,6 +35,7 @@ public class ShopUI : MonoBehaviour
     {
         if (shopManager != null) shopManager.OffersChanged -= Refresh;
         if (ProgressionManager.Instance != null) ProgressionManager.Instance.CurrencyChanged -= HandleCurrencyChanged;
+        
     }
 
     private void OnDestroy()

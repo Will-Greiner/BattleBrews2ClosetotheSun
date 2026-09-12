@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: 'Teeth '
   description: Unlock teeth.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1cf09668ca5b294428c382ced3e5c470, type: 3}
   persistentId: 4d000000000000000000000000000005
   price: 0
   firstAvailableRound: 1

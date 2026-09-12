@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Horse Hooves
   description: Unlock horse hooves.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d5ad60fb3c91a6f43bbd914348f4d5a9, type: 3}
   persistentId: 4d00000000000000000000000000000b
   price: 0
   firstAvailableRound: 1

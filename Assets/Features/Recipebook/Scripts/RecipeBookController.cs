@@ -147,6 +147,8 @@ public class RecipeBookController : MonoBehaviour, IHandInteractable
         isOpen = true;
         isTransitioning = false;
         transitionRoutine = null;
+
+        CursorManager.Instance?.ShowForUI(this);
     }
 
     private IEnumerator CloseBookRoutine()
@@ -161,6 +163,8 @@ public class RecipeBookController : MonoBehaviour, IHandInteractable
             yield return new WaitForSeconds(closingDuration);
 
         transform.SetParent(pedestalParent);
+        
+        CursorManager.Instance?.HideForUI(this);
 
         Vector3 targetPosition = pedestalParent != null ? pedestalParent.TransformPoint(pedestalLocalPosition) : pedestalLocalPosition;
         Quaternion targetRotation = pedestalParent != null ? pedestalParent.rotation * pedestalLocalRotation : pedestalLocalRotation;
@@ -178,6 +182,8 @@ public class RecipeBookController : MonoBehaviour, IHandInteractable
 
         activeGrabController = null;
         transitionRoutine = null;
+
+        
     }
 
     private void DisablePlayerControls()

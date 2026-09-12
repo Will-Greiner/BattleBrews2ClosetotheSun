@@ -61,6 +61,8 @@ public class RuneConstellationMinigame : MonoBehaviour
         BuildSequence();
         ResetAttempt();
         isActive = true;
+
+        CursorManager.Instance?.ShowForUI(this);
     }
 
     public void BeginDrag(RunePointUI point)
@@ -104,6 +106,8 @@ public class RuneConstellationMinigame : MonoBehaviour
         isDragging = false;
         ResetAttempt();
         SetVisible(false);
+
+        CursorManager.Instance?.HideForUI(this);
     }
 
     private void ConnectPoint(RunePointUI point)
@@ -127,6 +131,8 @@ public class RuneConstellationMinigame : MonoBehaviour
 
         SetVisible(false);
         callback?.Invoke();
+
+        CursorManager.Instance?.HideForUI(this);
     }
 
     private void PrepareActivePoints(int propertyLevel)

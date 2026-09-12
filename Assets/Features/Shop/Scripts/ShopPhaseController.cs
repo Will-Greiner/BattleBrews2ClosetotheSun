@@ -51,6 +51,8 @@ public class ShopPhaseController : MonoBehaviour
         if (grabController != null)
             grabController.ReleaseInputLock(this);
 
+        CursorManager.Instance?.HideForUI(this);
+
         RestoreGameplayCameraImmediately();
     }
 
@@ -90,12 +92,14 @@ public class ShopPhaseController : MonoBehaviour
             Debug.LogError($"{name}: A Shop Facing Point must be assigned for the shop camera transition.", this);
 
         yield return FadeShop(1f);
+        CursorManager.Instance?.ShowForUI(this);
         IsOpen = true;
         routine = null;
     }
 
     private IEnumerator CloseRoutine()
     {
+        CursorManager.Instance?.HideForUI(this);
         yield return FadeShop(0f);
         IsOpen = false;
 

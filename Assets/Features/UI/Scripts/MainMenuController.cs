@@ -266,6 +266,8 @@ public class MainMenuController : MonoBehaviour
         menuCanvasGroup.alpha = 1f;
         menuCanvasGroup.interactable = true;
         menuCanvasGroup.blocksRaycasts = true;
+
+        CursorManager.Instance?.ShowForUI(this);
     }
 
     private void HideMenu()
@@ -276,6 +278,8 @@ public class MainMenuController : MonoBehaviour
         menuCanvasGroup.alpha = 0f;
         menuCanvasGroup.interactable = false;
         menuCanvasGroup.blocksRaycasts = false;
+
+        CursorManager.Instance?.HideForUI(this);
     }
 
     public void QuitGame()
