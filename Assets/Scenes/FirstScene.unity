@@ -5875,7 +5875,6 @@ MonoBehaviour:
   potionDatabase: {fileID: 11400000, guid: f52ce3ece608a3e42a30e96261090340, type: 2}
   economySettings: {fileID: 11400000, guid: 6dde0293b57580f4caa5f141e8a1269e, type: 2}
   startingLives: 3
-  totalRounds: 15
   startAutomatically: 0
 --- !u!114 &43704377
 MonoBehaviour:
