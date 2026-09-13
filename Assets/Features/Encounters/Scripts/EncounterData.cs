@@ -47,9 +47,6 @@ public class EncounterData : ScriptableObject
 
     public PotionData SelectRequestedPotion(int round, PotionDatabase potionDatabase)
     {
-        if (!selectRandomPotion)
-            return bestPotion;
-
         if (potionDatabase == null)
         {
             Debug.LogError($"{name} cannot select a random potion because no PotionDatabase was provided.", this);
@@ -57,8 +54,15 @@ public class EncounterData : ScriptableObject
         }
 
         ContentAvailabilityService availability = ContentAvailabilityService.Instance;
+
+        if (!selectRandomPotion && bestPotion != null && (availability == null || availability.CanRequestPotion(bestPotion, round)))
+            return bestPotion;
+
         PotionData selectedPotion = potionDatabase.GetRandomAvailablePotion(round,
             potion => availability == null || availability.CanRequestPotion(potion, round));
+
+        if (!selectRandomPotion && selectedPotion != null)
+            Debug.LogWarning($"{name} requested {selectedPotion.PotionName} because its preferred potion is not currently craftable.", this);
 
         if (selectedPotion == null)
             Debug.LogError($"{name} could not find a potion available during round {round}.", this);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Monkey Hearts
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Monkey Hearts
-  description: Unlock monkey hearts.
+  description: Full of courage, mischief, and several feelings no licensed physician can identify.
   icon: {fileID: 21300000, guid: aa33c07b11c239a47b982ea4ea7a302f, type: 3}
   persistentId: 4d000000000000000000000000000006
   price: 90

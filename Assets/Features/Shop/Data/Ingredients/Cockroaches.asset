@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cockroaches
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Cockroaches
-  description: Unlock cockroaches.
+  description: Crunchy little professionals who have survived every kitchen inspection so far.
   icon: {fileID: 21300000, guid: ae4db93f4cd706749a91e7e543bfeb3c, type: 3}
   persistentId: 4d000000000000000000000000000008
   price: 55

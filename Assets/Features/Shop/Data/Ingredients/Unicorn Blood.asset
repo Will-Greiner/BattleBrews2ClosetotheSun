@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Unicorn Blood
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: 'Unicorn Blood '
-  description: Unlock unicorn blood.
+  description: Radiant, sticky, and ethically sourced according to a certificate written entirely in glitter.
   icon: {fileID: 21300000, guid: 36f226f5a94372b49b1b1c313b74ab5e, type: 3}
   persistentId: 4d000000000000000000000000000002
   price: 120

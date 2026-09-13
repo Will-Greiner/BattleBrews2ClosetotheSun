@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum PotionRequestAvailabilityMode
@@ -8,6 +9,7 @@ public enum PotionRequestAvailabilityMode
 
 public class ContentAvailabilityService : MonoBehaviour
 {
+    private const int MaximumCauldronIngredientTypes = 3;
     public static ContentAvailabilityService Instance { get; private set; }
 
     [SerializeField] private PotionRequestAvailabilityMode potionRequestMode = PotionRequestAvailabilityMode.CurrentlyCraftableOnly;
@@ -51,13 +53,16 @@ public class ContentAvailabilityService : MonoBehaviour
         if (potion == null || !potion.IsAvailableForRequest(round))
             return false;
 
-        return potionRequestMode == PotionRequestAvailabilityMode.AllConfiguredPotions || CanEventuallyCraftPotion(potion);
+        return potionRequestMode == PotionRequestAvailabilityMode.AllConfiguredPotions || CanCurrentlyCraftPotion(potion);
     }
 
-    public bool CanEventuallyCraftPotion(PotionData potion)
+    public bool CanCurrentlyCraftPotion(PotionData potion)
     {
         if (potion == null || !potion.HasValidRecipe())
             return false;
+
+        HashSet<IngredientData> requiredIngredientTypes = new();
+        List<ItemPropertyData> propertyRequirements = new();
 
         foreach (RecipeRequirement requirement in potion.Requirements)
         {
@@ -69,32 +74,59 @@ public class ContentAvailabilityService : MonoBehaviour
                 if (!IsIngredientUnlocked(requirement.Ingredient))
                     return false;
 
+                requiredIngredientTypes.Add(requirement.Ingredient);
                 continue;
             }
 
-            if (!CanAccessProperty(requirement.Property))
-                return false;
+            propertyRequirements.Add(requirement.Property);
         }
 
-        return true;
-    }
-
-    private bool CanAccessProperty(ItemPropertyData property)
-    {
-        if (property == null)
+        if (requiredIngredientTypes.Count > MaximumCauldronIngredientTypes)
             return false;
 
         IngredientDatabase ingredientDatabase = GameContentCatalog.Instance != null ? GameContentCatalog.Instance.IngredientDatabase : null;
 
-        if (ingredientDatabase == null)
+        if (propertyRequirements.Count > 0 && ingredientDatabase == null)
+            return false;
+
+        return CanAssignPropertyIngredients(propertyRequirements, 0, requiredIngredientTypes, ingredientDatabase);
+    }
+
+    public bool CanEventuallyCraftPotion(PotionData potion)
+    {
+        return CanCurrentlyCraftPotion(potion);
+    }
+
+    private bool CanAssignPropertyIngredients(IReadOnlyList<ItemPropertyData> properties, int propertyIndex, HashSet<IngredientData> selectedTypes, IngredientDatabase ingredientDatabase)
+    {
+        if (propertyIndex >= properties.Count)
             return true;
+
+        ItemPropertyData property = properties[propertyIndex];
+
+        if (property == null || ingredientDatabase == null)
+            return false;
 
         foreach (IngredientData ingredient in ingredientDatabase.Ingredients)
         {
             int level = ingredient != null ? ingredient.GetPropertyLevel(property) : 0;
 
-            if (level > 0 && IsIngredientUnlocked(ingredient) && IsContentUnlocked($"processing.level.{level}"))
+            if (level <= 0 || !IsIngredientUnlocked(ingredient) || !IsPropertyDiscovered(ingredient, level))
+                continue;
+
+            bool alreadySelected = selectedTypes.Contains(ingredient);
+
+            if (!alreadySelected && selectedTypes.Count >= MaximumCauldronIngredientTypes)
+                continue;
+
+            if (!alreadySelected)
+                selectedTypes.Add(ingredient);
+
+            if (CanAssignPropertyIngredients(properties, propertyIndex + 1, selectedTypes, ingredientDatabase))
                 return true;
+
+            if (!alreadySelected)
+                selectedTypes.Remove(ingredient);
         }
 
         return false;

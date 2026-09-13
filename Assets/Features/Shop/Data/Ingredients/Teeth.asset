@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Teeth
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: 'Teeth '
-  description: Unlock teeth.
+  description: A loose assortment. None match, all sparkle, and at least one appears to be judging you.
   icon: {fileID: 21300000, guid: 1cf09668ca5b294428c382ced3e5c470, type: 3}
   persistentId: 4d000000000000000000000000000005
   price: 75
