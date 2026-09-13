@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pulverizer
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Runic Pulverizer
-  description: Break ingredients down to uncover their final hidden property.
+  description: A rune-powered answer to the question, "Could this ingredient be more thoroughly destroyed?" Reveals final properties.
   icon: {fileID: 0}
   persistentId: f23abda66cfb45b9a6c99a1967425f65
   price: 190

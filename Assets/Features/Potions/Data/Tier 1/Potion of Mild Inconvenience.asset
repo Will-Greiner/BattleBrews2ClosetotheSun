@@ -26,7 +26,7 @@ MonoBehaviour:
     requiredCount: 1
   - requirementType: 1
     ingredient: {fileID: 0}
-    property: {fileID: 11400000, guid: 651e37cbcc557dc4f82154cf31312a97, type: 2}
+    property: {fileID: 11400000, guid: 97471c44e8cfc784e926be76f0429eaa, type: 2}
     requiredCount: 1
   firstRequestRound: 2
   lastRequestRound: 7

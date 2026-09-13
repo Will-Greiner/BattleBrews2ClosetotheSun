@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apples
   m_EditorClassIdentifier: Assembly-CSharp::ShopOfferData
   displayName: Apples
-  description: Unlock apples.
+  description: Crisp, red, and disturbingly confident. The traditional gateway fruit to questionable potion making.
   icon: {fileID: 21300000, guid: 875063015db270449818ee8b5dc11caa, type: 3}
   persistentId: 4d000000000000000000000000000001
   price: 0
