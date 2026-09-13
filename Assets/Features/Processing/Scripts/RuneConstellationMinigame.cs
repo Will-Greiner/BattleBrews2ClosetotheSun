@@ -43,8 +43,11 @@ public class RuneConstellationMinigame : MonoBehaviour
 
     private void Update()
     {
-        if (isActive && isDragging)
-            RefreshLine();
+        if (!isActive || !isDragging)
+            return;
+
+        DetectRuneUnderCursor();
+        RefreshLine();
     }
 
     public void Begin(int propertyLevel, Action onCompleted)
@@ -216,36 +219,57 @@ public class RuneConstellationMinigame : MonoBehaviour
         usedPositions.Clear();
         Rect areaRect = pointArea.rect;
 
-        float minimumX = areaRect.xMin + edgePadding;
-        float maximumX = areaRect.xMax - edgePadding;
-        float minimumY = areaRect.yMin + edgePadding;
-        float maximumY = areaRect.yMax - edgePadding;
-
         foreach (RunePointUI point in activePoints)
         {
             if (point == null || point.RectTransform == null)
                 continue;
 
-            Vector2 selectedPosition = Vector2.zero;
-            bool foundValidPosition = false;
+            Vector2 halfSize = point.RectTransform.rect.size * 0.5f;
+            float minimumX = areaRect.xMin + edgePadding + halfSize.x;
+            float maximumX = areaRect.xMax - edgePadding - halfSize.x;
+            float minimumY = areaRect.yMin + edgePadding + halfSize.y;
+            float maximumY = areaRect.yMax - edgePadding - halfSize.y;
+
+            Vector2 bestPosition = Vector2.zero;
+            float bestDistance = -1f;
 
             for (int attempt = 0; attempt < placementAttemptsPerPoint; attempt++)
             {
-                selectedPosition = new Vector2(UnityEngine.Random.Range(minimumX, maximumX), UnityEngine.Random.Range(minimumY, maximumY));
+                Vector2 candidate = new Vector2(
+                    UnityEngine.Random.Range(minimumX, maximumX),
+                    UnityEngine.Random.Range(minimumY, maximumY));
 
-                if (IsPositionFarEnoughFromOtherPoints(selectedPosition))
+                float nearestDistance = GetNearestPointDistance(candidate);
+
+                if (nearestDistance > bestDistance)
                 {
-                    foundValidPosition = true;
-                    break;
+                    bestDistance = nearestDistance;
+                    bestPosition = candidate;
                 }
+
+                if (nearestDistance >= minimumPointDistance)
+                    break;
             }
 
-            if (!foundValidPosition)
-                selectedPosition = new Vector2(UnityEngine.Random.Range(minimumX, maximumX), UnityEngine.Random.Range(minimumY, maximumY));
-
-            point.RectTransform.anchoredPosition = selectedPosition;
-            usedPositions.Add(selectedPosition);
+            point.RectTransform.anchoredPosition = bestPosition;
+            usedPositions.Add(bestPosition);
         }
+    }
+
+    private float GetNearestPointDistance(Vector2 candidate)
+    {
+        if (usedPositions.Count == 0)
+            return float.MaxValue;
+
+        float nearestDistance = float.MaxValue;
+
+        foreach (Vector2 usedPosition in usedPositions)
+        {
+            float distance = Vector2.Distance(candidate, usedPosition);
+            nearestDistance = Mathf.Min(nearestDistance, distance);
+        }
+
+        return nearestDistance;
     }
 
     private bool IsPositionFarEnoughFromOtherPoints(Vector2 candidate)
@@ -331,5 +355,41 @@ public class RuneConstellationMinigame : MonoBehaviour
             connectionLine.positionCount = 0;
 
         SetVisible(false);
+    }
+
+    private void DetectRuneUnderCursor()
+    {
+        if (Mouse.current == null)
+            return;
+
+        Vector2 pointerPosition = Mouse.current.position.ReadValue();
+        Camera eventCamera = GetEventCamera();
+
+        foreach (RunePointUI point in activePoints)
+        {
+            if (point == null || point.RectTransform == null)
+                continue;
+
+            bool containsPointer = RectTransformUtility.RectangleContainsScreenPoint(
+                point.RectTransform,
+                pointerPosition,
+                eventCamera);
+
+            point.SetPointerHovered(containsPointer);
+
+            if (containsPointer)
+                EnterPoint(point);
+        }
+    }
+
+    private Camera GetEventCamera()
+    {
+        if (constellationCanvas == null ||
+            constellationCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
+        {
+            return null;
+        }
+
+        return constellationCanvas.worldCamera;
     }
 }

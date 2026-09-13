@@ -12,6 +12,7 @@ public enum PotionBottleType
 [CreateAssetMenu(fileName = "New Potion", menuName = "Scriptable Objects/Potion")]
 public class PotionData : ScriptableObject
 {
+    private const int NoFinalRequestRound = 99;
     [Header("Identity")]
     [SerializeField] private string potionName;
     [SerializeField] private Sprite icon;
@@ -43,7 +44,7 @@ public class PotionData : ScriptableObject
 
     public bool IsAvailableForRequest(int round)
     {
-        return round >= firstRequestRound && round <= lastRequestRound;
+        return round >= firstRequestRound && (lastRequestRound >= NoFinalRequestRound || round <= lastRequestRound);
     }
 
     public bool HasValidRecipe()

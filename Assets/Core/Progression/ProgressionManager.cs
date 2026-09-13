@@ -28,6 +28,8 @@ public class ProgressionManager : MonoBehaviour
     public int Currency { get; private set; }
     public int ActiveSaveSlot => activeSaveSlot;
     public bool TutorialCompleted { get; private set; }
+    public int LoadedRound { get; private set; }
+    public int LoadedLives { get; private set; }
 
     private void Awake()
     {
@@ -72,6 +74,8 @@ public class ProgressionManager : MonoBehaviour
         Currency = startingCurrency;
         TutorialCompleted = false;
         createdUtc = DateTime.UtcNow.ToString("O");
+        LoadedRound = 0;
+        LoadedLives = 0;
 
         foreach (string id in initiallyUnlockedContentIds)
         {
@@ -235,6 +239,8 @@ public class ProgressionManager : MonoBehaviour
         Currency = Mathf.Max(0, data.currency);
         TutorialCompleted = data.tutorialCompleted;
         createdUtc = data.createdUtc;
+        LoadedRound = Mathf.Max(0, data.currentRound);
+        LoadedLives = Mathf.Max(0, data.lives);
 
         if (data.unlockedContentIds != null)
             foreach (string id in data.unlockedContentIds)

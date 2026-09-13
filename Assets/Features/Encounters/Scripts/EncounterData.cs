@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EncounterData", menuName = "Scriptable Objects/EncounterData")]
 public class EncounterData : ScriptableObject
 {
+    private const int NoFinalRound = 99;
     [Header("Identity")]
     [SerializeField] private string encounterName;
     [SerializeField] private string opponentName;
@@ -41,7 +42,7 @@ public class EncounterData : ScriptableObject
 
     public bool IsAvailableInRound(int round)
     {
-        return round >= firstRound && round <= lastRound;
+        return round >= firstRound && (lastRound >= NoFinalRound || round <= lastRound);
     }
 
     public PotionData SelectRequestedPotion(int round, PotionDatabase potionDatabase)

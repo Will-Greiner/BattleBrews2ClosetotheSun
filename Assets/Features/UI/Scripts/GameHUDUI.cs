@@ -101,7 +101,7 @@ public class GameHUDUI : MonoBehaviour
 
     private void SetRoundText(int currentRound, int totalRounds)
     {
-        roundText.text = $"ROUND {currentRound} / {totalRounds}";
+        roundText.text = totalRounds > 0 ? $"ROUND {currentRound} / {totalRounds}" : $"ROUND {currentRound}";
     }
 
     private void SetTimerText(float timeRemaining)

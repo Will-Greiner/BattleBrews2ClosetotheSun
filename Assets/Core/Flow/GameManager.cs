@@ -31,9 +31,6 @@ public class GameManager : MonoBehaviour
     [Min(1)]
     [SerializeField] private int startingLives = 3;
 
-    [Min(1)]
-    [SerializeField] private int totalRounds = 5;
-
     [SerializeField] private bool startAutomatically = true;
 
     private readonly List<EncounterData> availableEncounters = new();
@@ -56,7 +53,7 @@ public class GameManager : MonoBehaviour
     public GameState State { get; private set; } = GameState.NotStarted;
     public int CurrentRound { get; private set; }
     public int Lives { get; private set; }
-    public int TotalRounds => totalRounds;
+    public int TotalRounds => 0;
 
     private void Awake()
     {
@@ -107,7 +104,7 @@ public class GameManager : MonoBehaviour
         if (State == GameState.RoundStarting || State == GameState.RoundActive)
             return;
 
-        if (Lives <= 0 || CurrentRound >= totalRounds)
+        if (Lives <= 0)
         {
             EndGame();
             return;
@@ -136,7 +133,7 @@ public class GameManager : MonoBehaviour
 
         DeliveredPotion = null;
 
-        RoundChanged?.Invoke(CurrentRound, totalRounds);
+        RoundChanged?.Invoke(CurrentRound, 0);
         RoundStarted?.Invoke(CurrentEncounter, RequestedPotion);
     }
 
@@ -181,7 +178,7 @@ public class GameManager : MonoBehaviour
         if (State != GameState.RoundResolving)
             return;
 
-        if (Lives <= 0 || CurrentRound >= totalRounds)
+        if (Lives <= 0)
         {
             EndGame();
             return;
@@ -247,5 +244,52 @@ public class GameManager : MonoBehaviour
     {
         State = GameState.GameOver;
         GameEnded?.Invoke();
+    }
+
+    public bool RetryCurrentRound()
+    {
+        if (State != GameState.GameOver || CurrentEncounter == null || RequestedPotion == null)
+            return false;
+
+        Lives = 1;
+        DeliveredPotion = null;
+        State = GameState.RoundStarting;
+
+        CauldronController cauldron = FindFirstObjectByType<CauldronController>();
+        cauldron?.ClearCauldron();
+
+        LivesChanged?.Invoke(Lives, startingLives);
+        RoundChanged?.Invoke(CurrentRound, 0);
+        RoundStarted?.Invoke(CurrentEncounter, RequestedPotion);
+        ProgressionManager.Instance?.SaveNow();
+        return true;
+    }
+
+    public void ResumeGame()
+    {
+        if (State != GameState.NotStarted && State != GameState.GameOver)
+            return;
+
+        ProgressionManager progression = ProgressionManager.Instance;
+
+        int savedRound = progression != null
+            ? progression.LoadedRound
+            : 0;
+
+        CurrentRound = Mathf.Max(0, savedRound - 1);
+
+        Lives = progression != null && progression.LoadedLives > 0
+            ? progression.LoadedLives
+            : startingLives;
+
+        CurrentEncounter = null;
+        RequestedPotion = null;
+        DeliveredPotion = null;
+        State = GameState.NotStarted;
+
+        GameStarted?.Invoke();
+        LivesChanged?.Invoke(Lives, startingLives);
+
+        StartNextRound();
     }
 }

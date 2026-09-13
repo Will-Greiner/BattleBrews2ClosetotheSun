@@ -30,6 +30,7 @@ public class MainMenuController : MonoBehaviour
 
     private bool isStarting;
     private bool gameplayStarted;
+    private bool resumeLoadedGame;
 
     private void Awake()
     {
@@ -129,6 +130,7 @@ public class MainMenuController : MonoBehaviour
         if (ProgressionManager.Instance != null)
             ProgressionManager.Instance.LoadSlot(slot);
 
+        resumeLoadedGame = true;
         RememberSelectedSlot(slot);
         saveSlotMenu?.HideWithoutNotification();
         StartCoroutine(StartGameRoutine());
@@ -142,6 +144,7 @@ public class MainMenuController : MonoBehaviour
         if (ProgressionManager.Instance != null)
             ProgressionManager.Instance.CreateNewSlot(slot);
 
+        resumeLoadedGame = false;
         RememberSelectedSlot(slot);
         saveSlotMenu?.HideWithoutNotification();
         StartCoroutine(StartGameRoutine());
@@ -244,11 +247,12 @@ public class MainMenuController : MonoBehaviour
         // StartGame raises RoundStarted. RoundPresentationController then
         // generates the fighter, walks them in, and begins the dialogue.
         if (GameManager.Instance != null)
-            GameManager.Instance.StartGame();
-        else
-            Debug.LogError(
-                $"{name}: Cannot start because no GameManager exists.",
-                this);
+        {
+            if (resumeLoadedGame)
+                GameManager.Instance.ResumeGame();
+            else
+                GameManager.Instance.StartGame();
+        }
 
         // Remove only the menu's lock. RoundPresentationController maintains
         // its own lock during the fighter entrance and dialogue.

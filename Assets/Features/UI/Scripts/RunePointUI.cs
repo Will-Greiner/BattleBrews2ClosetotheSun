@@ -89,6 +89,11 @@ public class RunePointUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         RefreshVisuals();
     }
 
+    public void SetPointerHovered(bool hovered)
+    {
+        SetHovered(hovered);
+    }
+
     private void RefreshVisuals()
     {
         if (runeImage == null)

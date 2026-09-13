@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
             return false;
 
         GrabbableItem item = grabController.HeldItem;
-        return item.GetComponent<MortarPestle>() != null || item.GetComponent<BurnerBellows>() != null || item.GetComponent<PulverizerCrank>() != null || item.GetComponent<ProcessingTableHandle>() != null;
+        return item.GetComponent<MortarPestle>() != null || item.GetComponent<BurnerBellows>() != null || item.GetComponent<PulverizerCrank>() != null || item.GetComponent<ProcessingTableHandle>() != null || item.GetComponent<StirringStick>() != null;
     }
 
     private float CalculateTargetSpeed(float normalizedX)

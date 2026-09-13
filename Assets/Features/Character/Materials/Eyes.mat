@@ -62,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Eye:
-        m_Texture: {fileID: 2800000, guid: 4891ce3e20a3d104cb0c60a82751dfa3, type: 3}
+        m_Texture: {fileID: 2800000, guid: e9d2c4da46f5a1442a97582110c740ce, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Pupil:
-        m_Texture: {fileID: 2800000, guid: 97fc98d98d3a0e447b749aa95f71b294, type: 3}
+        m_Texture: {fileID: 2800000, guid: feac1dd37e0cf544aad749ab0e133b68, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
