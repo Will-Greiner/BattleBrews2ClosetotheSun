@@ -120,6 +120,7 @@ public class MainMenuController : MonoBehaviour
 
         HideMenu();
         settingsMenu?.Show();
+        CursorManager.Instance?.ShowForUI(this);
     }
 
     private void LoadGameFromSlot(int slot)
