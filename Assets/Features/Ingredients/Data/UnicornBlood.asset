@@ -20,7 +20,7 @@ MonoBehaviour:
   brewColor: {r: 0.95, g: 0.1, b: 1, a: 1}
   persistentId: bd768ddce60fa43469e082ae8116b017
   unlockId: blood
-  prefab: {fileID: 9136624165198822000, guid: fcd3067523a759f4191c3b3114ff4998, type: 3}
+  prefab: {fileID: 4570771058291320902, guid: d47f3d2963e66f14ea135741c54f8b67, type: 3}
   properties:
   - {fileID: 11400000, guid: 651e37cbcc557dc4f82154cf31312a97, type: 2}
   - {fileID: 11400000, guid: e169fec3cabff2c4f9cbbb11f77c3d6c, type: 2}

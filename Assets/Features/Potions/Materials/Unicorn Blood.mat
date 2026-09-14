@@ -43,15 +43,15 @@ Material:
     m_Floats:
     - _AlphaClip: 1
     - _AlphaToMask: 0
-    - _Amplitude: 0.04
+    - _Amplitude: 0.18
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 0
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _EdgeGlow: 5
-    - _Frequency: 4
-    - _PotionFillAmount: 0.072
+    - _Frequency: 14
+    - _PotionFillAmount: 0.045
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 5
@@ -62,7 +62,7 @@ Material:
     - _ZWriteControl: 1
     m_Colors:
     - _BaseColor: {r: 0.90852785, g: 0.325, b: 1, a: 1}
-    - _TopColor: {r: 0.8862745, g: 0.16078432, b: 1, a: 1}
+    - _TopColor: {r: 0.7715719, g: 0.18098256, b: 0.86415094, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &4573039609338008032

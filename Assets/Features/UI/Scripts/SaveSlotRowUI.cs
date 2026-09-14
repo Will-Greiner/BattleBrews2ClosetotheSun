@@ -94,7 +94,7 @@ public class SaveSlotRowUI : MonoBehaviour
         {
             awaitingDeleteConfirmation = true;
             confirmationExpiresAt = Time.unscaledTime + deleteConfirmationDuration;
-            if (deleteButtonText != null) deleteButtonText.text = "Confirm Delete";
+            if (deleteButtonText != null) deleteButtonText.text = "Confirm Delete   ";
             return;
         }
 
@@ -105,7 +105,7 @@ public class SaveSlotRowUI : MonoBehaviour
     private void ResetDeleteConfirmation()
     {
         awaitingDeleteConfirmation = false;
-        if (deleteButtonText != null) deleteButtonText.text = "Delete";
+        if (deleteButtonText != null) deleteButtonText.text = "Delete   ";
     }
 
     private void ResetOverwriteConfirmation()
